@@ -20,3 +20,6 @@ repositories {
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
 }
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.7"
+}
