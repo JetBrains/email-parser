@@ -1,9 +1,5 @@
 package playground
 
-/**
- * Created by Pavel on 26.02.2016.
- */
-
 fun main(args: Array<String>) {
     val n = readLine()!!.toInt()
 

@@ -10,6 +10,9 @@ buildscript {
     }
 }
 apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'playground.PrimeNumbersKt'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -22,4 +25,7 @@ sourceSets {
 }
 task wrapper(type: Wrapper) {
     gradleVersion = "2.7"
+}
+run{
+    standardInput = System.in
 }
