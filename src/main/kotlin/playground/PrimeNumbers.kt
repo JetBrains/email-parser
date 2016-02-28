@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
     printPrimes(primes)
 }
 
-internal fun getPrimes(n: Int): IntArray {
+fun getPrimes(n: Int): IntArray {
     if (n < 2 || n > 1000)
         return intArrayOf()
 

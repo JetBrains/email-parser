@@ -3,6 +3,7 @@ buildscript {
 
     repositories {
         mavenCentral()
+
     }
 
     dependencies {
@@ -19,9 +20,14 @@ mainClassName = 'playground.PrimeNumbersKt'
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile 'junit:junit:4.12'
+    testCompile 'org.jetbrains.spek:spek:0.1.195'
 }
+
 repositories {
     mavenCentral()
+    maven {
+        url "http://repository.jetbrains.com/simple/spek"
+    }
 }
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
