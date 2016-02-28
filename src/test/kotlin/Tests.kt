@@ -1,6 +1,6 @@
 import org.junit.Test
-import org.junit.Assert.*
-import playground.*;
+import org.junit.Assert.assertEquals
+import playground.getPrimes
 
 class Tests {
 
