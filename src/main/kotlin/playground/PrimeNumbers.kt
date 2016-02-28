@@ -9,10 +9,12 @@ fun main(args: Array<String>) {
     }
     val primes: IntArray = getPrimes(n)
     printPrimes(primes)
-
 }
 
 internal fun getPrimes(n: Int): IntArray {
+    if (n < 2 || n > 1000)
+        return intArrayOf()
+
     val isPrime = BooleanArray(n + 1) { if (it < 2) false else true }
     val n_root = Math.sqrt(n.toDouble()).toInt()
 
