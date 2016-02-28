@@ -7,13 +7,13 @@ fun main(args: Array<String>) {
         println("Number not in range from 2 to 1000.")
         return
     }
-    val isPrime: BooleanArray = getPrimes(n)
-    printPrimes(n, isPrime)
+    val primes: IntArray = getPrimes(n)
+    printPrimes(primes)
 
 }
 
-private fun getPrimes(n: Int): BooleanArray {
-    val isPrime = BooleanArray(n + 1) { true }
+internal fun getPrimes(n: Int): IntArray {
+    val isPrime = BooleanArray(n + 1) { if (it < 2) false else true }
     val n_root = Math.sqrt(n.toDouble()).toInt()
 
     for (i in 2..n_root) {
@@ -24,19 +24,22 @@ private fun getPrimes(n: Int): BooleanArray {
         }
     }
 
-    return isPrime
+    val primesAmount = isPrime.count { it }
+    var prime = 0
+    return IntArray(primesAmount) {
+        while (!(isPrime[prime]) && prime < isPrime.size)
+            ++prime
+        prime++
+    }
 }
 
-private fun printPrimes(n: Int, isPrime: BooleanArray) {
-    val numbers = IntArray(n - 1) { it + 2 }
-
-    print(2)
-    var first = true
-    for (i in numbers) {
-        if (isPrime[i] && !first) {
-            print(", $i")
+private fun printPrimes(primes: IntArray) {
+    for (i in primes.indices) {
+        if (i != primes.size - 1) {
+            print("${primes[i]}, ")
+        } else {
+            print(primes[i])
         }
-        first = false
     }
     println()
 }
