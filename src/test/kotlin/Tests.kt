@@ -8,7 +8,7 @@ class Tests {
         val expected = intArrayOf()
         val actual = getPrimes(1)
 
-        for(i in expected.indices) {
+        for (i in expected.indices) {
             assertEquals(expected[i], actual[i])
         }
     }
@@ -17,7 +17,7 @@ class Tests {
         val expected = intArrayOf()
         val actual = getPrimes(1001)
 
-        for(i in expected.indices) {
+        for (i in expected.indices) {
             assertEquals(expected[i], actual[i])
         }
     }
@@ -26,7 +26,7 @@ class Tests {
         val expected = intArrayOf(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
         val actual = getPrimes(29)
 
-        for(i in expected.indices) {
+        for (i in expected.indices) {
             assertEquals(expected[i], actual[i])
         }
     }
@@ -35,7 +35,7 @@ class Tests {
         val expected = intArrayOf(2)
         val actual = getPrimes(2)
 
-        for(i in expected.indices) {
+        for (i in expected.indices) {
             assertEquals(expected[i], actual[i])
         }
     }
@@ -44,7 +44,7 @@ class Tests {
         val expected = intArrayOf(2, 3, 5, 7, 11, 13, 17, 19, 23)
         val actual = getPrimes(25)
 
-        for(i in expected.indices) {
+        for (i in expected.indices) {
             assertEquals(expected[i], actual[i])
         }
     }
