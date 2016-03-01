@@ -28,7 +28,8 @@ fun main(args: Array<String>) {
     } while (incorrectInput)
 
     val primes: IntArray = getPrimes(n)
-    printPrimes(primes)
+
+    println(primes.joinToString(prefix = "Primes: ", postfix = "."))
 }
 
 fun getErrorMessage(param: Any): String = when (param) {
@@ -39,7 +40,7 @@ fun getErrorMessage(param: Any): String = when (param) {
 
 fun getPrimes(n: Int): IntArray {
     if (n < 2 || n > 1000)
-        return throw NotInRangeException(getErrorMessage(n))
+        throw NotInRangeException(getErrorMessage(n))
 
     val isPrime = BooleanArray(n + 1) { if (it < 2) false else true }
     val n_root = Math.sqrt(n.toDouble()).toInt()
@@ -52,22 +53,8 @@ fun getPrimes(n: Int): IntArray {
         }
     }
 
-    val primesAmount = isPrime.count { it }
-    var prime = 0
-    return IntArray(primesAmount) {
-        while (!(isPrime[prime]) && prime < isPrime.size)
-            ++prime
-        prime++
-    }
-}
-
-private fun printPrimes(primes: IntArray) {
-    for (i in primes.indices) {
-        if (i != primes.size - 1) {
-            print("${primes[i]}, ")
-        } else {
-            print(primes[i])
-        }
-    }
-    println()
+    return isPrime.withIndex()
+            .map { if (it.value) it.index else 0 }
+            .filter { it > 0 }
+            .toIntArray()
 }
