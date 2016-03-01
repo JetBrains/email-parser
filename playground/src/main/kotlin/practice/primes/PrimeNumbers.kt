@@ -1,4 +1,4 @@
-package playground
+package practice.primes
 
 fun main(args: Array<String>) {
     val n = readLine()!!.toInt()
