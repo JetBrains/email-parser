@@ -1,15 +1,39 @@
 package practice.primes
 
 fun main(args: Array<String>) {
-    val n = readLine()!!.toInt()
+    val enterMessage =
+            "\nEnter the number in range from 2 to 1000 to get all prime numbers that are less or equal to it.\nN = "
+    var errorMessage = "placeholder error message"
+    var n: Int = 2
+    var inputString: String?
+    var incorrectInput = false
 
-    if (n !in 2..1000) {
-        println("Number not in range from 2 to 1000.")
-        return
-    }
+    do {
+        if (incorrectInput) {
+            println(errorMessage)
+            incorrectInput = false
+        }
+        print(enterMessage)
+        inputString = readLine() ?: "null"
+        try {
+            n = inputString.toInt()
+            if (n !in 2..1000) {
+                errorMessage = getErrorMessage(n)
+                incorrectInput = true
+            }
+        } catch (e: NumberFormatException) {
+            errorMessage = getErrorMessage(inputString)
+            incorrectInput = true
+        }
+    } while (incorrectInput)
+
     val primes: IntArray = getPrimes(n)
     printPrimes(primes)
 }
+
+fun getErrorMessage(n: Int): String = "Number $n is not in range 2..1000."
+
+fun getErrorMessage(str: String?): String = """"$str" is not a number."""
 
 fun getPrimes(n: Int): IntArray {
     if (n < 2 || n > 1000)
