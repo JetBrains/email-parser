@@ -31,13 +31,15 @@ fun main(args: Array<String>) {
     printPrimes(primes)
 }
 
-fun getErrorMessage(n: Int): String = "Number $n is not in range 2..1000."
-
-fun getErrorMessage(str: String?): String = """"$str" is not a number."""
+fun getErrorMessage(param: Any): String = when (param) {
+    is Int -> "Number $param is not in range 2..1000."
+    is String -> """"$param" is not a number."""
+    else -> "unknown exception."
+}
 
 fun getPrimes(n: Int): IntArray {
     if (n < 2 || n > 1000)
-        return intArrayOf()
+        return throw NotInRangeException(getErrorMessage(n))
 
     val isPrime = BooleanArray(n + 1) { if (it < 2) false else true }
     val n_root = Math.sqrt(n.toDouble()).toInt()
