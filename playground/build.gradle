@@ -35,6 +35,11 @@ sourceSets {
 task wrapper(type: Wrapper) {
     gradleVersion = "2.11"
 }
-run{
+
+run {
     standardInput = System.in
+
+    if (project.hasProperty('N')) {
+        args N.split(' ')
+    }
 }

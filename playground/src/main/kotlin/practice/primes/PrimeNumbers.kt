@@ -7,14 +7,20 @@ fun main(args: Array<String>) {
     var n: Int = 2
     var inputString: String?
     var incorrectInput = false
+    var gotCLArgument = false
 
     do {
         if (incorrectInput) {
             println(errorMessage)
             incorrectInput = false
         }
-        print(enterMessage)
-        inputString = readLine() ?: "null"
+        if (args.size > 0 && !gotCLArgument) {
+            inputString = args[0]
+            gotCLArgument = true
+        } else {
+            print(enterMessage)
+            inputString = readLine() ?: "null"
+        }
         try {
             n = inputString.toInt()
             if (n !in 2..1000) {
