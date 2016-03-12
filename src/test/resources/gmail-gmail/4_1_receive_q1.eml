@@ -1,0 +1,78 @@
+                                                                                                                                                                                                                                                               
+Delivered-To: ppzhuk@gmail.com
+Received: by 10.107.169.83 with SMTP id s80csp1616980ioe;
+        Sat, 12 Mar 2016 13:49:53 -0800 (PST)
+X-Received: by 10.25.209.73 with SMTP id i70mr5516147lfg.0.1457819392930;
+        Sat, 12 Mar 2016 13:49:52 -0800 (PST)
+Return-Path: <thebostor@gmail.com>
+Received: from mail-lb0-x22e.google.com (mail-lb0-x22e.google.com. [2a00:1450:4010:c04::22e])
+        by mx.google.com with ESMTPS id c13si6194141lfb.17.2016.03.12.13.49.52
+        for <ppzhuk@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Mar 2016 13:49:52 -0800 (PST)
+Received-SPF: pass (google.com: domain of thebostor@gmail.com designates 2a00:1450:4010:c04::22e as permitted sender) client-ip=2a00:1450:4010:c04::22e;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of thebostor@gmail.com designates 2a00:1450:4010:c04::22e as permitted sender) smtp.mailfrom=thebostor@gmail.com;
+       dkim=pass header.i=@gmail.com;
+       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by mail-lb0-x22e.google.com with SMTP id bc4so184257001lbc.2
+        for <ppzhuk@gmail.com>; Sat, 12 Mar 2016 13:49:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
+        bh=iENTwpQR4EePE0rqBa9Q78PLy49FNFVuxXdSz/luPOY=;
+        b=MY5FSs5tp7jPMHEf4zo8gjVy6TQ2F+JxX+3Cnmz6FniDtbCYaROp6ffVK4XTwb5qDr
+         PaHfL+dZYZb0DIXE4wOiX9WF8rzAn2bz5wzie/q7Oh1VeSBFVx123/dbca1S4GFN9Cln
+         FyPeMOYp1UWsgo4t/RkXK8nhfYnMzxxvvVtZsaZnaAsNI4gUNsnnlBCzmQjD261ZeoDr
+         haTUETyIgIuilT6bhNV9XFbfLUNvjAyNUCKvehkEYU3EcoF4Jeaf8aKXyHGh5oEXLJRk
+         vFJGETfTEXAj/WrwScxIRCp0/yOehwJ3A17H94XZl1vWKsu/3O5tisfALDEcBAJ2ewp5
+         KBAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to;
+        bh=iENTwpQR4EePE0rqBa9Q78PLy49FNFVuxXdSz/luPOY=;
+        b=E3huJieCCdcoA2Q+2H+iT3/MHm/rTEXLVhfLwIJSlgTxc+MNqXp5evtTJfJqOjFjm7
+         GSlko5COLHBdtdOcs+4gvppeUhtFVyICUbNIoVM+j1PT3PTF3+ud1DNDSvbfBx9CTabU
+         8cjC+azfH8vkXaYevBNAeFvA2ot3likUJO/u02TO1Q8VViI0j8mrRy4I77Ykrjc5h8i5
+         sKg+ifxXidqUbNyfQmK2H0Rtwo6lsDJXi+n2NZq5Hnm9UqsKEie72atagJrT+30txHp3
+         aeZm1uJ1MiwqjZewQWsv4VxlP2hHcdTt2pbp2Hx3QiQOPNKGvJY9wqPtGJLRtkrqhKN1
+         CAMg==
+X-Gm-Message-State: AD7BkJJTkLF3+Y664ofUkc7p2Q+isA7YhcH+DoT7E4/uvxh8qq/cTUvLq925lf5cjEjOpcWKJ1cLyLWyFL129A==
+MIME-Version: 1.0
+X-Received: by 10.112.163.102 with SMTP id yh6mr5171372lbb.4.1457819392593;
+ Sat, 12 Mar 2016 13:49:52 -0800 (PST)
+Received: by 10.114.173.84 with HTTP; Sat, 12 Mar 2016 13:49:52 -0800 (PST)
+In-Reply-To: <CAGg-HvQQ9LyPOJegzgvnTtTxupBUn1y-A-jiMniOZA8vSdn-Tg@mail.gmail.com>
+References: <CAGg-HvQQ9LyPOJegzgvnTtTxupBUn1y-A-jiMniOZA8vSdn-Tg@mail.gmail.com>
+Date: Sun, 13 Mar 2016 00:49:52 +0300
+Message-ID: <CANVN=+6_DZaMDupoHKv2R_ESHadAziaDo6m8d=bur1VvsQy=5w@mail.gmail.com>
+Subject: Re:
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <thebostor@gmail.com>
+To: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <ppzhuk@gmail.com>
+Content-Type: multipart/alternative; boundary=089e011832960ad6fe052de1077f
+
+--089e011832960ad6fe052de1077f
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+MSDRhtC40YLQsNGC0LANCg0KMjAxNi0wMy0xMyAwOjQ5IEdNVCswMzowMCDQn9Cw0LLQtdC7INCW
+0YPQuiA8cHB6aHVrQGdtYWlsLmNvbT46DQoNCj4g0LHQtdC3INGG0LjRgtCw0YLRiw0KPg0KPiAt
+LQ0KPiDQltGD0Log0J/QsNCy0LXQuy4NCj4NCg==
+--089e011832960ad6fe052de1077f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">1 =D1=86=D0=B8=D1=82=D0=B0=D1=82=D0=B0</div><div class=3D"=
+gmail_extra"><br><div class=3D"gmail_quote">2016-03-13 0:49 GMT+03:00 =D0=
+=9F=D0=B0=D0=B2=D0=B5=D0=BB =D0=96=D1=83=D0=BA <span dir=3D"ltr">&lt;<a hre=
+f=3D"mailto:ppzhuk@gmail.com" target=3D"_blank">ppzhuk@gmail.com</a>&gt;</s=
+pan>:<br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
+r-left:1px #ccc solid;padding-left:1ex">=D0=B1=D0=B5=D0=B7 =D1=86=D0=B8=D1=
+=82=D0=B0=D1=82=D1=8B<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+--<br>
+=D0=96=D1=83=D0=BA =D0=9F=D0=B0=D0=B2=D0=B5=D0=BB.<br>
+</font></span></blockquote></div><br></div>
+
+--089e011832960ad6fe052de1077f--
