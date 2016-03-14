@@ -1,0 +1,35 @@
+Received: from smtp4o.mail.yandex.net ([37.140.190.29])
+	by mxback10o.mail.yandex.net with LMTP id f7JePSQx
+	for <jojograf@yandex.ru>; Mon, 14 Mar 2016 17:18:05 +0300
+Received: from smtp4o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp4o.mail.yandex.net (Yandex) with ESMTP id 68B532323A5C
+	for <jojograf@yandex.ru>; Mon, 14 Mar 2016 17:18:05 +0300 (MSK)
+Received: by smtp4o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id ugg57sPEWo-I5N4bCFf;
+	Mon, 14 Mar 2016 17:18:05 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp4o.mail.yandex.net
+X-Yandex-TimeMark: 1457965085
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1457965085;
+	bh=39v9fxoBkKUWhlMp6XR0R5hy4Q3vuftPrytbXFgmBwU=;
+	h=To:From:Subject:Message-ID:Date:User-Agent:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	b=KLK3HVH5H6JlWxNd8GEgY8SBK/Mn+ndcMNLrbUFMIBNUVLMaBedlMi/3H27nVYrQq
+	 Cfu7diuDBppKK9d+6CgO5ekjewcAe1Ag2Lv5eD/cfDzbJCeqJeWCgQDpN9IYF4W181
+	 rW6N/kzLdKtnYBgNbLHaG1tozX0d9wJFjX1BlB/M=
+Authentication-Results: smtp4o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Yandex-Spam: 1
+To: jojograf@yandex.ru
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <pav9147@yandex.ru>
+Subject: =?UTF-8?B?c29tZSBlbmdsaXNoINC4INGA0YPRgdGB0LrQuNC5?=
+Message-ID: <56E6C818.8020701@yandex.ru>
+Date: Mon, 14 Mar 2016 17:18:00 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Return-Path: pav9147@yandex.ru
+X-Yandex-Forward: bb9cb87b21ead38c9f5d9910d5a04b29
+
+Тут находится a little mix from different languages.
