@@ -1,0 +1,980 @@
+Delivered-To: ppzhuk@gmail.com
+Received: by 10.107.169.83 with SMTP id s80csp1213601ioe;
+        Wed, 16 Mar 2016 05:06:15 -0700 (PDT)
+X-Received: by 10.112.63.200 with SMTP id i8mr1250561lbs.5.1458129975470;
+        Wed, 16 Mar 2016 05:06:15 -0700 (PDT)
+Return-Path: <SEMA-CR-1=4072656975@bhd.aeroflot.ru>
+Received: from pusa82.subscribe.ru (pusa82.subscribe.ru. [81.222.133.82])
+        by mx.google.com with ESMTPS id mz3si1460735lbb.158.2016.03.16.05.06.14
+        for <ppzhuk@gmail.com>
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 16 Mar 2016 05:06:15 -0700 (PDT)
+Received-SPF: neutral (google.com: 81.222.133.82 is neither permitted nor denied by best guess record for domain of SEMA-CR-1=4072656975@bhd.aeroflot.ru) client-ip=81.222.133.82;
+Authentication-Results: mx.google.com;
+       spf=neutral (google.com: 81.222.133.82 is neither permitted nor denied by best guess record for domain of SEMA-CR-1=4072656975@bhd.aeroflot.ru) smtp.mailfrom=SEMA-CR-1=4072656975@bhd.aeroflot.ru;
+       dkim=pass header.i=@mail.sendsay.ru
+Received: id 2D7C1254090-1458129967
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.sendsay.ru; s=sendsay.201502;
+	t=1458129967; bh=BTcLcOcQUw6kip4GRVX6Jakva/6mxQ82EyKzHySqJmg=;
+	h=Received:Date:To:X-Mailer:Sender:Subject:From:Reply-To:Message-ID:
+	 Content-Type:Content-Transfer-Encoding;
+	b=SZkotrtx5h/V9Qlj7hk0dy5ajEhhbd0XlWJcrfzcejS/hmMvxjwV0BIoqfenqYtKE
+	 2FbUc3jHNA8+3OxWsERsV2lRxk/kye3MSmSGmlxZ+UbUATBtoyXPLydDh/wl5EKa4i
+	 tNwSQso/HwIUGUCZiStx76cIHW+SThEdODyLHMCQ=
+Received: from UNKNOWN(80.92.36.51), claiming to be "MLKPRDSBL81.msk.aeroflot.ru"
+ via SMTP by smtp.gate.sendsay.ru, id smtpdPGYsS5; Wed Mar 16 12:06:00 2016
+ +0300
+Date: Wed, 16 Mar 2016 16:05:58 +0400
+To: <ppzhuk@gmail.com>
+X-Mailer: Siebel 201412081537
+Sender: "Aeroflot Bonus" <info@aeroflot.ru>
+Subject: =?utf-8?b?0JLRgdGC0YDQtdGH0LDQtdC8INCy0LXRgdC90YMg0YE=?= LightAward!
+From: "Aeroflot Bonus" <info@aeroflot.ru>
+Reply-To: "Aeroflot Bonus" <info@aeroflot.ru>
+Message-ID: <SEMA-CR-1=4072656975@bhd.aeroflot.ru>
+Content-Type: text/html;	charset="UTF-8"
+Content-Transfer-Encoding: Quoted-Printable
+
+<table align=3D"center" bgcolor=3D"white" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"table col-md-12 white-bg" style=3D"border-left-width: 0px; font=
+-family: Arial; border-right-width: 0px; width: 652px; border-bottom-width:=
+ 0px; margin: 0px auto 3px; border-spacing: 0; border-top-width: 0px; backg=
+round-color: white">
+	<tbody style=3D"margin: 0px">
+		<tr class=3D"header" style=3D"margin: 0px">
+			<td style=3D"width: 337px; margin: 0px" width=3D"337">
+				<div class=3D"box" style=3D"margin: 0px">
+					<span style=3D"width: 200px; margin: 0px; display: block"><a border=3D=
+"0" height=3D"84" href=3D"http://www.aeroflot.ru/cms/ru/" style=3D"display:=
+ block" target=3D"_blank" width=3D"200"><img alt=3D"=D0=90=D1=8D=D1=80=D0=
+=BE=D1=84=D0=BB=D0=BE=D1=82 =D0=91=D0=BE=D0=BD=D1=83=D1=81" class=3D"logoty=
+pe img" height=3D"50" src=3D"http://image.sendsay.ru/image/afl/dab_burn_151=
+22014/logo.jpg" style=3D"border-left-width: 0px; border-right-width: 0px; b=
+order-bottom-width: 0px; margin: 18px 0px 20px 7px; border-top-width: 0px" =
+width=3D"162" /> </a></span></div>
+			</td>
+			<!-- C -->
+			<td style=3D"width: 126px; vertical-align: top; background-repeat: no-re=
+peat; padding-bottom: 0px; padding-top: 0px; padding-left: 0px; margin: 0px=
+; padding-right: 0px" valign=3D"top" width=3D"126">
+				<table cellpadding=3D"0" cellspacing=3D"0" style=3D"width: 105px" width=
+=3D"105">
+					<tbody>
+						<tr>
+							<td background=3D"http://image.sendsay.ru/image/afl/dab_burn_1512201=
+4/=
+BASIC=
+.jpg" height=3D"68" style=3D"height: 68px; width: 105px; vertical-align: to=
+p; background-repeat: no-repeat; padding-bottom: 0px; padding-top: 0px; pad=
+ding-left: 0px; margin: 0px; padding-right: 0px" valign=3D"top" width=3D"10=
+5">
+								<!--[if gte mso 9]>
+                                <v:rect xmlns:v=3D"urn:schemas-microsoft-co=
+m:vml" fill=3D"true" stroke=3D"false" style=3D"width:105px; height: 68px;">
+                                    <v:fill type=3D"tile" src=3D"img/credit=
+-card.jpg" color=3D"#0311a6" />
+                                    <v:textbox style=3D"mso-fit-shape-to-te=
+xt:true" inset=3D"0,0,0,0">
+                                <![endif]-->
+								<div height=3D"68" style=3D"font-size: 14px; width: 105px; font-wei=
+ght: 400; color: white; text-align: center; line-height: 13px" width=3D"105=
+">
+									<div height=3D"31" style=3D"height: 31px; width: 105px; display: b=
+lock; line-height: 31px" width=3D"105">
+										&nbsp;</div>
+									<div height=3D"13" style=3D"height: 13px; width: 105px; text-align=
+: center; display: block" width=3D"105">
+										<a href=3D"https://www.aeroflot.ru/personal/login&#13;&#10;" styl=
+e=3D"text-decoration: none; color: white; line-height: 13px" target=3D"_bla=
+nk">=
+237704740=
+</a></div>
+								</div>
+								<!--[if gte mso 9]>
+                                </v:textbox>
+                                </v:rect>
+                                <![endif]--></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<!-- PERSONAL INFO -->
+			<td style=3D"width: 209px; padding-top: 10px; margin: 0px" valign=3D"top=
+">
+				<table cellpadding=3D"0" cellspacing=3D"0" style=3D"width: 209px; verti=
+cal-align: top; padding-bottom: 0px; padding-top: 0px; padding-left: 0px; m=
+argin: 0px; padding-right: 0px">
+					<tbody>
+						<tr>
+							<td height=3D"24" style=3D"height: 18px; font-family: 'Arial'; verti=
+cal-align: top; margin: 0px">
+								<a href=3D"https://www.aeroflot.ru/personal/login" style=3D"font-si=
+ze: 11px; white-space: nowrap; text-transform: uppercase; font-weight: 400;=
+ color: #003e7e; margin: 0px" target=3D"_blank">=
+PAVEL ZHUK=
+ </a></td>
+							<td style=3D"width: 7px">
+								&nbsp;</td>
+							<td style=3D"font-family: 'Arial'; width: 100%; vertical-align: top;=
+ margin: 0px">
+								<a href=3D"https://www.aeroflot.ru/personal/login"><img alt=3D"" bo=
+rder=3D"0" height=3D"17" src=3D"http://image.sendsay.ru/image/afl/dab_burn_=
+15122014/icon.jpg" style=3D"margin: -1px 0px 0px 7px" width=3D"17" /> </a><=
+/td>
+						</tr>
+						<tr>
+							<td colspan=3D"4" style=3D"height: 21px; font-family: 'Arial'; verti=
+cal-align: top; margin: 0px">
+								<a href=3D"https://www.aeroflot.ru/personal/login" style=3D"font-si=
+ze: 16px; text-decoration: none; text-transform: uppercase; font-weight: 70=
+0; color: #003e7e; margin: 0px" target=3D"_blank">=
+500=
+</a><a style=3D"font-size: 16px; text-decoration: none; text-transform: upp=
+ercase; font-weight: 700; color: #003e7e; margin: 0px" target=3D"_blank">&n=
+bsp;/&nbsp;=
+0=
+</a></td>
+						</tr>
+						<tr>
+							<td colspan=3D"4" style=3D"font-family: 'Arial'; vertical-align: top=
+; margin: 0px">
+								<a href=3D"https://www.aeroflot.ru/personal/login" style=3D"font-si=
+ze: 11px; text-decoration: none; font-weight: 400; color: #003e7e; margin: =
+0px" target=3D"_blank">=D0=9C=D0=B8=D0=BB=D1=8C / =D0=9A=D0=B2=D0=B0=D0=BB=
+=D0=B8=D1=84=D0=B8=D0=BA=D0=B0=D1=86=D0=B8=D0=BE=D0=BD=D0=BD=D1=8B=D1=85 =
+=D0=BC=D0=B8=D0=BB=D1=8C </a></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class=3D"main-offer" style=3D"background: url(http://image.sendsay.ru/=
+image/afl/dab_lightaward_201603/img_ab_mailer_march_01.jpg) no-repeat cente=
+r top; margin: 0px">
+	<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"table=
+ col-md-12" style=3D"border-left-width: 0px; font-family: Arial; border-rig=
+ht-width: 0px; width: 640px; border-bottom-width: 0px; margin: 0px auto; bo=
+rder-spacing: 0; border-top-width: 0px">
+		<tbody style=3D"margin: 0px">
+			<tr class=3D"main-picture" style=3D"margin: 0px">
+				<td class=3D"col-md-12" colspan=3D"3" height=3D"400" style=3D"height: 4=
+00px; width: 640px; margin: 0px">
+					<a href=3D"http://www.aeroflot.ru/cms/special_offers/lightaward/" styl=
+e=3D"font-size: 11px; text-decoration: none; font-weight: 400; color: #003e=
+7e; margin: 0px" target=3D"_blank"><img alt=3D"=D0=92=D0=B5=D1=81=D0=B5=D0=
+=BD=D0=BD=D0=B5=D0=B5 =D0=BD=D0=B0=D1=81=D1=82=D1=80=D0=BE=D0=B5=D0=BD=D0=
+=B8=D0=B5 =D1=81 LightAward" border=3D"0" height=3D"400" src=3D"http://imag=
+e.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_mailer_march_01_1.jpg" =
+style=3D"border-left-width: 0px; height: 400px; border-right-width: 0px; wi=
+dth: 640px; border-bottom-width: 0px; display: block; border-top-width: 0px=
+" width=3D"640" /> </a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div align=3D"center" class=3D"wrapper very-light-bg" style=3D"margin: auto=
+; background-color: #ffffff">
+	<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"table=
+ col-md-12" style=3D"border-left-width: 0px; font-family: Arial; border-rig=
+ht-width: 0px; width: 640px; border-bottom-width: 0px; margin: 0px auto 17p=
+x; border-spacing: 0; border-top-width: 0px">
+		<tbody>
+			<tr style=3D"margin: 0px">
+				<td align=3D"center" class=3D"col-md-8 plain-text" colspan=3D"2" style=
+=3D"font-size: 14px; width: 640px; font-weight: 400; margin: 0px 20px 0px 0=
+px" valign=3D"top">
+					<div class=3D"plain-text" style=3D"font-size: 14px; font-weight: 400; =
+text-align: left; margin: 0px 2px 3px 3px; line-height: 1.23">
+						<p class=3D"plain-text" style=3D"font-size: 14px; font-weight: 400; c=
+olor: #000000; margin: 0px 2px 3px 0px; line-height: 1.23">
+							=D0=95=D1=81=D1=82=D1=8C =D0=B3=D0=BE=D1=80=D0=BE=D0=B4=D0=B0, =D0=
+=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B5 =D0=B0=D1=81=D1=81=D0=BE=D1=86=D0=
+=B8=D0=B8=D1=80=D1=83=D1=8E=D1=82=D1=81=D1=8F =D1=81 =D0=B2=D0=B5=D1=81=D0=
+=BD=D0=BE=D0=B9, =D0=B8 =D0=90=D0=BC=D1=81=D1=82=D0=B5=D1=80=D0=B4=D0=B0=D0=
+=BC =D0=BE=D0=B4=D0=B8=D0=BD =D0=B8=D0=B7 =D0=BD=D0=B8=D1=85. =D0=91=D0=B5=
+=D1=81=D0=BA=D0=BE=D0=BD=D0=B5=D1=87=D0=BD=D1=8B=D0=B5 =D0=BF=D0=BE=D0=BB=
+=D1=8F =D1=82=D1=8E=D0=BB=D1=8C=D0=BF=D0=B0=D0=BD=D0=BE=D0=B2 =D0=9A=D1=91=
+=D0=BA=D0=B5=D0=BD=D1=85=D0=BE=D1=84=D0=B0, =D0=B2=D0=BE=D0=B4=D0=BD=D1=8B=
+=D0=B5 =D0=BA=D0=B0=D0=BD=D0=B0=D0=BB=D1=8B, =D1=80=D0=B0=D0=B7=D0=BD=D0=BE=
+=D1=86=D0=B2=D0=B5=D1=82=D0=BD=D1=8B=D0=B5 =D1=83=D0=B7=D0=BA=D0=B8=D0=B5 =
+=D0=B4=D0=BE=D0=BC=D0=B8=D0=BA=D0=B8 =D0=B8 =D0=B2=D0=B5=D1=81=D0=B5=D0=BB=
+=D1=8B=D0=B5 =D0=B3=D1=83=D0=B4=D0=BA=D0=B8 =D0=B2=D0=B5=D0=BB=D0=BE=D1=81=
+=D0=B8=D0=BF=D0=B5=D0=B4=D0=BD=D1=8B=D1=85 =D0=BA=D0=BB=D0=B0=D0=BA=D1=81=
+=D0=BE=D0=BD=D0=BE=D0=B2 =E2=80=93 =D0=BF=D1=83=D1=81=D1=82=D1=8C =D0=92=D0=
+=B0=D1=88=D0=B0 =D0=B2=D0=B5=D1=81=D0=BD=D0=B0 =D1=81=D1=82=D0=B0=D0=BD=D0=
+=B5=D1=82 =D0=B5=D1=89=D0=B5 =D1=8F=D1=80=D1=87=D0=B5 =D1=81 LightAward!</p=
+>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div align=3D"center" class=3D"wrapper very-light-bg" style=3D"margin: auto=
+; background-color: #ffffff">
+	<table align=3D"center" bgcolor=3D"white" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"table col-md-12 white-bg" style=3D"border-left-width: 0px; fon=
+t-family: Arial; border-right-width: 0px; width: 640px; border-bottom-width=
+: 0px; margin: 0px auto; border-spacing: 0; border-top-width: 0px; backgrou=
+nd-color: white">
+		<tbody style=3D"margin: 0px">
+			<tr style=3D"margin: 0px">
+				<td class=3D"col-md-8" style=3D"width: 400px; margin: 0px" width=3D"400=
+">
+					<div height=3D"1" style=3D"height: 1px">
+						&nbsp;</div>
+				</td>
+				<td align=3D"right" class=3D"col-md-4" style=3D"width: 240px; text-alig=
+n: right; margin: 0px" width=3D"240">
+					<a class=3D"text-primary line-height" href=3D"http://www.aeroflot.ru/c=
+ms/special_offers/lightaward/" style=3D"font-size: 13px; text-decoration: n=
+one; font-weight: 400; color: #d92235; text-align: right; margin: 0px 2px 0=
+px 0px; line-height: 50px" target=3D"_blank">=D0=9F=D0=BE=D1=81=D0=BC=D0=BE=
+=D1=82=D1=80=D0=B5=D1=82=D1=8C =D0=B2=D1=81=D0=B5 =D0=BF=D1=80=D0=B5=D0=B4=
+=D0=BB=D0=BE=D0=B6=D0=B5=D0=BD=D0=B8=D1=8F</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<table align=3D"center" bgcolor=3D"white" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"table col-md-12 white-bg" style=3D"border-left-width: 0px; fon=
+t-family: Arial; border-right-width: 0px; width: 640px; border-bottom-width=
+: 0px; margin: 0px auto; border-spacing: 0; border-top-width: 0px; backgrou=
+nd-color: white" width=3D"640">
+		<tbody style=3D"margin: 0px">
+			<tr>
+				<td style=3D"border-left-width: 0px; border-right-width: 0px; width: 20=
+0px; border-bottom-width: 0px; border-top-width: 0px" valign=3D"top" width=
+=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" target=3D"_blank" width=
+=3D"200"><img alt=3D"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=90=
+=D0=BC=D1=81=D1=82=D0=B5=D1=80=D0=B4=D0=B0=D0=BC" border=3D"0" height=3D"15=
+0" src=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_ma=
+iler_march_02.jpg" style=3D"display: block" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>18 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>25 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"25" style=3D"height: 25px">
+						&nbsp;</div>
+				</td>
+				<td align=3D"left" style=3D"border-left-width: 0px; border-right-width:=
+ 0px; width: 200px; border-bottom-width: 0px; padding-bottom: 0px; text-ali=
+gn: left; padding-top: 0px; padding-left: 20px; margin: 0px; padding-right:=
+ 20px; border-top-width: 0px" valign=3D"top" width=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" width=3D"200"><img alt=3D=
+"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=94=D0=B5=D0=BB=D0=B8" b=
+order=3D"0" height=3D"150" src=3D"http://image.sendsay.ru/image/afl/dab_lig=
+htaward_201603/img_ab_mailer_march_03.jpg" style=3D"display: block" target=
+=3D"_blank" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>40 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>60 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"25" style=3D"height: 25px">
+						&nbsp;</div>
+				</td>
+				<td style=3D"border-left-width: 0px; border-right-width: 0px; width: 20=
+0px; border-bottom-width: 0px; border-top-width: 0px" valign=3D"top" width=
+=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" target=3D"_blank" width=
+=3D"200"><img alt=3D"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=A5=
+=D0=B0=D0=BD=D0=BE=D0=B9" border=3D"0" height=3D"150" src=3D"http://image.s=
+endsay.ru/image/afl/dab_lightaward_201603/img_ab_mailer_march_04.jpg" style=
+=3D"display: block" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>40 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>60 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"25" style=3D"height: 25px">
+						&nbsp;</div>
+				</td>
+			</tr>
+			<tr>
+				<td style=3D"border-left-width: 0px; border-right-width: 0px; width: 20=
+0px; border-bottom-width: 0px; margin: 0px; border-top-width: 0px" valign=
+=3D"top" width=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" target=3D"_blank" width=
+=3D"200"><img alt=3D"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=91=
+=D1=80=D1=8E=D1=81=D1=81=D0=B5=D0=BB=D1=8C" border=3D"0" height=3D"150" src=
+=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_mailer_m=
+arch_05.jpg" style=3D"display: block" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>18 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>25 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"15" style=3D"height: 15px">
+						&nbsp;</div>
+				</td>
+				<td style=3D"border-left-width: 0px; border-right-width: 0px; width: 20=
+0px; border-bottom-width: 0px; padding-bottom: 0px; padding-top: 0px; paddi=
+ng-left: 20px; margin: 0px; padding-right: 20px; border-top-width: 0px" val=
+ign=3D"top" width=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" target=3D"_blank" width=
+=3D"200"><img alt=3D"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=91=
+=D0=B0=D0=BA=D1=83" border=3D"0" height=3D"150" src=3D"http://image.sendsay=
+.ru/image/afl/dab_lightaward_201603/img_ab_mailer_march_06.jpg" style=3D"di=
+splay: block" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>15 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>20 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"5" style=3D"height: 5px">
+						&nbsp;</div>
+				</td>
+				<td style=3D"border-left-width: 0px; border-right-width: 0px; width: 20=
+0px; border-bottom-width: 0px; margin: 0px; border-top-width: 0px" valign=
+=3D"top" width=3D"200">
+					<div bgcolor=3D"#A1998C" height=3D"150" style=3D"height: 150px; width:=
+ 200px; background-color: #a1998c" width=3D"200">
+						<a border=3D"0" height=3D"150" href=3D"http://www.aeroflot.ru/cms/spe=
+cial_offers/lightaward/" style=3D"display: block" target=3D"_blank" width=
+=3D"200"><img alt=3D"=D0=9C=D0=BE=D1=81=D0=BA=D0=B2=D0=B0 =E2=80=94 =D0=91=
+=D0=B0=D1=80=D0=BD=D0=B0=D1=83=D0=BB" border=3D"0" height=3D"150" src=3D"ht=
+tp://image.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_mailer_march_0=
+7.jpg" style=3D"display: block" width=3D"200" /> </a></div>
+					<div bgcolor=3D"#d92236" height=3D"32" style=3D"height: 32px; width: 2=
+00px; background: #d92236" width=3D"200">
+						<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-left-width: 1px; font-family: Arial; border-right-width: 1px; width:=
+ 200px; border-bottom-width: 1px; margin: auto; border-spacing: 0; border-t=
+op-width: 1px">
+							<tbody>
+								<tr>
+									<td align=3D"left" bgcolor=3D"#d92236" height=3D"30" style=3D"heig=
+ht: 30px; width: 100px; vertical-align: middle; background: #d92236; color:=
+ #fff; padding-left: 5px" valign=3D"middle" width=3D"100">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+>20 000</font> <font color=3D"#ffffff" style=3D"font-size: 12px; color: #ff=
+ffff">=D0=BC=D0=B8=D0=BB=D1=8C</font></td>
+									<td align=3D"right" bgcolor=3D"#d92236" height=3D"30" style=3D"fon=
+t-size: 15px; height: 30px; width: 100px; vertical-align: middle; backgroun=
+d: #d92236; color: #fff; padding-right: 5px" valign=3D"middle" width=3D"100=
+">
+										<font color=3D"#ffffff" style=3D"font-size: 15px; color: #ffffff"=
+><strike>30 000</strike></font> <font color=3D"#ffffff" style=3D"font-size:=
+ 12px; color: #ffffff"><strike>=D0=BC=D0=B8=D0=BB=D1=8C</strike></font></td=
+>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div height=3D"5" style=3D"height: 5px">
+						&nbsp;</div>
+				</td>
+			</tr>
+			<tr style=3D"margin: 0px">
+				<td class=3D"col-md-12" colspan=3D"3" style=3D"margin: 0px" valign=3D"t=
+op">
+					<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 400; co=
+lor: #6f6f6f; margin: 0px 2px 3px 3px; line-height: 1.13">
+						=D0=9F=D0=B5=D1=80=D0=B8=D0=BE=D0=B4 =D0=BE=D1=84=D0=BE=D1=80=D0=BC=
+=D0=BB=D0=B5=D0=BD=D0=B8=D1=8F =D0=B1=D0=B8=D0=BB=D0=B5=D1=82=D0=BE=D0=B2 =
+=D0=BF=D0=BE =D1=81=D0=BF=D0=B5=D1=86=D0=B8=D0=B0=D0=BB=D1=8C=D0=BD=D1=8B=
+=D0=BC =D1=82=D0=B0=D1=80=D0=B8=D1=84=D0=B0=D0=BC: 15.03.2016 (=D1=81 00:00=
+ =D0=BF=D0=BE =D0=BC=D0=BE=D1=81=D0=BA=D0=BE=D0=B2=D1=81=D0=BA=D0=BE=D0=BC=
+=D1=83 =D0=B2=D1=80=D0=B5=D0=BC=D0=B5=D0=BD=D0=B8) =E2=80=93 19.03.2016 (=
+=D0=B4=D0=BE 23:59 =D0=BF=D0=BE =D0=BC=D0=BE=D1=81=D0=BA=D0=BE=D0=B2=D1=81=
+=D0=BA=D0=BE=D0=BC=D1=83 =D0=B2=D1=80=D0=B5=D0=BC=D0=B5=D0=BD=D0=B8). =D0=
+=9F=D0=B5=D1=80=D0=B8=D0=BE=D0=B4 =D0=BF=D0=B5=D1=80=D0=B5=D0=B2=D0=BE=D0=
+=B7=D0=BA=D0=B8 =D0=B2 =D1=80=D0=B0=D0=BC=D0=BA=D0=B0=D1=85 =D0=B4=D0=B5=D0=
+=B9=D1=81=D1=82=D0=B2=D0=B8=D1=8F =D0=B4=D0=B0=D0=BD=D0=BD=D0=BE=D0=B3=D0=
+=BE =D0=BF=D1=80=D0=B5=D0=B4=D0=BB=D0=BE=D0=B6=D0=B5=D0=BD=D0=B8=D1=8F: 15.=
+04.2016<span class=3D"plain-text" style=3D"font-size: 12px; font-weight: 40=
+0; color: #6f6f6f; margin: 0px 2px 3px 3px; line-height: 1.13">=E2=80=93</s=
+pan>15.07.2016. =D0=9E=D1=84=D0=BE=D1=80=D0=BC=D0=BB=D0=B5=D0=BD=D0=B8=D0=
+=B5 =D0=B0=D0=B2=D0=B8=D0=B0=D0=B1=D0=B8=D0=BB=D0=B5=D1=82=D0=BE=D0=B2 =D0=
+=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=BE =D1=82=D0=BE=D0=BB=D1=8C=D0=
+=BA=D0=BE =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=B5 =D0=9F=D0=90=D0=9E&nb=
+sp;=C2=AB=D0=90=D1=8D=D1=80=D0=BE=D1=84=D0=BB=D0=BE=D1=82=C2=BB. =D0=94=D0=
+=B5=D0=B9=D1=81=D1=82=D0=B2=D1=83=D1=8E=D1=82 =D0=BE=D0=B3=D1=80=D0=B0=D0=
+=BD=D0=B8=D1=87=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D0=BE =D0=BA=D0=BE=D0=BB=D0=
+=B8=D1=87=D0=B5=D1=81=D1=82=D0=B2=D1=83 =D0=BC=D0=B5=D1=81=D1=82 =D0=BF=D0=
+=BE =D1=81=D0=BF=D0=B5=D1=86=D0=B8=D0=B0=D0=BB=D1=8C=D0=BD=D1=8B=D0=BC =D1=
+=82=D0=B0=D1=80=D0=B8=D1=84=D0=B0=D0=BC, =D1=80=D0=B5=D0=B9=D1=81=D0=B0=D0=
+=BC =D0=B8 =D0=B4=D0=B0=D1=82=D0=B0=D0=BC =D0=BF=D0=B5=D1=80=D0=B5=D0=BB=D0=
+=B5=D1=82=D0=BE=D0=B2. =D0=9F=D1=80=D0=B5=D0=B4=D0=BB=D0=BE=D0=B6=D0=B5=D0=
+=BD=D0=B8=D0=B5 =D0=B4=D0=B5=D0=B9=D1=81=D1=82=D0=B2=D1=83=D0=B5=D1=82 =D1=
+=82=D0=BE=D0=BB=D1=8C=D0=BA=D0=BE =D0=B4=D0=BB=D1=8F =D0=BE=D1=84=D0=BE=D1=
+=80=D0=BC=D0=BB=D0=B5=D0=BD=D0=B8=D1=8F =D0=B1=D0=B8=D0=BB=D0=B5=D1=82=D0=
+=BE=D0=B2 =D0=BD=D0=B0 =D1=81=D0=BE=D0=B1=D1=81=D1=82=D0=B2=D0=B5=D0=BD=D0=
+=BD=D1=8B=D0=B5 =D1=80=D0=B5=D0=B3=D1=83=D0=BB=D1=8F=D1=80=D0=BD=D1=8B=D0=
+=B5 =D1=80=D0=B5=D0=B9=D1=81=D1=8B =D0=9F=D0=90=D0=9E&nbsp;=C2=AB=D0=90=D1=
+=8D=D1=80=D0=BE=D1=84=D0=BB=D0=BE=D1=82=C2=BB, =D0=B0 =D1=82=D0=B0=D0=BA=D0=
+=B6=D0=B5 =D0=B4=D0=BE=D1=87=D0=B5=D1=80=D0=BD=D0=B8=D1=85 =D0=B8 =D0=B7=D0=
+=B0=D0=B2=D0=B8=D1=81=D0=B8=D0=BC=D1=8B=D1=85 =D0=BE=D0=B1=D1=89=D0=B5=D1=
+=81=D1=82=D0=B2 =E2=80=93 =D0=B0=D0=B2=D0=B8=D0=B0=D1=86=D0=B8=D0=BE=D0=BD=
+=D0=BD=D1=8B=D1=85 =D0=BA=D0=BE=D0=BC=D0=BF=D0=B0=D0=BD=D0=B8=D0=B9 =D0=BF=
+=D0=BE=D0=B4 =D0=BA=D0=BE=D0=BC=D0=BC=D0=B5=D1=80=D1=87=D0=B5=D1=81=D0=BA=
+=D0=B8=D0=BC =D1=83=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=D0=B5=
+=D0=BC =D0=9F=D0=90=D0=9E&nbsp;=C2=AB=D0=90=D1=8D=D1=80=D0=BE=D1=84=D0=BB=
+=D0=BE=D1=82=C2=BB. =D0=91=D0=B8=D0=BB=D0=B5=D1=82=D1=8B, =D0=BE=D1=84=D0=
+=BE=D1=80=D0=BC=D0=BB=D0=B5=D0=BD=D0=BD=D1=8B=D0=B5 =D0=B2 =D1=80=D0=B0=D0=
+=BC=D0=BA=D0=B0=D1=85 =D1=81=D0=BF=D0=B5=D1=86=D0=B8=D0=B0=D0=BB=D1=8C=D0=
+=BD=D0=BE=D0=B9 =D0=B0=D0=BA=D1=86=D0=B8=D0=B8, =D0=BD=D0=B5 =D0=BF=D0=BE=
+=D0=B4=D0=BB=D0=B5=D0=B6=D0=B0=D1=82 =D0=B2=D0=BE=D0=B7=D0=B2=D1=80=D0=B0=
+=D1=82=D1=83. =D0=91=D0=BE=D0=BB=D0=B5=D0=B5 =D0=BF=D0=BE=D0=B4=D1=80=D0=BE=
+=D0=B1=D0=BD=D1=83=D1=8E =D0=B8=D0=BD=D1=84=D0=BE=D1=80=D0=BC=D0=B0=D1=86=
+=D0=B8=D1=8E =D0=92=D1=8B =D0=BC=D0=BE=D0=B6=D0=B5=D1=82=D0=B5 =D0=BD=D0=B0=
+=D0=B9=D1=82=D0=B8 =D0=BD=D0=B0 =D1=81=D0=B0=D0=B9=D1=82=D0=B5 <a href=3D"h=
+ttp://www.aeroflot.ru/cms/ru/">www.aeroflot.ru</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td style=3D"margin: 0px">
+					&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div align=3D"center" class=3D"wrapper very-light-bg" style=3D"margin: auto=
+; background-color: #ffffff">
+	<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"table=
+ col-md-12" style=3D"border-left-width: 0px; height: 220px; font-family: Ar=
+ial; border-right-width: 0px; width: 640px; border-bottom-width: 0px; margi=
+n: 0px auto; border-spacing: 0; border-top-width: 0px">
+		<tbody style=3D"margin: 0px">
+			<tr>
+				<td style=3D"margin: 0px">
+					<div height=3D"25" style=3D"height: 25px">
+						&nbsp;</div>
+				</td>
+			</tr>
+			<tr style=3D"margin: 0px">
+				<td class=3D"col-md-12" colspan=3D"3" style=3D"height: 14px; width: 640=
+px; margin: 0px" valign=3D"top">
+					<h2 align=3D"left" class=3D"h2 h2-modified add-margin txt-align-r" sty=
+le=3D"font-size: 16px; text-transform: uppercase; font-weight: 700; color: =
+#003e7e; text-align: left; margin: 5px 0px 5px 5px; line-height: 25px">
+						=D0=9D=D0=9E=D0=92=D0=9E=D0=A1=D0=A2=D0=98 =D0=9F=D0=A0=D0=9E=D0=93=
+=D0=A0=D0=90=D0=9C=D0=9C=D0=AB</h2>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=3D"3" height=3D"31" style=3D"margin: 0px">
+					<div height=3D"28" style=3D"height: 28px">
+						&nbsp;</div>
+				</td>
+			</tr>
+			<tr class=3D"news-inline-block" style=3D"vertical-align: top; margin: 0p=
+x 0px 20px">
+				<td class=3D"col-md-4" style=3D"width: 200px; margin: 0px" valign=3D"to=
+p">
+					<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_new=
+s_item/59593" style=3D"text-decoration: none; margin: 0px" target=3D"_blank=
+"><img alt=3D"=D0=9D=D0=BE=D0=B2=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D1=82=D0=BD=
+=D1=91=D1=80 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B =E2=80=
+=93 =D0=BE=D1=82=D0=B5=D0=BB=D1=8C =D0=9C=D0=B5=D1=82=D1=80=D0=BE=D0=BF=D0=
+=BE=D0=BB=D1=8C" border=3D"0" class=3D"img" height=3D"130" src=3D"http://im=
+age.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_mailer_march_08.jpg" =
+style=3D"height: 130px; width: 200px; margin: 1px 0px 20px; display: block"=
+ width=3D"200" /></a></td>
+				<td class=3D"col-md-8" colspan=3D"2" style=3D"width: 420px; margin: 0px=
+" valign=3D"top">
+					<div class=3D"box" style=3D"margin: 0px 0px 0px 20px">
+						<div class=3D"h3" style=3D"font-size: 17px; font-weight: 700; color: =
+black; margin: 0px; line-height: 17px">
+							=D0=9D=D0=BE=D0=B2=D1=8B=D0=B9 =D0=BF=D0=B0=D1=80=D1=82=D0=BD=D0=B5=
+=D1=80 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B =E2=80=93 =D0=
+=BE=D1=82=D0=B5=D0=BB=D1=8C =C2=AB=D0=9C=D0=B5=D1=82=D1=80=D0=BE=D0=BF=D0=
+=BE=D0=BB=D1=8C=C2=BB</div>
+						<div height=3D"13" style=3D"height: 13px">
+							&nbsp;</div>
+						<div class=3D"plain-text" style=3D"font-size: 14px; font-weight: 400;=
+ margin: 0px 2px 3px 0px; line-height: 1.23">
+							=D0=9E=D1=81=D1=82=D0=B0=D0=BD=D0=B0=D0=B2=D0=BB=D0=B8=D0=B2=D0=B0=
+=D0=B9=D1=82=D0=B5=D1=81=D1=8C =D0=B2 =D0=BB=D0=B5=D0=B3=D0=B5=D0=BD=D0=B4=
+=D0=B0=D1=80=D0=BD=D0=BE=D0=BC =D0=BE=D1=82=D0=B5=D0=BB=D0=B5 =C2=AB=D0=9C=
+=D0=B5=D1=82=D1=80=D0=BE=D0=BF=D0=BE=D0=BB=D1=8C=C2=BB<br />
+							=D0=B8 =D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B0=D0=B9=D1=82=D0=B5 1 =D0=
+=BC=D0=B8=D0=BB=D1=8E =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=
+=8B =C2=AB=D0=90=D1=8D=D1=80=D0=BE=D1=84=D0=BB=D0=BE=D1=82 =D0=91=D0=BE=D0=
+=BD=D1=83=D1=81=C2=BB =D0=B7=D0=B0 =D0=BA=D0=B0=D0=B6=D0=B4=D1=8B=D0=B5 30 =
+=D1=80=D1=83=D0=B1=D0=BB=D0=B5=D0=B9, =D0=BF=D0=BE=D1=82=D1=80=D0=B0=D1=87=
+=D0=B5=D0=BD=D0=BD=D1=8B=D0=B5 =D0=BD=D0=B0 =D0=BF=D1=80=D0=BE=D0=B6=D0=B8=
+=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5, =D0=B0 =D1=82=D0=B0=D0=BA=D0=B6=D0=B5 =D0=
+=BD=D0=B0 =D1=83=D1=81=D0=BB=D1=83=D0=B3=D0=B8 =D0=B1=D0=B0=D1=80=D0=B0 =D0=
+=B8 =D1=80=D0=B5=D1=81=D1=82=D0=BE=D1=80=D0=B0=D0=BD=D0=B0 =D0=BE=D1=82=D0=
+=B5=D0=BB=D1=8F.</div>
+						<div class=3D"btn btn-secondary" style=3D"font-size: 11px; text-decor=
+ation: none; text-transform: uppercase; font-weight: 700; color: white; mar=
+gin: 15px 0px">
+							<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_n=
+ews_item/59593" style=3D"text-decoration: none; margin: 0px" target=3D"_bla=
+nk"><img alt=3D"=D0=9F=D0=BE=D0=B4=D1=80=D0=BE=D0=B1=D0=BD=D0=B5=D0=B5" src=
+=3D"http://image.sendsay.ru/image/afl/dab/APRIL15_Newsletter/btn_default.pn=
+g" style=3D"border-left-width: 0px; border-right-width: 0px; border-bottom-=
+width: 0px; margin: 0px; border-top-width: 0px" /> </a></div>
+					</div>
+				</td>
+			</tr>
+			<tr class=3D"news-inline-block" style=3D"vertical-align: top; margin: 0p=
+x 0px 20px">
+				<td class=3D"col-md-4" style=3D"width: 200px; margin: 0px" valign=3D"to=
+p">
+					<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_new=
+s_item/59011" style=3D"text-decoration: none; margin: 0px" target=3D"_blank=
+"><img alt=3D"=D0=94=D0=B2=D0=BE=D0=B9=D0=BD=D1=8B=D0=B5 =D0=BC=D0=B8=D0=BB=
+=D0=B8 =D0=BE=D1=82 Park Inn by Radisson" border=3D"0" class=3D"img" height=
+=3D"130" src=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/img=
+_ab_mailer_march_09.jpg" style=3D"height: 130px; width: 200px; margin: 1px =
+0px 20px; display: block" width=3D"200" /></a></td>
+				<td class=3D"col-md-8" colspan=3D"2" style=3D"width: 420px; margin: 0px=
+" valign=3D"top">
+					<div class=3D"box" style=3D"margin: 0px 0px 0px 20px">
+						<div class=3D"h3" style=3D"font-size: 17px; font-weight: 700; color: =
+black; margin: 0px; line-height: 17px">
+							=D0=94=D0=B2=D0=BE=D0=B9=D0=BD=D1=8B=D0=B5 =D0=BC=D0=B8=D0=BB=D0=B8 =
+=D0=BE=D1=82 Park Inn by Radisson</div>
+						<div height=3D"13" style=3D"height: 13px">
+							&nbsp;</div>
+						<div class=3D"plain-text" style=3D"font-size: 14px; font-weight: 400;=
+ margin: 0px 2px 3px 0px; line-height: 1.23">
+							=D0=9E=D1=81=D1=82=D0=B0=D0=BD=D0=B0=D0=B2=D0=BB=D0=B8=D0=B2=D0=B0=
+=D0=B9=D1=82=D0=B5=D1=81=D1=8C =D0=B2 =D0=BE=D1=82=D0=B5=D0=BB=D1=8F=D1=85 =
+Park Inn by Radisson, =D1=83=D1=87=D0=B0=D1=81=D1=82=D0=B2=D1=83=D1=8E=D1=
+=89=D0=B8=D1=85 =D0=B2 =D0=B0=D0=BA=D1=86=D0=B8=D0=B8, =D0=B4=D0=BE 30.04.2=
+016 =D0=B8 =D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B0=D0=B9=D1=82=D0=B5 =D0=B4=D0=
+=B2=D0=BE=D0=B9=D0=BD=D1=8B=D0=B5 =D0=BC=D0=B8=D0=BB=D0=B8 =D0=B7=D0=B0&nbs=
+p;=D0=BF=D1=80=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5.</div>
+						<div class=3D"btn btn-secondary" style=3D"font-size: 11px; text-decor=
+ation: none; text-transform: uppercase; font-weight: 700; color: white; mar=
+gin: 15px 0px">
+							<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_n=
+ews_item/59011" style=3D"text-decoration: none; margin: 0px" target=3D"_bla=
+nk"><img alt=3D"=D0=9F=D0=BE=D0=B4=D1=80=D0=BE=D0=B1=D0=BD=D0=B5=D0=B5" src=
+=3D"http://image.sendsay.ru/image/afl/dab/APRIL15_Newsletter/btn_default.pn=
+g" style=3D"border-left-width: 0px; border-right-width: 0px; border-bottom-=
+width: 0px; margin: 0px; border-top-width: 0px" /> </a></div>
+					</div>
+				</td>
+			</tr>
+			<tr class=3D"news-inline-block" style=3D"vertical-align: top; margin: 0p=
+x 0px 20px">
+				<td class=3D"col-md-4" style=3D"width: 200px; margin: 0px" valign=3D"to=
+p">
+					<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_new=
+s_item/59165" style=3D"text-decoration: none; margin: 0px" target=3D"_blank=
+"><img alt=3D"=C2=AB=D0=A0=D0=BE=D0=B7=D0=B0 =D0=A5=D1=83=D1=82=D0=BE=D1=80=
+=C2=BB: =D0=B4=D0=B2=D0=BE=D0=B9=D0=BD=D1=8B=D0=B5 =D0=BC=D0=B8=D0=BB=D0=B8=
+ =D0=B7=D0=B0 =D0=BF=D1=80=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =
+=D0=B2 =D0=B0=D0=BF=D1=80=D0=B5=D0=BB=D0=B5" border=3D"0" class=3D"img" hei=
+ght=3D"130" src=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/=
+img_ab_mailer_march_010.jpg" style=3D"height: 130px; width: 200px; margin: =
+1px 0px 20px; display: block" width=3D"200" /></a></td>
+				<td class=3D"col-md-8" colspan=3D"2" style=3D"width: 420px; margin: 0px=
+" valign=3D"top">
+					<div class=3D"box" style=3D"margin: 0px 0px 0px 20px">
+						<div class=3D"h3" style=3D"font-size: 17px; font-weight: 700; color: =
+black; margin: 0px; line-height: 17px">
+							=C2=AB=D0=A0=D0=BE=D0=B7=D0=B0 =D0=A5=D1=83=D1=82=D0=BE=D1=80=C2=BB:=
+ =D0=B4=D0=B2=D0=BE=D0=B9=D0=BD=D1=8B=D0=B5 =D0=BC=D0=B8=D0=BB=D0=B8 =D0=B7=
+=D0=B0 =D0=BF=D1=80=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5<br />
+							=D0=B2 =D0=B0=D0=BF=D1=80=D0=B5=D0=BB=D0=B5</div>
+						<div height=3D"13" style=3D"height: 13px">
+							&nbsp;</div>
+						<div class=3D"plain-text" style=3D"font-size: 14px; font-weight: 400;=
+ margin: 0px 2px 3px 0px; line-height: 1.23">
+							=D0=91=D1=80=D0=BE=D0=BD=D0=B8=D1=80=D1=83=D0=B9=D1=82=D0=B5 =D0=BF=
+=D1=80=D0=BE=D0=B6=D0=B8=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B0 =D0=B0=
+=D0=BF=D1=80=D0=B5=D0=BB=D1=8C =D0=B2 =D0=BB=D1=8E=D0=B1=D0=BE=D0=BC =D0=BE=
+=D1=82=D0=B5=D0=BB=D0=B5 =D0=BA=D1=83=D1=80=D0=BE=D1=80=D1=82=D0=B0 =C2=AB=
+=D0=A0=D0=BE=D0=B7=D0=B0 =D0=A5=D1=83=D1=82=D0=BE=D1=80=C2=BB =D1=87=D0=B5=
+=D1=80=D0=B5=D0=B7 =D0=BE=D0=BD=D0=BB=D0=B0=D0=B9=D0=BD-=D0=BC=D0=B0=D0=B3=
+=D0=B0=D0=B7=D0=B8=D0=BD =D0=B8 =D0=BA=D0=BE=D0=BF=D0=B8=D1=82=D0=B5 =D0=B2=
+ =D0=B4=D0=B2=D0=B0 =D1=80=D0=B0=D0=B7=D0=B0 =D0=B1=D0=BE=D0=BB=D1=8C=D1=88=
+=D0=B5 =D0=BC=D0=B8=D0=BB=D1=8C.</div>
+						<div class=3D"btn btn-secondary" style=3D"font-size: 11px; text-decor=
+ation: none; text-transform: uppercase; font-weight: 700; color: white; mar=
+gin: 15px 0px">
+							<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bonus_n=
+ews_item/59165" style=3D"text-decoration: none; margin: 0px" target=3D"_bla=
+nk"><img alt=3D"=D0=9F=D0=BE=D0=B4=D1=80=D0=BE=D0=B1=D0=BD=D0=B5=D0=B5" src=
+=3D"http://image.sendsay.ru/image/afl/dab/APRIL15_Newsletter/btn_default.pn=
+g" style=3D"border-left-width: 0px; border-right-width: 0px; border-bottom-=
+width: 0px; margin: 0px; border-top-width: 0px" /> </a></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div height=3D"25" style=3D"height: 25px; line-height: 25px">
+						&nbsp;</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div align=3D"center" class=3D"wrapper very-light-gray-bg" style=3D"margin:=
+ auto; background-color: #e2f4fe">
+	<table align=3D"center" bgcolor=3D"#eaf4fd" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"table col-md-12" style=3D"border-left-width: 0px; font-fami=
+ly: Arial; border-right-width: 0px; width: 640px; background: #e2f4fe; bord=
+er-bottom-width: 0px; margin: 0px auto; border-spacing: 0; border-top-width=
+: 0px" width=3D"640">
+		<tbody style=3D"margin: 0px">
+			<tr>
+				<td align=3D"center">
+					<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" style=3D"b=
+order-left-width: 0px; font-family: Arial; border-right-width: 0px; width: =
+640px; border-bottom-width: 0px; margin: 0px auto; border-spacing: 0; borde=
+r-top-width: 0px">
+						<tbody>
+							<tr>
+								<td width=3D"290">
+									<img alt=3D"=D0=A3 =D0=BD=D0=B0=D1=81 =D0=BF=D0=B5=D1=80=D0=B5=D1=
+=80=D1=8B=D0=B2 =D0=BD=D0=B0 =D0=BF=D0=BB=D0=B0=D0=BD=D0=BE=D0=B2=D1=8B=D0=
+=B5 =D1=82=D0=B5=D1=85=D0=BD=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8=D0=B5 =D1=
+=80=D0=B0=D0=B1=D0=BE=D1=82=D1=8B" border=3D"0" class=3D"img" height=3D"260=
+" src=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/img_ab_mai=
+ler_march_012.jpg" style=3D"height: 260px; width: 326px; margin: 1px 0px 0p=
+x; display: block" width=3D"326" /></td>
+								<td width=3D"435">
+									<div class=3D"box" style=3D"margin: 20px 0px 30px 15px">
+										<div class=3D"h3" style=3D"font-size: 16px; font-weight: 700; col=
+or: #02458d; margin: 0px; line-height: 22px">
+											=D0=9E=D0=91=D0=9D=D0=9E=D0=92=D0=9B=D0=95=D0=9D=D0=98=D0=95 =D0=
+=9F=D0=9B=D0=90=D0=A2=D0=A4=D0=9E=D0=A0=D0=9C=D0=AB =D0=9F=D0=A0=D0=9E=D0=
+=93=D0=A0=D0=90=D0=9C=D0=9C=D0=AB =C2=AB=D0=90=D0=AD=D0=A0=D0=9E=D0=A4=D0=
+=9B=D0=9E=D0=A2&nbsp;=D0=91=D0=9E=D0=9D=D0=A3=D0=A1=C2=BB</div>
+										<div class=3D"plain-text" style=3D"font-size: 13px; font-weight: =
+400; color: #02458d; margin: 10px 2px 3px 0px; line-height: 1.23">
+											=D0=9D=D0=B0=D0=BF=D0=BE=D0=BC=D0=B8=D0=BD=D0=B0=D0=B5=D0=BC, =
+=D1=87=D1=82=D0=BE =D0=B2 =D0=BF=D0=B5=D1=80=D0=B8=D0=BE=D0=B4 <strong>=D1=
+=81 20 =D0=BF=D0=BE 29 =D0=BC=D0=B0=D1=80=D1=82=D0=B0 2016 =D0=B3=D0=BE=D0=
+=B4=D0=B0</strong> =D0=B2 =D1=81=D0=B2=D1=8F=D0=B7=D0=B8 =D1=81 =D1=82=D0=
+=B5=D1=85=D0=BD=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8=D0=BC =D0=BE=D0=B1=D0=
+=BD=D0=BE=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC =D0=BF=D0=BB=D0=B0=D1=
+=82=D1=84=D0=BE=D1=80=D0=BC=D1=8B =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=
+=BC=D0=BC=D1=8B =C2=AB=D0=90=D1=8D=D1=80=D0=BE=D1=84=D0=BB=D0=BE=D1=82&nbsp=
+;=D0=91=D0=BE=D0=BD=D1=83=D1=81=C2=BB =D0=BD=D0=B5=D0=BA=D0=BE=D1=82=D0=BE=
+=D1=80=D1=8B=D0=B5 =D1=81=D0=B5=D1=80=D0=B2=D0=B8=D1=81=D1=8B =D0=B1=D1=83=
+=D0=B4=D1=83=D1=82 =D0=B2=D1=80=D0=B5=D0=BC=D0=B5=D0=BD=D0=BD=D0=BE =D0=BD=
+=D0=B5=D0=B4=D0=BE=D1=81=D1=82=D1=83=D0=BF=D0=BD=D1=8B.</div>
+										<div class=3D"btn btn-secondary" style=3D"font-size: 11px; text-d=
+ecoration: none; text-transform: uppercase; font-weight: 700; color: white;=
+ margin: 15px 0px">
+											<a class=3D"no-underline" href=3D"http://www.aeroflot.ru/cms/bon=
+us_news_item/58839" style=3D"text-decoration: none; margin: 0px" target=3D"=
+_blank"><img alt=3D"=D0=9F=D0=BE=D0=B4=D1=80=D0=BE=D0=B1=D0=BD=D0=B5=D0=B5"=
+ src=3D"http://image.sendsay.ru/image/afl/dab_lightaward_201603/btn_readmor=
+e_ru.png" style=3D"border-left-width: 0px; border-right-width: 0px; border-=
+bottom-width: 0px; margin: 0px; border-top-width: 0px" /> </a></div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div height=3D"25" style=3D"height: 25px; line-height: 25px">
+	&nbsp;</div>
+<div bgcolor=3D"#f2f2f2" class=3D"wrapper very-light-gray-bg" style=3D"back=
+ground: #f2f2f2; margin: 0px">
+	<table align=3D"center" bgcolor=3D"#f2f2f2" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"table col-md-12" style=3D"border-left-width: 0px; font-fami=
+ly: Arial; border-right-width: 0px; width: 640px; background: #f2f2f2; bord=
+er-bottom-width: 0px; margin: 0px auto; border-spacing: 0; border-top-width=
+: 0px">
+		<tbody style=3D"margin: 0px">
+			<tr>
+				<td colspan=3D"2">
+					<div height=3D"39" style=3D"height: 39px; line-height: 39px">
+						<img alt=3D"" border=3D"0" src=3D"http://image.sendsay.ru/image/afl/d=
+ab_exp_201510/emp_640x1.png" style=3D"height: 1px; display: block" /></div>
+				</td>
+			</tr>
+			<tr style=3D"margin: 0px">
+				<td class=3D"col-md-6" style=3D"width: 320px; margin: 0px">
+					<p class=3D"h2 h2-modified add-margin txt-align-r" style=3D"font-size:=
+ 18px; text-transform: uppercase; font-weight: 700; color: #003e7e; text-al=
+ign: right; margin: 0px">
+						=D0=9C=D0=AB =D0=92 =D0=A1=D0=9E=D0=A6=D0=98=D0=90=D0=9B=D0=AC=D0=9D=
+=D0=AB=D0=A5 =D0=A1=D0=95=D0=A2=D0=AF=D0=A5</p>
+				</td>
+				<td class=3D"col-md-6" style=3D"width: 320px; margin: 0px">
+					<table cellpadding=3D"0" cellspacing=3D"0" style=3D"width: 185px; marg=
+in-left: 66px">
+						<tbody>
+							<tr>
+								<td style=3D"padding-bottom: 0px; padding-top: 0px; padding-left: 0=
+px; margin: 0px; padding-right: 0px">
+									<a href=3D"http://www.facebook.com/aeroflot" style=3D"display: blo=
+ck" target=3D"_blank"><img alt=3D"Facebook" border=3D"0" src=3D"http://imag=
+e.sendsay.ru/image/afl/dab_burn_15122014/icon_fb.jpg" style=3D"height: 25px=
+; width: 26px; display: block" /> </a></td>
+								<td style=3D"padding-bottom: 0px; padding-top: 0px; padding-left: 0=
+px; margin: 0px; padding-right: 0px">
+									<a href=3D"http://vk.com/aeroflot" style=3D"display: block" target=
+=3D"_blank"><img alt=3D"=D0=92=D0=9A=D0=BE=D0=BD=D1=82=D0=B0=D0=BA=D1=82=D0=
+=B5" border=3D"0" src=3D"http://image.sendsay.ru/image/afl/dab_burn_1512201=
+4/icon_vk.jpg" style=3D"height: 25px; width: 26px; display: block" /> </a><=
+/td>
+								<td style=3D"padding-bottom: 0px; padding-top: 0px; padding-left: 0=
+px; margin: 0px; padding-right: 0px">
+									<a href=3D"https://twitter.com/aeroflot" style=3D"display: block" =
+target=3D"_blank"><img alt=3D"Twitter" border=3D"0" src=3D"http://image.sen=
+dsay.ru/image/afl/dab_burn_15122014/icon_tw.jpg" style=3D"height: 25px; wid=
+th: 26px; display: block" /> </a></td>
+								<td style=3D"padding-bottom: 0px; padding-top: 0px; padding-left: 0=
+px; margin: 0px; padding-right: 0px">
+									<a href=3D"http://www.youtube.com/user/AeroflotRussia/videos" styl=
+e=3D"display: block" target=3D"_blank"><img alt=3D"YouTube" border=3D"0" sr=
+c=3D"http://image.sendsay.ru/image/afl/dab_burn_15122014/icon_you.jpg" styl=
+e=3D"height: 25px; width: 26px; display: block" /> </a></td>
+								<td style=3D"padding-bottom: 0px; padding-top: 0px; padding-left: 0=
+px; margin: 0px; padding-right: 0px">
+									<a href=3D"http://www.instagram.com/aeroflot/" style=3D"display: b=
+lock" target=3D"_blank"><img alt=3D"Instagram" border=3D"0" src=3D"http://i=
+mage.sendsay.ru/image/afl/dab_burn_15122014/icon_insta.jpg" style=3D"height=
+: 25px; width: 26px; display: block" /> </a></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=3D"2">
+					<div height=3D"33" style=3D"height: 33px; line-height: 33px">
+						&nbsp;</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div bgcolor=3D"#ffffff" class=3D"specials-white-bg" style=3D"background: #=
+ffffff; margin: 0px">
+	<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"table=
+ col-md-12" style=3D"border-left-width: 0px; font-family: Arial; border-rig=
+ht-width: 0px; width: 640px; border-bottom-width: 0px; margin: 0px auto; bo=
+rder-spacing: 0; border-top-width: 0px">
+		<tbody style=3D"margin: 0px">
+			<tr>
+				<td colspan=3D"4">
+					<div height=3D"30" style=3D"height: 30px; line-height: 30px">
+						<img alt=3D"" border=3D"0" src=3D"http://image.sendsay.ru/image/afl/d=
+ab_exp_201510/emp_640x1.png" style=3D"height: 1px; display: block" /></div>
+				</td>
+			</tr>
+			<tr style=3D"margin: 0px">
+				<td class=3D"footer-td-1" style=3D"width: 140px; margin: 0px">
+					<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 400; ma=
+rgin: 0px; line-height: 1.23">
+						+7 (495) 223-55-55</p>
+				</td>
+				<td class=3D"footer-td-2" style=3D"width: 140px; margin: 0px">
+					<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 400; ma=
+rgin: 0px; line-height: 1.23">
+						8 (800) 444-55-55</p>
+				</td>
+				<td class=3D"footer-td-3" style=3D"width: 230px; margin: 0px" width=3D"=
+230">
+					<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 400; ma=
+rgin: 0px; line-height: 1.23">
+						<a class=3D"simple-blue-text" href=3D"http://ctd.aeroflot.ru:8060/ctd=
+/unsub?RID=3D=
+1@72656975=
+&CON=3D=
+1-IG9-199=
+&PRO=3D=
+&AID=3D=
+&OID=3D1-DJO0HG&CID=3D1-G2UR3D&COID=3D1-G2UR3E&RT=3DOne+Click+Unsub&LC=3DEN=
+U" style=3D"font-size: 13px; font-weight: 400; color: #003e7e; margin: 0px"=
+ target=3D"_blank">=D0=9E=D1=82=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C=D1=81=
+=D1=8F =D0=BE=D1=82 =D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B5=D0=BD=D0=B8=D1=8F =
+=D0=BD=D0=BE=D0=B2=D0=BE=D1=81=D1=82=D0=B5=D0=B9</a></p>
+				</td>
+				<td align=3D"right" class=3D"footer-td-2" style=3D"width: 130px; margin=
+: 0px" width=3D"130">
+					<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 400; te=
+xt-align: right; margin: 0px; line-height: 1.23">
+						=C2=A9 =D0=90=D1=8D=D1=80=D0=BE=D1=84=D0=BB=D0=BE=D1=82 2016</p>
+				</td>
+			</tr>
+			<tr col=3D"" style=3D"margin: 0px">
+				<td colspan=3D"4" height=3D"15" valign=3D"middle">
+					<div height=3D"15" style=3D"height: 15px; margin-top: 20px; line-heigh=
+t: 15px">
+						<img border=3D"0" src=3D"http://image.sendsay.ru/image/afl/dab_newsle=
+tter_201602/emps_640x1.png" style=3D"height: 1px; display: block" /></div>
+					<table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"t=
+able col-md-12" style=3D"border-left-width: 0px; font-family: Arial; border=
+-right-width: 0px; width: 640px; border-bottom-width: 0px; margin: 0px auto=
+; border-spacing: 0; border-top-width: 0px">
+						<tbody style=3D"margin: 0px">
+							<tr col=3D"" style=3D"margin: 0px">
+								<td class=3D"footer-td-1" style=3D"width: 180px; margin: 0px">
+									<p class=3D"plain-text" style=3D"font-size: 12px; font-weight: 700=
+; color: #003e7e; margin: 0px; line-height: 1.23">
+										=D0=94=D0=BB=D1=8F =D0=BC=D0=BE=D0=B1=D0=B8=D0=BB=D1=8C=D0=BD=D1=
+=8B=D1=85 =D1=83=D1=81=D1=82=D1=80=D0=BE=D0=B9=D1=81=D1=82=D0=B2:</p>
+								</td>
+								<td align=3D"right" class=3D"footer-td-2" style=3D"width: 142px; ma=
+rgin: 0px">
+									<a class=3D"no-underline" href=3D"https://itunes.apple.com/app/aer=
+oflot/id580243869" style=3D"text-decoration: none; margin: 0px" target=3D"_=
+blank"><img alt=3D"=D0=94=D0=BE=D1=81=D1=82=D1=83=D0=BF=D0=BD=D0=BE =D0=B2 =
+App store" height=3D"38" src=3D"http://image.sendsay.ru/image/afl/dab_newsl=
+etter_201602/img_nl_feb_19.jpg" style=3D"border-left-width: 0px; border-rig=
+ht-width: 0px; border-bottom-width: 0px; margin: 0px; border-top-width: 0px=
+" width=3D"142" /> </a></td>
+								<td align=3D"right" class=3D"footer-td-3" style=3D"width: 142px; ma=
+rgin: 0px" width=3D"230">
+									<a class=3D"no-underline" href=3D"https://play.google.com/store/ap=
+ps/details?id=3Dru.aeroflot" style=3D"text-decoration: none; margin: 0px" t=
+arget=3D"_blank"><img alt=3D"=D0=94=D0=BE=D1=81=D1=82=D1=83=D0=BF=D0=BD=D0=
+=BE Android market" height=3D"38" src=3D"http://image.sendsay.ru/image/afl/=
+dab_newsletter_201602/img_nl_feb_20.jpg" style=3D"border-left-width: 0px; b=
+order-right-width: 0px; border-bottom-width: 0px; margin: 0px; border-top-w=
+idth: 0px" width=3D"142" /> </a></td>
+								<td align=3D"right" class=3D"footer-td-2" style=3D"width: 142px; ma=
+rgin: 0px" width=3D"130">
+									<a class=3D"no-underline" href=3D"https://www.microsoft.com/ru-ru/=
+store/apps/%D0%90%D1%8D%D1%80%D0%BE%D1%84%D0%BB%D0%BE%D1%82/9nblggh07n9l/" =
+style=3D"text-decoration: none; margin: 0px" target=3D"_blank"><img alt=3D"=
+=D0=94=D0=BE=D1=81=D1=82=D1=83=D0=BF=D0=BD=D0=BE =D0=B4=D0=BB=D1=8F Windows=
+ Phone" height=3D"38" src=3D"http://image.sendsay.ru/image/afl/dab_newslett=
+er_201602/img_nl_feb_21.jpg" style=3D"border-left-width: 0px; border-right-=
+width: 0px; border-bottom-width: 0px; margin: 0px; border-top-width: 0px" w=
+idth=3D"142" /> </a></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<p>
+	&nbsp;<img src=3D"http://ctd.aeroflot.ru:8060/ctd/tmo?RID=3D=
+1@72656975=
+" width=3D1 height=3D1></p>

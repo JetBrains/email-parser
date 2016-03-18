@@ -19,6 +19,8 @@ mainClassName = 'practice.email.executable.MailParserExampleKt'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'javax.mail:mail:1.4.7'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.jetbrains.spek:spek:0.1.195'
 }
@@ -39,7 +41,7 @@ task wrapper(type: Wrapper) {
 run {
     standardInput = System.in
 
-//    if (project.hasProperty('N')) {
-//        args N.split(' ')
-//    }
+    if (project.hasProperty('emlFile')) {
+        args emlFile.split('xyz')
+    }
 }

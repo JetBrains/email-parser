@@ -1,0 +1,90 @@
+Received: from smtp1o.mail.yandex.net ([37.140.190.26])
+	by mxback3o.mail.yandex.net with LMTP id RMgmGqC4
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 14:19:25 +0300
+Received: from smtp1o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp1o.mail.yandex.net (Yandex) with ESMTP id 9C508DE3A94
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 14:19:25 +0300 (MSK)
+Received: by smtp1o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id RZKv0NvWck-JPfCnGRb;
+	Tue, 15 Mar 2016 14:19:25 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp1o.mail.yandex.net
+X-Yandex-TimeMark: 1458040765
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1458040765;
+	bh=MhK/WEQaplgn5HMTMlu4ZPB/JXrlYOG+F50eR97SXKw=;
+	h=To:From:Subject:Message-ID:Date:User-Agent:MIME-Version:
+	 Content-Type;
+	b=gWukNe6u1VcRlXjWMY0C+uXNaHjGPRh5TycV61zlNO83ufY3qCw1/EMyyCv/ty0+n
+	 SMCxHAzXTzIOS6sNPaoV339mJ+IbaAeNPP/8m6LdyO0BJ7dsnxhtq9HAp0MjP6BBwX
+	 gqUpSsuI7+jhYYSyf2xfafN1WqXO799EOEK3oHFc=
+Authentication-Results: smtp1o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Yandex-Spam: 1
+To: jojograf@yandex.ru
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <pav9147@yandex.ru>
+Subject: rich text
+Message-ID: <56E7EFB6.4000105@yandex.ru>
+Date: Tue, 15 Mar 2016 14:19:18 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="------------050708000507020802090204"
+Return-Path: pav9147@yandex.ru
+X-Yandex-Forward: bb9cb87b21ead38c9f5d9910d5a04b29
+
+This is a multi-part message in MIME format.
+--------------050708000507020802090204
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+big text
+
+
+  header 1
+
+
+    header 2
+
+
+      header 3
+
+list:
+
+ 1. one
+ 2. two
+ 3. three
+
+*bold *
+/italic/
+
+
+--------------050708000507020802090204
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000">
+    <big><big><big><big>big text<small><small><small><br>
+                  <br>
+                </small></small></small></big></big></big></big>
+    <h1><big><big><big><big><small><small><small>header 1</small></small></small></big></big></big></big></h1>
+    <h2><big><big><big><big><small><small><small>header 2</small></small></small></big></big></big></big></h2>
+    <h3><big><big><big><big><small><small><small>header 3</small></small></small></big></big></big></big></h3>
+    <p>list:<br>
+    </p>
+    <ol>
+      <li>one</li>
+      <li>two </li>
+      <li>three</li>
+    </ol>
+    <p><b>bold </b><br>
+      <i>italic</i><br>
+    </p>
+  </body>
+</html>
+
+--------------050708000507020802090204--

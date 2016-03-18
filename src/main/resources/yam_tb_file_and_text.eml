@@ -1,0 +1,50 @@
+Received: from smtp2o.mail.yandex.net ([37.140.190.27])
+	by mxback6o.mail.yandex.net with LMTP id xTi6n9rN
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 14:16:02 +0300
+Received: from smtp2o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp2o.mail.yandex.net (Yandex) with ESMTP id E186F36A3F83
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 14:16:02 +0300 (MSK)
+Received: by smtp2o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id WbzkMD5zf7-G2DevNCN;
+	Tue, 15 Mar 2016 14:16:02 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp2o.mail.yandex.net
+X-Yandex-TimeMark: 1458040562
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1458040562;
+	bh=h29KvD5cz887DFd2/h/oxSRm9vrompzij9IUIGL6DeY=;
+	h=To:From:Subject:Message-ID:Date:User-Agent:MIME-Version:
+	 Content-Type;
+	b=C2nh08Z2W9iuiq7fs+TqCfEuI7gkGjGwGGISVLsjRr4hc+jD4yqbJmDQI9gN+B7oR
+	 vdAO1I64Th0BSLkn96Mo/60L7C+Hk5eI+a+laNbCzPrDjUtBkB67TL1taa/k05ytUO
+	 WWgN//ZxjVP+A+NOeTq/DdY94kYviNUhWcgXQYUc=
+Authentication-Results: smtp2o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Yandex-Spam: 1
+To: jojograf@yandex.ru
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <pav9147@yandex.ru>
+Subject: file and text
+Message-ID: <56E7EEEB.3070005@yandex.ru>
+Date: Tue, 15 Mar 2016 14:15:55 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.6.0
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------030103080106090900070209"
+Return-Path: pav9147@yandex.ru
+X-Yandex-Forward: bb9cb87b21ead38c9f5d9910d5a04b29
+
+This is a multi-part message in MIME format.
+--------------030103080106090900070209
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+hello! I send you a file!
+
+--------------030103080106090900070209
+Content-Type: text/plain; charset=UTF-8;
+ name="testMessage.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="testMessage.txt"
+
+VGhlcmUgaXMgYW4gdGVzdCBtZXNzYWdlIGZvciB5b3Uh
+--------------030103080106090900070209--
