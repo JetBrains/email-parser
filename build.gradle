@@ -42,6 +42,6 @@ run {
     standardInput = System.in
 
     if (project.hasProperty('emlFile')) {
-        args emlFile.split('xyz')
+        args emlFile.split('\n')
     }
 }
