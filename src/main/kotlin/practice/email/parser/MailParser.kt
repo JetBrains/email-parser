@@ -1,6 +1,5 @@
 package practice.email.parser
 
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -16,12 +15,8 @@ object EmailContentParseMode {
      * Return plain email body content without any parsing.
      */
     val SIMPLE = 0
-
-    //reserved
-    val QUOTE = 1
-    val QUOTE_DEEP = 2
-    val QUOTE_SMART = 3
-    val QUOTE_SMART_DEEP = 4
+    val ONE = 1
+    val DEEP = 2
 }
 
 private val defaultCharset = "UTF-8"
@@ -32,21 +27,13 @@ private val defaultCharset = "UTF-8"
 private object ContentType {
     val TEXT_PLAIN = "text/plain"
     val MULTIPART_ALT = "multipart/alternative"
-    
+
 }
 
-/**
- * Chosen parse mode for email body content.
- */
-private var contentParseMode = EmailContentParseMode.SIMPLE
-
-/**
- * Defines the depth of the quotes parsing in the email body.
- * Default value is 0.
- *
- * Not used for now. Reserved.
- */
-private var contentParseDeep = 0
+// Templates for detecting quotes and signatures.
+// Some others will be added later.
+val SIGNATURE_PATTERN = "--"
+val QUOTE_PATTERN = ">"
 
 /**
  * Data class for storing some parsed email headers and parsed email body content.
@@ -55,7 +42,7 @@ data class Email(val date: Date,
                  val from: ArrayList<String>,
                  val to: ArrayList<String>,
                  val subject: String,
-                 val content: Content) {
+                 var content: Content) {
     override fun toString(): String {
         val builder = StringBuilder()
 
@@ -89,18 +76,118 @@ data class Content(val body: String, val quote: Content?, val signature: String?
  * Return parsed email with Date, From, To, Subject and Content fields.
  *
  * @param emlFile file in EML format.
- * @param contentParsingMode email body content parser mode. Default value is EmailContentParseMode.SIMPLE.
- * @param contentParsingDeep defines the depth of the quotes parsing in the email body. Default value is 0.
  * @return object of Email class.
  * @exception ParseException if fails to parse Date, From or Content fields.
  * @exception NotImplementedError
  */
-fun parseEml(emlFile: File, contentParsingMode: Int = EmailContentParseMode.SIMPLE, contentParsingDeep: Int = 0): Email {
+fun parseEml(emlFile: File): Email {
     val source: InputStream = FileInputStream(emlFile)
-    contentParseMode = contentParsingMode
-    contentParseDeep = contentParsingDeep
     return parse(source)
 }
+
+// TODO add comments
+// TODO parseEmailContent adds additional CRLF(example - yamail-yamail 4_1_receive_q1). Fix it
+/**
+ *
+ */
+fun parseEmlWithContent(emlFile: File, mode: Int = EmailContentParseMode.SIMPLE): Email {
+    val email = parseEml(emlFile)
+    if (mode != EmailContentParseMode.SIMPLE) {
+        email.content = parseEmailContent(email.content.body, mode)
+    }
+    return email
+}
+
+/**
+ *
+ */
+private fun parseEmailContent(content: String, mode: Int): Content {
+    val lines: Array<String> = content.split("\r\n").toTypedArray();
+    var linesIdx = lines.size - 1
+    var buffer: Array<String> = Array(lines.size) {""}
+    var bufferLength = 0
+    var body: String
+    var quote: Content?
+    var sign:  String?
+    
+    while (linesIdx > -1 && 
+           !lines[linesIdx].trim().equals(SIGNATURE_PATTERN) && 
+           !lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+        buffer[bufferLength++] = lines[linesIdx--]
+    }
+    
+    if (linesIdx <= -1) {
+        body = reverseAndJoin(buffer, bufferLength)
+        return Content(body, null, null)
+    }
+    
+    if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+        bufferLength = 0
+        buffer[bufferLength++] = lines[linesIdx--].substring(1)
+        while (linesIdx > -1 && !lines[linesIdx].equals("")) {
+            if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+                buffer[bufferLength++] = lines[linesIdx--].substring(1)
+            } else {
+                buffer[bufferLength++] = lines[linesIdx--]
+            }
+        }
+        val quoteString = reverseAndJoin(buffer, bufferLength)
+        if (mode == EmailContentParseMode.DEEP) {
+            quote = parseEmailContent(quoteString, mode)
+        } else {
+            quote = Content(quoteString, null, null)
+        }
+        body = lines.take(linesIdx + 1).joinToString(separator = "\r\n")
+        return Content(body, quote, null)
+    }
+    
+    if (lines[linesIdx].trim().equals(SIGNATURE_PATTERN)) {
+        buffer[bufferLength++] = lines[linesIdx--]
+        sign = reverseAndJoin(buffer, bufferLength)
+        bufferLength = 0
+        while ((linesIdx > -1) && !lines[linesIdx].startsWith(QUOTE_PATTERN))  {
+            buffer[bufferLength++] = lines[linesIdx--]
+        }
+        if (linesIdx <= -1) {
+            body = reverseAndJoin(buffer, bufferLength)
+            return Content(body, null, sign)
+        }
+        
+        // TODO find a way get rid of duplicate code.
+        // Repeated code. Is there in Kotlin convenient way to move it into
+        // the separate function?
+        if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+            bufferLength = 0
+            buffer[bufferLength++] = lines[linesIdx--].substring(1)
+            while (linesIdx > -1 && !lines[linesIdx].equals("")) {
+                if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+                    buffer[bufferLength++] = lines[linesIdx--].substring(1)
+                } else {
+                    buffer[bufferLength++] = lines[linesIdx--]
+                }
+            }
+            val quoteString = reverseAndJoin(buffer, bufferLength)
+            if (mode == EmailContentParseMode.DEEP) {
+                quote = parseEmailContent(quoteString, mode)
+            } else {
+                quote = Content(quoteString, null, null)
+            }
+            body = lines.take(linesIdx + 1).joinToString(separator = "\r\n")
+            return Content(body, quote, null)
+        }
+    }
+
+    // Must never get there.
+    throw ParseException("Incorrect message content parsing.")
+}
+
+fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
+    if (bufferLength == 0) {
+        ""
+    } else {
+        buffer.reverse()
+        buffer.joinToString(separator = "\r\n")
+    }
 
 /**
  * Create MimeMessage from the given source and fetch and decode all needed fields.
@@ -135,7 +222,7 @@ private fun parse(source: InputStream): Email {
     return Email(date, from, to, subject, content)
 }
 
-private fun getErrorMsg(fieldName: String) = "Coud not found '$fieldName' field."
+private fun getErrorMsg(fieldName: String) = "Could not found '$fieldName' field."
 
 /**
  * Transform addresses from array of Address objects to their string representation.
@@ -158,8 +245,7 @@ private fun getAddresses(addrresses: Array<Address>): ArrayList<String> {
 
 
 // TODO add more tests for this fun
-// It seems that charset is fetched incorrectly and that cause
-// incorrect body encoding
+// TODO It seems that charset is fetched incorrectly and cause incorrect body decoding
 /**
  * This function defines email message type, amount of parts it is consists of,
  * gets the appropriate part and parses it.
@@ -189,8 +275,9 @@ private fun parseContent(part: MimePart): Content {
 
     when (contentType) {
         ContentType.TEXT_PLAIN ->
-            return splitContent(
-                    decodeTo(content as String, charset, defaultCharset)
+            return Content(
+                    decodeTo(content as String, charset, defaultCharset),
+                    null, null
             )
         ContentType.MULTIPART_ALT ->
             return parseContent(
@@ -210,18 +297,3 @@ private fun parseContent(part: MimePart): Content {
  */
 private fun decodeTo(content: String, charsetFrom: String, charsetTo: String): String =
         content.toByteArray(charset(charsetFrom)).toString(charset(charsetTo))
-
-/**
- * Forming Content object from the given content string depends from
- * contentParseMode and contentParseDeep.
- *
- * @param content email message content in form of plain text.
- * @return Content object.
- * @exception NotImplementedError for now it works just with EmailContentParseMode.SIMPLE mode.
- */
-private fun splitContent(content: String): Content {
-    when (contentParseMode) {
-        EmailContentParseMode.SIMPLE -> return Content(content, null, null)
-        else -> throw NotImplementedError()
-    }
-}

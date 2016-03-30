@@ -1,0 +1,72 @@
+Delivered-To: thebostor@gmail.com
+Received: by 10.114.5.136 with SMTP id s8csp477213lds;
+        Tue, 29 Mar 2016 23:42:35 -0700 (PDT)
+X-Received: by 10.25.83.8 with SMTP id h8mr2563254lfb.167.1459320155704;
+        Tue, 29 Mar 2016 23:42:35 -0700 (PDT)
+Return-Path: <ppzhuk@gmail.com>
+Received: from mail-lb0-x22e.google.com (mail-lb0-x22e.google.com. [2a00:1450:4010:c04::22e])
+        by mx.google.com with ESMTPS id 189si1068387lfb.120.2016.03.29.23.42.35
+        for <thebostor@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Mar 2016 23:42:35 -0700 (PDT)
+Received-SPF: pass (google.com: domain of ppzhuk@gmail.com designates 2a00:1450:4010:c04::22e as permitted sender) client-ip=2a00:1450:4010:c04::22e;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com;
+       spf=pass (google.com: domain of ppzhuk@gmail.com designates 2a00:1450:4010:c04::22e as permitted sender) smtp.mailfrom=ppzhuk@gmail.com;
+       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by mail-lb0-x22e.google.com with SMTP id bc4so23415484lbc.2
+        for <thebostor@gmail.com>; Tue, 29 Mar 2016 23:42:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:references:to:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=9i4V5+8jetPKvP6Ele8HpwUI5/P61HK6laIdMUD2Wb8=;
+        b=O4OGoEg5bptgrJwfvToKoCgMmVNUD1S77E9i09GBee0Pg3hXQ3wqNCIEyJgvU+AshS
+         EEND8ja/VxAVtA04lZAGaQSMVQ4IOVqP7s43oMbay91DoYAHmpmFpZPT8F+kcmK/W2oa
+         /123ue7ew+AGU8vxJHPkHx7TyNU95i/17ms+HYekzUsbEA1yqAwK2fzJ6Aote7n2hiYs
+         2tELx6uJlLktXZtbauHkMKc6jEcircNvC7ewMcErZfEJaeUkjPqwbdlba5QNEqw0tuwe
+         tpxdEAgT1sjdvp4rj2H4hsgk83BjUmXqcFIM3vJT6x4suRtTUxnBJBlT47Rkwp7xQDkK
+         h/bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:references:to:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=9i4V5+8jetPKvP6Ele8HpwUI5/P61HK6laIdMUD2Wb8=;
+        b=IZ+uTtxOuSi/Gd9oQVpnbox+MzOtmhwz//l/LnER9NK1Cnm3ou/KjrL/6RsWmuTvZh
+         BawHw4IhEsHClIqDOebc1ltrcfNZLCUymwkK4cGp2i4NVFXqe458GbORNkjji83HOOB3
+         n7St5z6OSH6GxDavGw3Jpb9NcKcv0H+Po1Aqiof8DJfyVFj/EdAflU+4EkOqCbzJq3Uq
+         d8B8rmFr09fEx8s+rBGoEwNCmL7z/ZIS99h2+h/xfpF+d7hoAZBFxqpWnA2GFpIH/Af1
+         uhCwqoi8x5igOBFz0XXpdyxA++HqNKt/gAGibt8ZxWLwfQLNh+0tj1RfF/AHTqFP7vow
+         n1sQ==
+X-Gm-Message-State: AD7BkJK+ozHvi+o2rjsLyfarR7JEe52c3PqexmMYDRC9bbis0qNj3U+FsJpR0TSlwdID0w==
+X-Received: by 10.112.166.100 with SMTP id zf4mr2929959lbb.58.1459320155534;
+        Tue, 29 Mar 2016 23:42:35 -0700 (PDT)
+Return-Path: <ppzhuk@gmail.com>
+Received: from [192.168.0.93] ([109.167.253.79])
+        by smtp.gmail.com with ESMTPSA id ke9sm351195lbc.28.2016.03.29.23.42.34
+        for <thebostor@gmail.com>
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 29 Mar 2016 23:42:34 -0700 (PDT)
+Subject: =?UTF-8?B?UmU6INC+0L/Qu9Cw0YLQsCDQt9CwINGP0L3QstCw0YDRjA==?=
+References: <918491452001697@web17j.yandex.ru>
+To: thebostor@gmail.com
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <ppzhuk@gmail.com>
+Message-ID: <56FB7558.7050601@gmail.com>
+Date: Wed, 30 Mar 2016 09:42:32 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.1
+MIME-Version: 1.0
+In-Reply-To: <918491452001697@web17j.yandex.ru>
+Content-Type: text/plain; charset=koi8-r; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Цитата без подписей
+
+05.01.2016 16:48, Наталья Линькова пишет:
+> Добрый день, Паша!
+> Что-то не смогла до Вас дозвониться.
+> Если Вы уже перевели оплату за январь, скиньте, пожалуйста, платежку,
+> т.к. я пока оплату еще не получила.
+> Спасибо!
+> Наталья.
+
