@@ -8,8 +8,6 @@ import java.util.*
 import javax.mail.*
 import javax.mail.internet.*
 
-// TODO Add tests
-
 /**
  * Contains email body content parse mode constants.
  */
@@ -34,6 +32,7 @@ private val defaultCharset = "UTF-8"
 private object ContentType {
     val TEXT_PLAIN = "text/plain"
     val MULTIPART_ALT = "multipart/alternative"
+    
 }
 
 /**
@@ -104,23 +103,6 @@ fun parseEml(emlFile: File, contentParsingMode: Int = EmailContentParseMode.SIMP
 }
 
 /**
- * Return parsed email with Date, From, To, Subject and Content fields.
- *
- * @param emlString string with all EML text inside it.
- * @param contentParsingMode email body content parser mode. Default value is EmailContentParseMode.SIMPLE.
- * @param contentParsingDeep defines the depth of the quotes parsing in the email body. Default value is 0.
- * @return object of Email class.
- * @exception ParseException if fails to parse Date, From or Content fields.
- * @exception NotImplementedError
- */
-fun parseEml(emlString: String, mode: Int = EmailContentParseMode.SIMPLE, deep: Int = 1): Email {
-    val source: InputStream = ByteArrayInputStream(emlString.toByteArray(charset("US-ASCII")))
-    contentParseMode = mode
-    contentParseDeep = deep
-    return parse(source)
-}
-
-/**
  * Create MimeMessage from the given source and fetch and decode all needed fields.
  *
  * @param source  InputStream with email source in EML format.
@@ -174,6 +156,10 @@ private fun getAddresses(addrresses: Array<Address>): ArrayList<String> {
     return addressList
 }
 
+
+// TODO add more tests for this fun
+// It seems that charset is fetched incorrectly and that cause
+// incorrect body encoding
 /**
  * This function defines email message type, amount of parts it is consists of,
  * gets the appropriate part and parses it.
@@ -189,9 +175,9 @@ private fun parseContent(part: MimePart): Content {
     var charset: String = "UTF-8"
 
     // Parse contentType and charset if given
-    for ((i, elem) in part.contentType.split("; ").withIndex()) {
+    for ((i, elem) in part.contentType.split(";").withIndex()) {
         when (i) {
-            0 -> contentType = elem
+            0 -> contentType = elem.trim()
             else -> {
                 val s = elem.split("=")
                 if (s[0].equals("charset")) {

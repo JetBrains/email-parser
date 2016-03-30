@@ -1,0 +1,100 @@
+Received: from smtp2o.mail.yandex.net ([37.140.190.27])
+	by mxback10o.mail.yandex.net with LMTP id lQzGtDQR
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 00:24:10 +0300
+Received: from smtp2o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp2o.mail.yandex.net (Yandex) with ESMTP id AC1BA36A3F3A
+	for <jojograf@yandex.ru>; Tue, 15 Mar 2016 00:24:10 +0300 (MSK)
+Received: by smtp2o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id nnkROADkX5-OATS6x98;
+	Tue, 15 Mar 2016 00:24:10 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp2o.mail.yandex.net
+X-Yandex-TimeMark: 1457990650
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1457990650;
+	bh=p0xOLG+6GIAJu1Cu1rK9kWOrxoYDboLCwrhsVWaMqcI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:
+	 X-Mailer:Thread-Index:Content-Language;
+	b=rGKffkN/DcRUdZgoCvAo5wv/qhdZvzLvXEazI2oi+g/nFmk8gTt90pt0y0NqjtUxO
+	 tXNYvCohBTpKr6wMcitDqFKHVZsQqJb0Fd5pbyxrum3WtZ4/oDZsCsiyTIjuSoPYQK
+	 2gzpMQl3IPU0H8Pg8MuNQUF7vdgbYs+BP32F2lRc=
+Authentication-Results: smtp2o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Yandex-Spam: 1
+From: "Yandex Mail" <pav9147@yandex.ru>
+To: <jojograf@yandex.ru>
+Subject: =?koi8-r?B?8NLP18XS0cXN?=
+Date: Tue, 15 Mar 2016 00:24:04 +0300
+Message-ID: <000001d17e37$d6135fb0$823a1f10$@yandex.ru>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0001_01D17E50.FB6097B0"
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AdF+N8rduQf72Z8NTKilwzltaPw/Iw==
+Content-Language: ru
+Return-Path: pav9147@yandex.ru
+X-Yandex-Forward: bb9cb87b21ead38c9f5d9910d5a04b29
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0001_01D17E50.FB6097B0
+Content-Type: text/plain;
+	charset="koi8-r"
+Content-Transfer-Encoding: base64
+
+8NLP18XSz97Oz8Ug0MnT2NPNzw0KDQo=
+
+------=_NextPart_000_0001_01D17E50.FB6097B0
+Content-Type: text/html;
+	charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; charset=3Dkoi8-r"><meta =
+name=3DGenerator content=3D"Microsoft Word 14 (filtered =
+medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-fareast-language:EN-US;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri","sans-serif";
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri","sans-serif";
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DRU link=3Dblue =
+vlink=3Dpurple><div class=3DWordSection1><p =
+class=3DMsoNormal>=F0=D2=CF=D7=C5=D2=CF=DE=CE=CF=C5 =
+=D0=C9=D3=D8=D3=CD=CF<o:p></o:p></p></div></body></html>
+------=_NextPart_000_0001_01D17E50.FB6097B0--
+

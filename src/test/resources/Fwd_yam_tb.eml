@@ -1,0 +1,104 @@
+Received: from smtp13.mail.yandex.net ([95.108.130.68])
+	by mxback3j.mail.yandex.net with LMTP id RGLlHCbS
+	for <pav9147@yandex.ru>; Thu, 17 Mar 2016 14:07:04 +0300
+Received: from smtp13.mail.yandex.net (localhost [127.0.0.1])
+	by smtp13.mail.yandex.net (Yandex) with ESMTP id 0E640E4019B
+	for <pav9147@yandex.ru>; Thu, 17 Mar 2016 14:07:04 +0300 (MSK)
+Received: by smtp13.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id kEDWWPjFGv-73ZqU58q;
+	Thu, 17 Mar 2016 14:07:03 +0300
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Front: smtp13.mail.yandex.net
+X-Yandex-TimeMark: 1458212823
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1458212823;
+	bh=PB5f1J0HAIDOVWvgoDihHLZP+iNMh2JnVrtlE1bqbGI=;
+	h=Subject:References:To:From:X-Forwarded-Message-Id:Message-ID:Date:
+	 User-Agent:MIME-Version:In-Reply-To:Content-Type;
+	b=DXz9b6cyQXApDXs1tXakJe0+QrJeXCQoy8lYHejJCEuop+OCAa8u4AdtM0sQfL6lY
+	 Oz1/NxfHlxh7HYC6S9am4mFBDQLwlfle2R9RRDzi/WpJEwOH+gW7ktK5AyI89Bz2Z7
+	 XhbAwr7ugYnHObdjJyitH/jJ+1awr7qhKdrRB/g4=
+Authentication-Results: smtp13.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Yandex-Spam: 1
+Subject: =?UTF-8?B?RndkOiDRgtC10LzQsCDQv9C40YHRjNC80LA=?=
+References: <2686481457820093@web11h.yandex.ru>
+To: pav9147@yandex.ru
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <jojograf@yandex.ru>
+X-Forwarded-Message-Id: <2686481457820093@web11h.yandex.ru>
+Message-ID: <56EA8FD5.1030509@yandex.ru>
+Date: Thu, 17 Mar 2016 14:07:01 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
+ Thunderbird/38.7.0
+MIME-Version: 1.0
+In-Reply-To: <2686481457820093@web11h.yandex.ru>
+Content-Type: multipart/alternative;
+ boundary="------------040107050706010705070406"
+Return-Path: jojograf@yandex.ru
+X-Yandex-Forward: a2e27b0b5c48689323f80c563467d578
+
+This is a multi-part message in MIME format.
+--------------040107050706010705070406
+Content-Type: text/plain; charset=koi8-r; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+
+
+-------- Перенаправленное сообщение --------
+Тема: 	тема письма
+Дата: 	Sun, 13 Mar 2016 01:01:33 +0300
+От: 	pav9147@yandex.ru
+Кому: 	jojograf@yandex.ru
+
+
+
+без цитаты
+
+
+
+
+--------------040107050706010705070406
+Content-Type: text/html; charset=koi8-r
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=koi8-r">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000">
+    <br>
+    <div class="moz-forward-container"><br>
+      <br>
+      -------- Перенаправленное сообщение --------
+      <table class="moz-email-headers-table" border="0" cellpadding="0"
+        cellspacing="0">
+        <tbody>
+          <tr>
+            <th align="RIGHT" nowrap="nowrap" valign="BASELINE">Тема: </th>
+            <td>тема письма</td>
+          </tr>
+          <tr>
+            <th align="RIGHT" nowrap="nowrap" valign="BASELINE">Дата: </th>
+            <td>Sun, 13 Mar 2016 01:01:33 +0300</td>
+          </tr>
+          <tr>
+            <th align="RIGHT" nowrap="nowrap" valign="BASELINE">От: </th>
+            <td><a class="moz-txt-link-abbreviated" href="mailto:pav9147@yandex.ru">pav9147@yandex.ru</a></td>
+          </tr>
+          <tr>
+            <th align="RIGHT" nowrap="nowrap" valign="BASELINE">Кому: </th>
+            <td><a class="moz-txt-link-abbreviated" href="mailto:jojograf@yandex.ru">jojograf@yandex.ru</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <pre>без цитаты
+</pre>
+      <br>
+    </div>
+    <br>
+  </body>
+</html>
+
+--------------040107050706010705070406--
