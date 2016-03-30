@@ -9,7 +9,7 @@ import org.junit.Assert.assertArrayEquals
 class MailParserSpecs : Spek() {
 
     init {
-        given("email parser") {
+        given("email parser with SIMPLE parse mode") {
             on("simple email") {
                 var expectedEmail: Email = TestEmails.yam_tb_eng_rus
                 var actualEmail: Email = parseEml(

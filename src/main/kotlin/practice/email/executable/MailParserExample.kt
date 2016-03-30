@@ -22,10 +22,34 @@ fun main(args: Array<String>) {
         val file = File(args[0])
         if (file.exists()) {
             var email = parseEml(file)
+            println("Just an email:")
             println(email)
-            println("*******")
+            
             email = parseEmlWithContent(file, EmailContentParseMode.ONE)
+            println("Email with parsed content (mode ONE):")
             println(email)
+            
+            println("Top level content's components:")
+            println("body:")
+            println(email.content.body)
+            println("quote:")
+            println(email.content.quote)
+            println("signature:")
+            println(email.content.signature)
+
+            
+            email = parseEmlWithContent(file, EmailContentParseMode.DEEP)
+            println("Email with parsed content (mode DEEP):")
+            println(email)
+
+            println("Top level content's components:")
+            println("body:")
+            println(email.content.body)
+            println("quote:")
+            println(email.content.quote)
+            println("signature:")
+            println(email.content.signature)
+
         } else {
             println(incorrectFileMsg)
         }

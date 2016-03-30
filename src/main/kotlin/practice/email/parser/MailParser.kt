@@ -86,8 +86,10 @@ fun parseEml(emlFile: File): Email {
 }
 
 // TODO add comments
-// TODO parseEmailContent adds additional CRLF(example - yamail-yamail 4_1_receive_q1). Fix it
+// TODO parseEmailContent eats(adds?) one of CRLF(example - yamail-yamail 4_1_receive_q1). Fix it
+// TODO It seems there are mey be some problems with quotes and signs in one email simultaneously
 /**
+ * 
  *
  */
 fun parseEmlWithContent(emlFile: File, mode: Int = EmailContentParseMode.SIMPLE): Email {
@@ -185,8 +187,9 @@ fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
     if (bufferLength == 0) {
         ""
     } else {
-        buffer.reverse()
-        buffer.joinToString(separator = "\r\n")
+        val res = buffer.take(bufferLength).toTypedArray()
+        res.reverse()
+        res.joinToString(separator = "\r\n")
     }
 
 /**
