@@ -1,0 +1,72 @@
+                                                                                                                                                                                                                                                               
+Delivered-To: ppzhuk@gmail.com
+Received: by 10.107.169.83 with SMTP id s80csp1602191ioe;
+        Sat, 12 Mar 2016 12:55:42 -0800 (PST)
+X-Received: by 10.25.17.65 with SMTP id g62mr4498497lfi.52.1457816142623;
+        Sat, 12 Mar 2016 12:55:42 -0800 (PST)
+Return-Path: <kingmaker93@mail.ru>
+Received: from f304.i.mail.ru (f304.i.mail.ru. [128.140.169.168])
+        by mx.google.com with ESMTPS id bl3si7165660lbc.39.2016.03.12.12.55.42
+        for <ppzhuk@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Mar 2016 12:55:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of kingmaker93@mail.ru designates 128.140.169.168 as permitted sender) client-ip=128.140.169.168;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of kingmaker93@mail.ru designates 128.140.169.168 as permitted sender) smtp.mailfrom=kingmaker93@mail.ru;
+       dkim=pass header.i=@mail.ru;
+       dmarc=pass (p=NONE dis=NONE) header.from=mail.ru
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+	h=References:In-Reply-To:Content-Type:Message-ID:Reply-To:Date:MIME-Version:Subject:To:From; bh=CvoqKPkbs57KhU8o9NHb3hSbbZCY7D2aoY6YU2E69t8=;
+	b=fjiv4e0Mz0F11WmnUr0t4PhxtdbUVSVeTJIbKYjRMkg7ZSybVJe+6+ypbK1KjSfq8ylDsVEFBbEw06TV1Kfxa09SKUFXS32b2sfQ5Z2uWxd8SWfBCdtEm5ZeOLX03d/usI0ZXU17TY4vFMmLhfzDMWGoBFiTMWtv27ojC0SG+Fg=;
+Received: from [109.167.253.79] (ident=mail)
+	by f304.i.mail.ru with local (envelope-from <kingmaker93@mail.ru>)
+	id 1aeqZZ-0003UN-UH
+	for ppzhuk@gmail.com; Sat, 12 Mar 2016 23:55:42 +0300
+Received: from [109.167.253.79] by e.mail.ru with HTTP;
+	Sat, 12 Mar 2016 23:55:41 +0300
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <kingmaker93@mail.ru>
+To: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <ppzhuk@gmail.com>
+Subject: =?UTF-8?B?UmU6INCf0YDQvtCy0LXRgNC60LA=?=
+MIME-Version: 1.0
+X-Mailer: Mail.Ru Mailer 1.0
+X-Originating-IP: [109.167.253.79]
+Date: Sat, 12 Mar 2016 23:55:41 +0300
+Reply-To: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <kingmaker93@mail.ru>
+X-Priority: 3 (Normal)
+Message-ID: <1457816141.423964956@f304.i.mail.ru>
+Content-Type: multipart/alternative;
+	boundary="--ALT--1YnVjhG8v113R349pH3fqh86lmprGZeB1457816141"
+X-Mras: Ok
+X-Spam: undefined
+In-Reply-To: <CAGg-HvQMHNyU+UmsqFPWwhA9AAhYzT=N+g-mv0T2s3YVOuPqEQ@mail.gmail.com>
+References: <CAGg-HvQMHNyU+UmsqFPWwhA9AAhYzT=N+g-mv0T2s3YVOuPqEQ@mail.gmail.com>
+
+
+----ALT--1YnVjhG8v113R349pH3fqh86lmprGZeB1457816141
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+
+IFJlcGx5INC40Lcg0L/RgNC+0YHRgtC+IG1haWwhCgoKPtCS0L7RgdC60YDQtdGB0LXQvdGM0LUs
+IDEzINC80LDRgNGC0LAgMjAxNiwgNjo1NSArMTA6MDAg0L7RgiDQn9Cw0LLQtdC7INCW0YPQuiA8
+cHB6aHVrQGdtYWlsLmNvbT46Cj4KPtCf0YDQuNCy0LXRgiDQuNC3IGdtYWlsIQo+Cj4tLSAKPtCW
+0YPQuiDQn9Cw0LLQtdC7LgoK
+
+----ALT--1YnVjhG8v113R349pH3fqh86lmprGZeB1457816141
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+CjxIVE1MPjxCT0RZPlJlcGx5INC40Lcg0L/RgNC+0YHRgtC+IG1haWwhPGJyPjxicj48YnI+PGJs
+b2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0OjFweCBzb2xpZCAjMDg1N0E2OyBtYXJnaW46MTBw
+eDsgcGFkZGluZzowIDAgMCAxMHB4OyI+CgnQktC+0YHQutGA0LXRgdC10L3RjNC1LCAxMyDQvNCw
+0YDRgtCwIDIwMTYsIDY6NTUgKzEwOjAwINC+0YIg0J/QsNCy0LXQuyDQltGD0LogJmx0O3Bwemh1
+a0BnbWFpbC5jb20mZ3Q7Ojxicj4KCTxicj4KCTxkaXYgaWQ9IiI+CgoKCgoKCgoKCgoKCgoKCgoK
+CgoKCgoKCgoKPGRpdiBjbGFzcz0ianMtaGVscGVyIGpzLXJlYWRtc2ctbXNnIj4KCTxzdHlsZSB0
+eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT4KIAk8ZGl2PgoJCTxiYXNlIHRhcmdldD0iX3NlbGYiIGhy
+ZWY9Imh0dHBzOi8vZS5tYWlsLnJ1LyI+CgkJCiAgICAgICAgICAgIDxkaXYgaWQ9InN0eWxlXzE0
+NTc4MTYxMDMwMDAwMDAwNzIxX0JPRFkiPtCf0YDQuNCy0LXRgiDQuNC3IGdtYWlsITxicj4KPGJy
+PgotLSA8YnI+CtCW0YPQuiDQn9Cw0LLQtdC7Ljxicj4KPC9kaXY+CiAgICAgICAgICAgIAogICAg
+ICAgIAoJCTxiYXNlIHRhcmdldD0iX3NlbGYiIGhyZWY9Imh0dHBzOi8vZS5tYWlsLnJ1LyI+Cgk8
+L2Rpdj4KCgkKPC9kaXY+CgoKPC9kaXY+CjwvYmxvY2txdW90ZT4KPGJyPjwvQk9EWT48L0hUTUw+
+Cg==
+
+----ALT--1YnVjhG8v113R349pH3fqh86lmprGZeB1457816141--

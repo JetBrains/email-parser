@@ -1,0 +1,8 @@
+4_gmail_receive_q1_FAILED 
+
+Strange quote formatting which fails to parse
+
+5_gmail_send_q2_QUOTE_ATE
+
+After replying on prev message gmail web client just ate designation of that quote!
+Should find a way why it happened and what to do with it (parse of leave).

@@ -1,0 +1,12 @@
+Fwd_yam_tb.eml
+
+Many spaces around fwded message. (Should I fix it?)
+
+Fwd_mail_wc
+
+Has the dashes around fwded messages. 
+So it protect us from detecting signature in fwded message as our own.
+
+Fwd_mail_tb.eml
+
+Detect fwded signature as my own. Should be fixed.
