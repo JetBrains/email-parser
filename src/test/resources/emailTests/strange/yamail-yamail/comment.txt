@@ -1,0 +1,4 @@
+This is the correspondence between yandex-mail web client. All emails has koi8 encoding. 
+And all encoding fails. What interesting - emails from other clients with koi8 charset decodes just fine.
+
+// TODO fix

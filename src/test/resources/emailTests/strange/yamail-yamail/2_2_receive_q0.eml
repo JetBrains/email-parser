@@ -1,0 +1,36 @@
+Received: from mxback2h.mail.yandex.net ([127.0.0.1])
+	by mxback2h.mail.yandex.net with LMTP id KFbg5yQI
+	for <jojograf@yandex.ru>; Sun, 13 Mar 2016 01:01:34 +0300
+Received: from web11h.yandex.ru (web11h.yandex.ru [2a02:6b8:0:f05::21])
+	by mxback2h.mail.yandex.net (nwsmtp/Yandex) with ESMTP id 27xXNO9njm-1Yo45K2M;
+	Sun, 13 Mar 2016 01:01:34 +0300
+X-Yandex-Front: mxback2h.mail.yandex.net
+X-Yandex-TimeMark: 1457820094
+Authentication-Results: mxback2h.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: from web11h.yandex.ru (localhost [127.0.0.1])
+	by web11h.yandex.ru (Yandex) with ESMTP id EE546120234;
+	Sun, 13 Mar 2016 01:01:33 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1457820094; bh=NlzloKa79VnDwgWwVT4YmQnXA0GrGjgDlm7xySqYKUk=;
+	h=From:To:Subject:Date;
+	b=Kn1tJX1ddpssj/LsM9aH2N3ylIC3kLw0MBwBeNlDNGw3ebCDSYZbWJXjtduZoD8GO
+	 3KnlKz2/8XZUkIs4mw9Y9YU2zd8XwRUC59zDIYXVOdTG7yb8x/G4bpBJ+LuxVrZoRN
+	 oFXpE0i5F1lxCzOEaFRWOQ22DADtkZ5zh5a0yYB8=
+X-Yandex-Spam: 1
+X-Yandex-Front: web11h.yandex.ru
+X-Yandex-TimeMark: 1457820093
+Received: by web11h.yandex.ru with HTTP;
+	Sun, 13 Mar 2016 01:01:33 +0300
+From: pav9147@yandex.ru
+To: jojograf@yandex.ru
+Subject: =?koi8-r?B?1MXNwSDQydPYzcE=?=
+MIME-Version: 1.0
+Message-Id: <2686481457820093@web11h.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Sun, 13 Mar 2016 01:01:33 +0300
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=koi8-r
+Return-Path: pav9147@yandex.ru
+X-Yandex-Forward: bb9cb87b21ead38c9f5d9910d5a04b29
+
+без цитаты

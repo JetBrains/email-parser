@@ -1,0 +1,62 @@
+                                                                                                                                                                                                                                                               
+Delivered-To: thebostor@gmail.com
+Received: by 10.114.93.201 with SMTP id cw9csp59693ldb;
+        Sat, 12 Mar 2016 13:51:00 -0800 (PST)
+X-Received: by 10.50.43.134 with SMTP id w6mr10218855igl.22.1457819460548;
+        Sat, 12 Mar 2016 13:51:00 -0800 (PST)
+Return-Path: <ppzhuk@gmail.com>
+Received: from mail-ig0-x22b.google.com (mail-ig0-x22b.google.com. [2607:f8b0:4001:c05::22b])
+        by mx.google.com with ESMTPS id qa1si9138997igc.92.2016.03.12.13.51.00
+        for <thebostor@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Mar 2016 13:51:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of ppzhuk@gmail.com designates 2607:f8b0:4001:c05::22b as permitted sender) client-ip=2607:f8b0:4001:c05::22b;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of ppzhuk@gmail.com designates 2607:f8b0:4001:c05::22b as permitted sender) smtp.mailfrom=ppzhuk@gmail.com;
+       dkim=pass header.i=@gmail.com;
+       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by mail-ig0-x22b.google.com with SMTP id vf5so30602581igb.0
+        for <thebostor@gmail.com>; Sat, 12 Mar 2016 13:51:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-transfer-encoding;
+        bh=1NaK9neY9rBFQZe+aQtAgKn4LRGIohtV/cUL6IP8nRc=;
+        b=NVVUrXinRhYHK52p70JEMUFxv5DJLZKwsMi5VdgWRxnojOKxfV72YkhOZ9Q0SKU9zW
+         sOX6L8uN24ECEkx3T9HK5sI/TkknCCaRpNPRcacmbz51iGZlW2EH9pk+rbB5V+DXl/TV
+         dEbGwCsTX9V6jetZHZIWnBef5yzh/tF9zZ+l8Cubj01yieO6awXrhieUFBgaG7AcK/5V
+         uv4ecH7wFEZhs+SFXnIvTYNQfNnUNIQJv90/GF1QtYvgEGQD0zdSPpdnX7KDClFr5L2t
+         ykXY/05u0nX7V3DnzNCYqnl6ZqVzy/G7yLBqfJSFpiVr1KtqIhAbkptPjzPIgnhwNKv7
+         5njg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-transfer-encoding;
+        bh=1NaK9neY9rBFQZe+aQtAgKn4LRGIohtV/cUL6IP8nRc=;
+        b=VmaTdFvOUFWJHDW2kOq3brKeWfDfcNsmLOiqmh/jgN2DDXk6G2CIQKpNd+Fh01ZQTx
+         rYy5ZdZHEnC+6gXWkXINpV6x0x7GikHLbu85FXHbcWKTWMVxrZ+C2FkMQUhPKV0TgaIx
+         S6zAuc4tV3iUBiHhGkjaYLE2S9JN09e3/PzHAtrfwj/eKeNirY3QfLL9ozGeRI1c00Ui
+         cMq4pxLk9WAJXBi5HQR0domepURhkdBCD4Fwh36vDe2Wg9ZFDZGTPDMBxuX59WJf1m16
+         aBNOJmaeL5b5O3/Uocwzfgu/qGv5XprL0ciVDFZDnH0TVvBe/Y7hiJKglw0fuvH+YHBR
+         015g==
+X-Gm-Message-State: AD7BkJIO/oa/v9whw2PExUlKUAQkX2APDBRrJ2xI9gpcK0GWwV1QXvQA3QRJXQXAGQpS4bo/u+qsBeDCGFtDow==
+MIME-Version: 1.0
+X-Received: by 10.50.79.162 with SMTP id k2mr2655123igx.90.1457819460280; Sat,
+ 12 Mar 2016 13:51:00 -0800 (PST)
+Received: by 10.107.57.67 with HTTP; Sat, 12 Mar 2016 13:51:00 -0800 (PST)
+In-Reply-To: <CANVN=+6_DZaMDupoHKv2R_ESHadAziaDo6m8d=bur1VvsQy=5w@mail.gmail.com>
+References: <CAGg-HvQQ9LyPOJegzgvnTtTxupBUn1y-A-jiMniOZA8vSdn-Tg@mail.gmail.com>
+	<CANVN=+6_DZaMDupoHKv2R_ESHadAziaDo6m8d=bur1VvsQy=5w@mail.gmail.com>
+Date: Sun, 13 Mar 2016 00:51:00 +0300
+Message-ID: <CAGg-HvTJcupDe8r0HUrjvh-j0TGUKwYe7y9vxgvJ9qEka4DpYA@mail.gmail.com>
+Subject: Re:
+From: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <ppzhuk@gmail.com>
+To: =?UTF-8?B?0J/QsNCy0LXQuyDQltGD0Lo=?= <thebostor@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+MtC1INGG0LjRgtCw0YLRiw0KDQoyMDE2LTAzLTEzIDA6NDkgR01UKzAzOjAwINCf0LDQstC10Lsg
+0JbRg9C6IDx0aGVib3N0b3JAZ21haWwuY29tPjoNCj4gMSDRhtC40YLQsNGC0LANCj4NCj4gMjAx
+Ni0wMy0xMyAwOjQ5IEdNVCswMzowMCDQn9Cw0LLQtdC7INCW0YPQuiA8cHB6aHVrQGdtYWlsLmNv
+bT46DQo+Pg0KPj4g0LHQtdC3INGG0LjRgtCw0YLRiw0KPj4NCj4+IC0tDQo+PiDQltGD0Log0J/Q
+sNCy0LXQuy4NCj4NCj4NCg0KDQoNCi0tIA0K0JbRg9C6INCf0LDQstC10LsuDQo=
