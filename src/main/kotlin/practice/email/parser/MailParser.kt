@@ -33,6 +33,7 @@ private object ContentType {
 // Templates for detecting quotes and signatures.
 // Some others will be added later.
 val SIGNATURE_PATTERN = "--"
+
 val QUOTE_PATTERN = ">"
 
 /**
@@ -104,30 +105,31 @@ fun parseEmlWithContent(emlFile: File, mode: Int = EmailContentParseMode.SIMPLE)
  *
  */
 private fun parseEmailContent(content: String, mode: Int): Content {
-    val lines: Array<String> = content.split("\r\n").toTypedArray();
+    val lines: Array<String> = content.split("\n").toTypedArray();
     var linesIdx = lines.size - 1
     var buffer: Array<String> = Array(lines.size) {""}
     var bufferLength = 0
-    var body: String
+    var body: String = ""
     var quote: Content?
     var sign:  String?
     
     while (linesIdx > -1 && 
            !lines[linesIdx].trim().equals(SIGNATURE_PATTERN) && 
-           !lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+           !lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
         buffer[bufferLength++] = lines[linesIdx--]
     }
     
     if (linesIdx <= -1) {
         body = reverseAndJoin(buffer, bufferLength)
+        body += "\n"
         return Content(body, null, null)
     }
     
-    if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+    if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
         bufferLength = 0
         buffer[bufferLength++] = lines[linesIdx--].substring(1)
         while (linesIdx > -1 && !lines[linesIdx].equals("")) {
-            if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+            if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
                 buffer[bufferLength++] = lines[linesIdx--].substring(1)
             } else {
                 buffer[bufferLength++] = lines[linesIdx--]
@@ -139,7 +141,8 @@ private fun parseEmailContent(content: String, mode: Int): Content {
         } else {
             quote = Content(quoteString, null, null)
         }
-        body = lines.take(linesIdx + 1).joinToString(separator = "\r\n")
+        body = lines.take(linesIdx + 1).joinToString(separator = "\n")
+        body += "\n"
         return Content(body, quote, null)
     }
     
@@ -147,22 +150,23 @@ private fun parseEmailContent(content: String, mode: Int): Content {
         buffer[bufferLength++] = lines[linesIdx--]
         sign = reverseAndJoin(buffer, bufferLength)
         bufferLength = 0
-        while ((linesIdx > -1) && !lines[linesIdx].startsWith(QUOTE_PATTERN))  {
+        while ((linesIdx > -1) && !lines[linesIdx].trim().startsWith(QUOTE_PATTERN))  {
             buffer[bufferLength++] = lines[linesIdx--]
         }
         if (linesIdx <= -1) {
             body = reverseAndJoin(buffer, bufferLength)
+            body += "\n"
             return Content(body, null, sign)
         }
         
         // TODO find a way get rid of duplicate code.
         // Repeated code. Is there in Kotlin convenient way to move it into
         // the separate function?
-        if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+        if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
             bufferLength = 0
             buffer[bufferLength++] = lines[linesIdx--].substring(1)
             while (linesIdx > -1 && !lines[linesIdx].equals("")) {
-                if (lines[linesIdx].startsWith(QUOTE_PATTERN)) {
+                if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
                     buffer[bufferLength++] = lines[linesIdx--].substring(1)
                 } else {
                     buffer[bufferLength++] = lines[linesIdx--]
@@ -174,7 +178,8 @@ private fun parseEmailContent(content: String, mode: Int): Content {
             } else {
                 quote = Content(quoteString, null, null)
             }
-            body = lines.take(linesIdx + 1).joinToString(separator = "\r\n")
+            body = lines.take(linesIdx + 1).joinToString(separator = "\n")
+            body += "\n"
             return Content(body, quote, null)
         }
     }
@@ -189,7 +194,7 @@ fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
     } else {
         val res = buffer.take(bufferLength).toTypedArray()
         res.reverse()
-        res.joinToString(separator = "\r\n")
+        res.joinToString(separator = "\n")
     }
 
 /**
@@ -279,7 +284,7 @@ private fun parseContent(part: MimePart): Content {
     when (contentType) {
         ContentType.TEXT_PLAIN ->
             return Content(
-                    decodeTo(content as String, charset, defaultCharset),
+                    decodeTo(content as String, charset, defaultCharset).replace("\r\n", "\n"),
                     null, null
             )
         ContentType.MULTIPART_ALT ->

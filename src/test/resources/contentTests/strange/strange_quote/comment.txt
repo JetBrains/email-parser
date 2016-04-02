@@ -6,3 +6,5 @@ Strange quote formatting which fails to parse
 
 After replying on prev message gmail web client just ate designation of that quote!
 Should find a way why it happened and what to do with it (parse of leave).
+
+UPD: seems it fixed. (I guess after replacement CRLF with LF)

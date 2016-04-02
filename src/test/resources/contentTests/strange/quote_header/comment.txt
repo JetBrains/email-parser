@@ -2,5 +2,3 @@ quote_with_sign_FAILED.eml
 
 There are strange quote header witch goes to the body part.
 How is that?? Should fix.
-
-TODO check for others emails with such feature
