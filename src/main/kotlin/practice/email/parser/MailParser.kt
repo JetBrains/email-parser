@@ -110,8 +110,8 @@ private fun parseEmailContent(content: String, mode: Int): Content {
     var buffer: Array<String> = Array(lines.size) {""}
     var bufferLength = 0
     var body: String = ""
-    var quote: Content?
-    var sign:  String?
+    var quote: Content? = null
+    var sign:  String? = null
     
     while (linesIdx > -1 && 
            !lines[linesIdx].trim().equals(SIGNATURE_PATTERN) && 
@@ -122,7 +122,7 @@ private fun parseEmailContent(content: String, mode: Int): Content {
     if (linesIdx <= -1) {
         body = reverseAndJoin(buffer, bufferLength)
         body += "\n"
-        return Content(body, null, null)
+        return Content(body, quote, sign)
     }
     
     if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
@@ -143,7 +143,7 @@ private fun parseEmailContent(content: String, mode: Int): Content {
         }
         body = lines.take(linesIdx + 1).joinToString(separator = "\n")
         body += "\n"
-        return Content(body, quote, null)
+        return Content(body, quote, sign)
     }
     
     if (lines[linesIdx].trim().equals(SIGNATURE_PATTERN)) {
@@ -156,7 +156,7 @@ private fun parseEmailContent(content: String, mode: Int): Content {
         if (linesIdx <= -1) {
             body = reverseAndJoin(buffer, bufferLength)
             body += "\n"
-            return Content(body, null, sign)
+            return Content(body, quote, sign)
         }
         
         // TODO find a way get rid of duplicate code.
@@ -180,7 +180,7 @@ private fun parseEmailContent(content: String, mode: Int): Content {
             }
             body = lines.take(linesIdx + 1).joinToString(separator = "\n")
             body += "\n"
-            return Content(body, quote, null)
+            return Content(body, quote, sign)
         }
     }
 
