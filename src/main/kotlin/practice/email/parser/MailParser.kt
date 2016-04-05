@@ -95,6 +95,7 @@ fun parseEml(emlFile: File): Email {
  */
 fun parseEmlWithContent(emlFile: File, mode: Int = EmailContentParseMode.SIMPLE): Email {
     val email = parseEml(emlFile)
+    //check for incorrent mode
     if (mode != EmailContentParseMode.SIMPLE) {
         email.content = parseEmailContent(email.content.body, mode)
     }
@@ -109,7 +110,7 @@ private fun parseEmailContent(content: String, mode: Int): Content {
     var linesIdx = lines.size - 1
     var buffer: Array<String> = Array(lines.size) {""}
     var bufferLength = 0
-    var body: String = ""
+    var body: String
     var quote: Content? = null
     var sign:  String? = null
     
@@ -284,7 +285,7 @@ private fun parseContent(part: MimePart): Content {
     when (contentType) {
         ContentType.TEXT_PLAIN ->
             return Content(
-                    decodeTo(content as String, charset, defaultCharset).replace("\r\n", "\n"),
+                    decodeTo(content as String, charset, defaultCharset).replace("\r\n", "\n").replace("\r", "\n"),
                     null, null
             )
         ContentType.MULTIPART_ALT ->

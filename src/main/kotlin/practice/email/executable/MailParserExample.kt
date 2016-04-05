@@ -2,7 +2,6 @@ package practice.email.executable
 
 import practice.email.parser.Content
 import practice.email.parser.EmailContentParseMode
-import practice.email.parser.SIGNATURE_PATTERN
 import practice.email.parser.parseEml
 import practice.email.parser.parseEmlWithContent
 import java.io.File

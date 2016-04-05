@@ -11,9 +11,9 @@ class MailParserSpecs : Spek() {
     init {
         given("email parser with SIMPLE parse mode") {
             on("simple email") {
-                var expectedEmail: Email = TestEmails.yam_tb_eng_rus
-                var actualEmail: Email = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\simple.eml""")
+                val expectedEmail: Email = TestEmails.simple
+                val actualEmail: Email = parseEml(
+                        File(""".\src\test\resources\emailTests\simple.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -38,11 +38,11 @@ class MailParserSpecs : Spek() {
                     assertNull(actualEmail.content.signature)
                 }
             }
-            
-            on("X - email with KOI8-R content-type charset") {
-                var expectedEmail = TestEmails.wc_test
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\simple_koi8.eml""")
+
+            on("email with KOI8-R content-type charset") {
+                val expectedEmail = TestEmails.simple_koi8
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\simple_koi8.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -57,11 +57,9 @@ class MailParserSpecs : Spek() {
                 it("should parse SUBJECT correct") {
                     assertEquals(expectedEmail.subject, actualEmail.subject)
                 }
-                
-//               There is some problem with KOI8-R charset. This case is always fails.
-//                it("should parse CONTENT BODY correct") {
-//                    assertEquals(expectedEmail.content.body, actualEmail.content.body)
-//                }
+                it("should parse CONTENT BODY correct") {
+                    assertEquals(expectedEmail.content.body, actualEmail.content.body)
+                }
                 it("shouldn't have QUOTES") {
                     assertNull(actualEmail.content.quote)
                 }
@@ -71,9 +69,9 @@ class MailParserSpecs : Spek() {
             }
 
             on("email with base64 Content-Transfer-Encoding") {
-                var expectedEmail = TestEmails.gmailMariya
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\simple_base64_encoding.eml""")
+                val expectedEmail = TestEmails.simple_base64_encoding
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\simple_base64_encoding.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -98,11 +96,11 @@ class MailParserSpecs : Spek() {
                     assertNull(actualEmail.content.signature)
                 }
             }
-            
-            on("X - another email with KOI8-R content-type charset") {
-                var expectedEmail = TestEmails.e6_2_receive_q2
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\simple_koi8_DECODE_FAILED.eml""")
+
+            on("another email with KOI8-R content-type charset") {
+                val expectedEmail = TestEmails.simple_koi8_2
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\simple_koi8_2.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -117,10 +115,9 @@ class MailParserSpecs : Spek() {
                 it("should parse SUBJECT correct") {
                     assertEquals(expectedEmail.subject, actualEmail.subject)
                 }
-//               There is some problem with KOI8-R charset. This case is always fails.
-//                it("should parse CONTENT BODY correct") {
-//                    assertEquals(expectedEmail.content.body, actualEmail.content.body)
-//                }
+                it("should parse CONTENT BODY correct") {
+                    assertEquals(expectedEmail.content.body, actualEmail.content.body)
+                }
                 it("shouldn't have QUOTES") {
                     assertNull(actualEmail.content.quote)
                 }
@@ -130,9 +127,9 @@ class MailParserSpecs : Spek() {
             }
 
             on("FWD multipart/alternative email") {
-                var expectedEmail = TestEmails.fwd_gmail_tb
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\multipart_alt.eml""")
+                val expectedEmail = TestEmails.multipart_alt
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\multipart_alt.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -159,9 +156,9 @@ class MailParserSpecs : Spek() {
             }
 
             on("FWD multipart/alternative KOI8-R email") {
-                var expectedEmail = TestEmails.fwd_yam_tb
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\multipart_alt_koi8.eml""")
+                val expectedEmail = TestEmails.multipart_alt_koi8
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\multipart_alt_koi8.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -188,9 +185,9 @@ class MailParserSpecs : Spek() {
             }
 
             on("Outlook multipart/alternative US-ASCII email") {
-                var expectedEmail = TestEmails.from_outlook_eng
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\multipert_alt_ascii_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
+                val expectedEmail = TestEmails.multipart_alt_ascii
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\multipart_alt_ascii_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
                 )
 
                 it("should parse DATE correct") {
@@ -217,9 +214,9 @@ class MailParserSpecs : Spek() {
             }
 
             on("Outlook multipart/alternative KOI8-R email") {
-                var expectedEmail = TestEmails.from_outlook_ru
-                var actualEmail = parseEml(
-                        File("""D:\IDEA workspace\email-parser\src\test\resources\emailTests\multipart_alt_koi8_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
+                val expectedEmail = TestEmails.multipart_alt_koi8_2
+                val actualEmail = parseEml(
+                        File(""".\src\test\resources\emailTests\multipart_alt_koi8_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
                 )
 
                 it("should parse DATE correct") {
