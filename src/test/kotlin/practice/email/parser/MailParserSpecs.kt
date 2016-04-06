@@ -12,7 +12,7 @@ class MailParserSpecs : Spek() {
         given("email parser with SIMPLE parse mode") {
             on("simple email") {
                 val expectedEmail: Email = TestEmails.simple
-                val actualEmail: Email = parseEml(
+                val actualEmail: Email = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\simple.eml""")
                 )
 
@@ -41,7 +41,7 @@ class MailParserSpecs : Spek() {
 
             on("email with KOI8-R content-type charset") {
                 val expectedEmail = TestEmails.simple_koi8
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\simple_koi8.eml""")
                 )
 
@@ -70,7 +70,7 @@ class MailParserSpecs : Spek() {
 
             on("email with base64 Content-Transfer-Encoding") {
                 val expectedEmail = TestEmails.simple_base64_encoding
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\simple_base64_encoding.eml""")
                 )
 
@@ -99,7 +99,7 @@ class MailParserSpecs : Spek() {
 
             on("another email with KOI8-R content-type charset") {
                 val expectedEmail = TestEmails.simple_koi8_2
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\simple_koi8_2.eml""")
                 )
 
@@ -128,7 +128,7 @@ class MailParserSpecs : Spek() {
 
             on("FWD multipart/alternative email") {
                 val expectedEmail = TestEmails.multipart_alt
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\multipart_alt.eml""")
                 )
 
@@ -157,7 +157,7 @@ class MailParserSpecs : Spek() {
 
             on("FWD multipart/alternative KOI8-R email") {
                 val expectedEmail = TestEmails.multipart_alt_koi8
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\multipart_alt_koi8.eml""")
                 )
 
@@ -186,7 +186,7 @@ class MailParserSpecs : Spek() {
 
             on("Outlook multipart/alternative US-ASCII email") {
                 val expectedEmail = TestEmails.multipart_alt_ascii
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\multipart_alt_ascii_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
                 )
 
@@ -215,7 +215,7 @@ class MailParserSpecs : Spek() {
 
             on("Outlook multipart/alternative KOI8-R email") {
                 val expectedEmail = TestEmails.multipart_alt_koi8_2
-                val actualEmail = parseEml(
+                val actualEmail = EmailParser().parseEml(
                         File(""".\src\test\resources\emailTests\multipart_alt_koi8_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
                 )
 

@@ -1,23 +1,23 @@
 package practice.email.executable
 
 import practice.email.parser.Content
-import practice.email.parser.EmailContentParseMode
-import practice.email.parser.parseEml
-import practice.email.parser.parseEmlWithContent
+import practice.email.parser.EmailContentParser
+import practice.email.parser.EmailParser
 import java.io.File
 
 private val incorrectFileMsg = "Given file is not exists."
 private val noFilePathMsg = "There isn't any path to target file. Try again and input path as a first command-line argument."
 
-fun main(args: Array<String>) {    
+fun main(args: Array<String>) {
     if (args.size > 0) {
         val file = File(args[0])
         if (file.exists()) {
-            var email1 = parseEml(file)
+            val parser = EmailParser()
+            var email1 = parser.parseEml(file)
             println("********** Just an email **********")
             println(email1)
 
-            var email2 = parseEmlWithContent(file, EmailContentParseMode.ONE)
+            var email2 = parser.parseEmlWithContent(file, EmailContentParser.MODE_ONE)
 //            println("********** Email with parsed content **********")
 //            println(email2)
             println("********** Content's components (mode ONE) **********")
@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
             println(email2.content.signature)
             println()
             
-            var email3 = parseEmlWithContent(file, EmailContentParseMode.DEEP)
+            var email3 = parser.parseEmlWithContent(file, EmailContentParser.MODE_DEEP)
             println("********** Content's components (mode DEEP) **********")
             
             var currentContent: Content? = email3.content
@@ -46,6 +46,7 @@ fun main(args: Array<String>) {
                 currentContent = currentContent?.quote
                 ++i
             } while (currentContent != null)
+
         } else {
             println(incorrectFileMsg)
         }
