@@ -1,6 +1,7 @@
 package practice.email.executable
 
 import practice.email.parser.Content
+import practice.email.parser.ContentParseMode
 import practice.email.parser.EmailContentParser
 import practice.email.parser.EmailParser
 import java.io.File
@@ -12,14 +13,13 @@ fun main(args: Array<String>) {
     if (args.size > 0) {
         val file = File(args[0])
         if (file.exists()) {
-            val parser = EmailParser()
-            var email1 = parser.parseEml(file)
+            val parser = EmailParser(file)
+            var email1 = parser.parse()
             println("********** Just an email **********")
             println(email1)
 
-            var email2 = parser.parseEmlWithContent(file, EmailContentParser.MODE_ONE)
-//            println("********** Email with parsed content **********")
-//            println(email2)
+            parser.prepare(mode = ContentParseMode.MODE_ONE)
+            var email2 = parser.parse()
             println("********** Content's components (mode ONE) **********")
             println("*** body ***")
             println(email2.content.body)
@@ -28,8 +28,9 @@ fun main(args: Array<String>) {
             println("*** signature ***")
             println(email2.content.signature)
             println()
-            
-            var email3 = parser.parseEmlWithContent(file, EmailContentParser.MODE_DEEP)
+
+            parser.prepare(mode = ContentParseMode.MODE_DEEP)
+            var email3 = parser.parse()
             println("********** Content's components (mode DEEP) **********")
             
             var currentContent: Content? = email3.content

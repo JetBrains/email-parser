@@ -11,10 +11,10 @@ class ContentParserSpec : Spek() {
         given("email content parser with parseMode ONE") {
             on("simple email with signature") {
                 val expectedContent = TestContents.simple_sig
-                var actualContent = EmailParser().parseEmlWithContent(
+                var actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_sig.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -29,10 +29,10 @@ class ContentParserSpec : Spek() {
             
             on("second simple email with signature") {
                 val expectedContent = TestContents.simple_sig_2
-                var actualContent = EmailParser().parseEmlWithContent(
+                var actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_sig_2.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -47,10 +47,10 @@ class ContentParserSpec : Spek() {
 
             on("email with just quote") {
                 val expectedContent = TestContents.simple_quote_koi8
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_quote_koi8.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -65,10 +65,10 @@ class ContentParserSpec : Spek() {
 
             on("email with inner signature") {
                 val expectedContent = TestContents.quote_plus_inner_sig
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\quote_plus_inner_sig.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -83,10 +83,10 @@ class ContentParserSpec : Spek() {
 
             on("email with some nested quotes") {
                 val expectedContent = TestContents.only_nested_quotes
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\only_nested_quotes.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -101,10 +101,10 @@ class ContentParserSpec : Spek() {
 
             on("simple email with just body") {
                 val expectedContent = TestContents.just_body
-                var actualContent = EmailParser().parseEmlWithContent(
+                var actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\just_body.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -119,10 +119,10 @@ class ContentParserSpec : Spek() {
 
             on("email with 5 nested quotes and signs") {
                 val expectedContent = TestContents.quotes_signs_5
-                var actualContent = EmailParser().parseEmlWithContent(
+                var actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\5_quotes_plus_signs.eml"""),
-                        EmailContentParser.MODE_ONE
-                ).content
+                        ContentParseMode.MODE_ONE
+                ).parse().content
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -139,10 +139,10 @@ class ContentParserSpec : Spek() {
         given("email content parser with parseMode DEEP") {
             on("simple email with signature") {
                 val expectedContent = TestContents.simple_sig_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_sig.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -157,10 +157,10 @@ class ContentParserSpec : Spek() {
 
             on("second simple email with signature") {
                 val expectedContent = TestContents.simple_sig_2_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_sig_2.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -175,10 +175,10 @@ class ContentParserSpec : Spek() {
 
             on("email with just quote") {
                 val expectedContent = TestContents.simple_quote_koi8_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\simple_quote_koi8.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -203,10 +203,10 @@ class ContentParserSpec : Spek() {
 
             on("email with inner signature") {
                 val expectedContent = TestContents.quote_plus_inner_sig_deep
-                var actualContent = EmailParser().parseEmlWithContent(
+                var actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\quote_plus_inner_sig.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -231,10 +231,10 @@ class ContentParserSpec : Spek() {
             
             on("email with some nested quotes") {
                 val expectedContent = TestContents.only_nested_quotes_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\only_nested_quotes.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -273,10 +273,10 @@ class ContentParserSpec : Spek() {
 
             on("simple email with just body") {
                 val expectedContent = TestContents.just_body_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\just_body.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -291,10 +291,10 @@ class ContentParserSpec : Spek() {
 
             on("email with 5 nested quotes and signs") {
                 val expectedContent = TestContents.quotes_signs_5_deep
-                val actualContent = EmailParser().parseEmlWithContent(
+                val actualContent = EmailParser(
                         File(""".\src\test\resources\contentTests\5_quotes_plus_signs.eml"""),
-                        EmailContentParser.MODE_DEEP
-                ).content
+                        ContentParseMode.MODE_DEEP
+                ).parse().content
 
                 it("should parse body0 correct") {
                     assertEquals(expectedContent.body, actualContent.body)

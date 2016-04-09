@@ -12,9 +12,9 @@ class MailParserSpecs : Spek() {
         given("email parser with SIMPLE parse mode") {
             on("simple email") {
                 val expectedEmail: Email = TestEmails.simple
-                val actualEmail: Email = EmailParser().parseEml(
+                val actualEmail: Email = EmailParser(
                         File(""".\src\test\resources\emailTests\simple.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -41,9 +41,9 @@ class MailParserSpecs : Spek() {
 
             on("email with KOI8-R content-type charset") {
                 val expectedEmail = TestEmails.simple_koi8
-                val actualEmail = EmailParser().parseEml(
+                val actualEmail = EmailParser(
                         File(""".\src\test\resources\emailTests\simple_koi8.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -70,9 +70,9 @@ class MailParserSpecs : Spek() {
 
             on("email with base64 Content-Transfer-Encoding") {
                 val expectedEmail = TestEmails.simple_base64_encoding
-                val actualEmail = EmailParser().parseEml(
+                val actualEmail = EmailParser(
                         File(""".\src\test\resources\emailTests\simple_base64_encoding.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -99,9 +99,9 @@ class MailParserSpecs : Spek() {
 
             on("another email with KOI8-R content-type charset") {
                 val expectedEmail = TestEmails.simple_koi8_2
-                val actualEmail = EmailParser().parseEml(
+                val actualEmail = EmailParser(
                         File(""".\src\test\resources\emailTests\simple_koi8_2.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -128,9 +128,9 @@ class MailParserSpecs : Spek() {
 
             on("FWD multipart/alternative email") {
                 val expectedEmail = TestEmails.multipart_alt
-                val actualEmail = EmailParser().parseEml(
+                val actualEmail = EmailParser(
                         File(""".\src\test\resources\emailTests\multipart_alt.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -157,9 +157,9 @@ class MailParserSpecs : Spek() {
 
             on("FWD multipart/alternative KOI8-R email") {
                 val expectedEmail = TestEmails.multipart_alt_koi8
-                val actualEmail = EmailParser().parseEml(
+                val actualEmail = EmailParser(
                         File(""".\src\test\resources\emailTests\multipart_alt_koi8.eml""")
-                )
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -186,9 +186,9 @@ class MailParserSpecs : Spek() {
 
             on("Outlook multipart/alternative US-ASCII email") {
                 val expectedEmail = TestEmails.multipart_alt_ascii
-                val actualEmail = EmailParser().parseEml(
-                        File(""".\src\test\resources\emailTests\multipart_alt_ascii_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
-                )
+                val actualEmail = EmailParser(
+                        File(""".\src\test\resources\emailTests\multipart_alt_ascii.eml""")
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)
@@ -215,9 +215,9 @@ class MailParserSpecs : Spek() {
 
             on("Outlook multipart/alternative KOI8-R email") {
                 val expectedEmail = TestEmails.multipart_alt_koi8_2
-                val actualEmail = EmailParser().parseEml(
-                        File(""".\src\test\resources\emailTests\multipart_alt_koi8_CONTENT_TYPE_SEPARATE_LINES_and_CHARSET_QUOTES.eml""")
-                )
+                val actualEmail = EmailParser(
+                        File(""".\src\test\resources\emailTests\multipart_alt_koi8_2.eml""")
+                ).parse()
 
                 it("should parse DATE correct") {
                     assertEquals(expectedEmail.date, actualEmail.date)

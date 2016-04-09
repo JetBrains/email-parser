@@ -7,23 +7,7 @@ import javax.mail.internet.ParseException
  * 1. Create EmailContentParser object and call parse().
  * 2. For another parsing, call prepare() and after that call parse().
  */
-class EmailContentParser(var content: String, var mode: Int = EmailContentParser.MODE_ONE) {
-    companion object EmailContentParseMode {
-        /**
-         * Return plain email body content without any parsing.
-         */
-        val MODE_SIMPLE = 0
-        
-        /**
-         * Parse just outer quote and signature.
-         */
-        val MODE_ONE = 1
-
-        /**
-         * Parse all quotes and signatures recursively.
-         */
-        val MODE_DEEP = 2
-    }
+class EmailContentParser(var content: String, var mode: ContentParseMode = ContentParseMode.MODE_ONE) {
 
     // Templates for detecting quotes and signatures.
     // Some others will be added later.
@@ -44,40 +28,44 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
     
     init {
             checkMode()
-            lines = content.split("\n").toTypedArray()
-            linesIdx = lines.size - 1
-            buffer = Array(lines.size) {""}
-            bufferLength = 0
-            
-            body = ""
-            quote = null
-            sign = null
-        
-            isPrepared = true
+            this.lines = this.content.split("\n").toTypedArray()
+            this.linesIdx = this.lines.size - 1
+            this.buffer = Array(this.lines.size) {""}
+            this.bufferLength = 0
+
+            this.body = ""
+            this.quote = null
+            this.sign = null
+
+            this.isPrepared = true
     }
 
     /**
      *
      */
-    fun prepare(content: String, mode: Int = MODE_ONE): EmailContentParser {
-        checkMode()
+    fun prepare(content: String = this.content, mode: ContentParseMode = this.mode): EmailContentParser {
         this.content = content
         this.mode = mode
-        
-        lines = content.split("\n").toTypedArray()
-        linesIdx = lines.size - 1
-        buffer = Array(lines.size) {""}
-        bufferLength = 0
 
-        body = ""
-        quote = null
-        sign = null
+        checkMode()
+        this.lines = this.content.split("\n").toTypedArray()
+        this.linesIdx = this.lines.size - 1
+        this. buffer = Array(this.lines.size) {""}
+        this.bufferLength = 0
 
-        isPrepared = true
+        this.body = ""
+        this.quote = null
+        this.sign = null
+
+        this.isPrepared = true
         
         return this
     }
-    
+
+    private fun hasContent()   = this.linesIdx > -1
+    private fun gotSignature() = this.lines[this.linesIdx].trim().equals(SIGNATURE_PATTERN)
+    private fun gotQuote()     = this.lines[this.linesIdx].trim().startsWith(QUOTE_PATTERN)
+
     /**
      *
      */
@@ -87,9 +75,7 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
         }
         isPrepared = false;
         
-        while (linesIdx > -1 &&
-                !lines[linesIdx].trim().equals(SIGNATURE_PATTERN) &&
-                !lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
+        while (hasContent() && !gotSignature() && !gotQuote()) {
             buffer[bufferLength++] = lines[linesIdx--]
         }
 
@@ -98,23 +84,24 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
             return Content(body, quote, sign)
         }
 
-        if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
+        if (gotQuote()) {
             parseQuotePart()
             return Content(body, quote, sign)
         }
 
-        if (lines[linesIdx].trim().equals(SIGNATURE_PATTERN)) {
+        if (gotSignature()) {
             parseSignaturePart()
             bufferLength = 0
-            while ((linesIdx > -1) && !lines[linesIdx].trim().startsWith(QUOTE_PATTERN))  {
+            while (hasContent() && !gotQuote())  {
                 buffer[bufferLength++] = lines[linesIdx--]
             }
+
             if (linesIdx <= -1) {
                 parseBodyPart()
                 return Content(body, quote, sign)
             }
             
-            if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
+            if (gotQuote()) {
                 parseQuotePart()
                 return Content(body, quote, sign)
             }
@@ -123,7 +110,7 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
         // Must never get there.
         throw ParseException("Incorrect message content parsing.")
     }
-    
+
     private fun parseBodyPart() {
         body = reverseAndJoin(buffer, bufferLength)
         body += "\n"
@@ -132,15 +119,15 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
     private fun parseQuotePart() {
         bufferLength = 0
         buffer[bufferLength++] = lines[linesIdx--].substring(1)
-        while (linesIdx > -1 && !lines[linesIdx].equals("")) {
-            if (lines[linesIdx].trim().startsWith(QUOTE_PATTERN)) {
+        while (hasContent() && !lines[linesIdx].equals("")) {
+            if (gotQuote()) {
                 buffer[bufferLength++] = lines[linesIdx--].substring(1)
             } else {
                 buffer[bufferLength++] = lines[linesIdx--]
             }
         }
         val quoteString = reverseAndJoin(buffer, bufferLength)
-        if (mode == EmailContentParser.MODE_DEEP) {
+        if (mode == ContentParseMode.MODE_DEEP) {
             quote = EmailContentParser(quoteString, mode).parse()
         } else {
             quote = Content(quoteString, null, null)
@@ -153,19 +140,11 @@ class EmailContentParser(var content: String, var mode: Int = EmailContentParser
         buffer[bufferLength++] = lines[linesIdx--]
         sign = reverseAndJoin(buffer, bufferLength)
     }
-    
-    private fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
-        if (bufferLength == 0) {
-            ""
-        } else {
-            val res = buffer.take(bufferLength).toTypedArray()
-            res.reverse()
-            res.joinToString(separator = "\n")
-        }
 
     private fun checkMode() {
-        if (mode < EmailContentParser.MODE_ONE || mode > EmailContentParser.MODE_DEEP) {
+        if (this.mode < ContentParseMode.MODE_ONE || this.mode > ContentParseMode.MODE_DEEP) {
             throw ParseException("Incorrect parse mode.")
         }
     }
 }
+
