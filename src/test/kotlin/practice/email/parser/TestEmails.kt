@@ -7,6 +7,10 @@ import java.util.*
 import javax.mail.internet.MailDateFormat
 
 object TestEmails {
+    private val path =
+        ".${File.separator}src${File.separator}test${File.separator}resources${File.separator}" + 
+        "testFiles${File.separator}email${File.separator}"
+    
     private val mailDateFormat = MailDateFormat();
 
     private fun getAddressesList(vararg addresses: String): ArrayList<String> {
@@ -37,7 +41,7 @@ object TestEmails {
             """some english и русский""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\simple.txt"""
+                            "${path}simple.txt"
                     )),
                     null, null
             )
@@ -50,7 +54,7 @@ object TestEmails {
             """Тест из веб-клиента""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\simple_koi8.txt"""
+                            "${path}simple_koi8.txt"
                     )),
                     null, null
             )
@@ -63,7 +67,7 @@ object TestEmails {
             """email-parser task#2""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\simple_base64_encoding.txt"""
+                            "${path}simple_base64_encoding.txt"
                     )),
                     null, null
             )
@@ -76,7 +80,7 @@ object TestEmails {
             """Re: тема письма""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\simple_koi8_2.txt"""
+                            "${path}simple_koi8_2.txt"
                     )),
                     null, null
             )
@@ -89,7 +93,7 @@ object TestEmails {
             """Fwd: Re: Практика""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\multipart_alt.txt"""
+                            "${path}multipart_alt.txt"
                     )),
                     null, null
             )
@@ -102,7 +106,7 @@ object TestEmails {
             """Fwd: тема письма""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\multipart_alt_koi8.txt"""
+                            "${path}multipart_alt_koi8.txt"
                     )),
                     null, null
             )
@@ -115,7 +119,7 @@ object TestEmails {
             """theme""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\multipart_alt_ascii.txt"""
+                            "${path}multipart_alt_ascii.txt"
                     )),
                     null, null
             )
@@ -128,7 +132,7 @@ object TestEmails {
             """Проверяем""",
             Content(
                     readFile(File(
-                            """.\src\test\resources\testFiles\email\multipart_alt_koi8_2.txt"""
+                            "${path}multipart_alt_koi8_2.txt"
                     )), null, null
             )
     )

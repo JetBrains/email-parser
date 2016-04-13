@@ -13,7 +13,7 @@ data class Email(val date: Date,
 
     private val forkSeparator = "+---"
     private val leafSeparator = "|___"
-    
+
     override fun toString(): String {
         val builder = StringBuilder()
         getHeaders(builder)
@@ -21,7 +21,7 @@ data class Email(val date: Date,
         builder.append(content)
         return builder.toString()
     }
-    
+
     fun getTreeRepresentation(): String {
         val builder = StringBuilder()
         getHeaders(builder)
