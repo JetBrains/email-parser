@@ -3,13 +3,17 @@ package practice.email.parser
 import java.io.File
 
 object TestContents {
+    private val path = 
+            ".${File.separator}src${File.separator}test${File.separator}" + 
+            "resources${File.separator}testFiles${File.separator}content${File.separator}"
+    
     val simple_sig = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\simple_sig\body.txt"""
+                    "${path}simple_sig${File.separator}body.txt"
             )),
             null,
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\simple_sig\signature.txt"""
+                    "${path}simple_sig${File.separator}signature.txt"
             ))
     )
 
@@ -17,11 +21,11 @@ object TestContents {
 
     val simple_sig_2 = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\simple_sig_2\body.txt"""
+                    "${path}simple_sig_2${File.separator}body.txt"
             )),
             null,
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\simple_sig_2\signature.txt"""
+                    "${path}simple_sig_2${File.separator}signature.txt"
             ))
     )
 
@@ -29,11 +33,11 @@ object TestContents {
 
     val simple_quote_koi8 = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\simple_quote_koi8\body.txt"""
+                    "${path}simple_quote_koi8${File.separator}body.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\simple_quote_koi8\quote.txt"""
+                            "${path}simple_quote_koi8${File.separator}quote.txt"
                     )),
                     null,
                     null
@@ -45,11 +49,11 @@ object TestContents {
 
     val quote_plus_inner_sig = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\quote_plus_inner_sig\body.txt"""
+                    "${path}quote_plus_inner_sig${File.separator}body.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\quote_plus_inner_sig\quote.txt"""
+                            "${path}quote_plus_inner_sig${File.separator}quote.txt"
                     )),
                     null,
                     null
@@ -59,15 +63,15 @@ object TestContents {
 
     val quote_plus_inner_sig_deep = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\quote_plus_inner_sig\body.txt"""
+                    "${path}quote_plus_inner_sig${File.separator}body.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\quote_plus_inner_sig\body1.txt"""
+                            "${path}quote_plus_inner_sig${File.separator}body1.txt"
                     )),
                     null,
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\quote_plus_inner_sig\signature1.txt"""
+                            "${path}quote_plus_inner_sig${File.separator}signature1.txt"
                     ))
             ),
             null
@@ -75,11 +79,11 @@ object TestContents {
 
     val only_nested_quotes = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\only_nested_quotes\body.txt"""
+                    "${path}only_nested_quotes${File.separator}body.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\only_nested_quotes\quote.txt"""
+                            "${path}only_nested_quotes${File.separator}quote.txt"
                     )),
                     null,
                     null
@@ -89,15 +93,15 @@ object TestContents {
 
     val only_nested_quotes_deep = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\only_nested_quotes\body0.txt"""
+                    "${path}only_nested_quotes${File.separator}body0.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\only_nested_quotes\body1.txt"""
+                            "${path}only_nested_quotes${File.separator}body1.txt"
                     )),
                     Content(
                             TestEmails.readFile(File(
-                                    """.\src\test\resources\testFiles\content\only_nested_quotes\body2.txt"""
+                                    "${path}only_nested_quotes${File.separator}body2.txt"
                             )),
                             null,
                             null
@@ -109,7 +113,7 @@ object TestContents {
 
     val just_body = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\just_body\body.txt"""
+                    "${path}just_body${File.separator}body.txt"
             )),
             null,
             null
@@ -119,53 +123,53 @@ object TestContents {
 
     val quotes_signs_5 = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body.txt"""
+                    "${path}5_quotes_plus_signs${File.separator}body.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\5_quotes_plus_signs\quote.txt"""
+                            "${path}5_quotes_plus_signs${File.separator}quote.txt"
                     )),
                     null,
                     null
             ),
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\signature.txt"""
+                    "${path}5_quotes_plus_signs${File.separator}signature.txt"
             ))
     )
 
     val quotes_signs_5_deep = Content(
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body0.txt"""
+                    "${path}5_quotes_plus_signs${File.separator}body0.txt"
             )),
             Content(
                     TestEmails.readFile(File(
-                            """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body1.txt"""
+                            "${path}5_quotes_plus_signs${File.separator}body1.txt"
                     )),
                     Content(
                             TestEmails.readFile(File(
-                                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body2.txt"""
+                                    "${path}5_quotes_plus_signs${File.separator}body2.txt"
                             )),
                             Content(
                                     TestEmails.readFile(File(
-                                            """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body3.txt"""
+                                            "${path}5_quotes_plus_signs${File.separator}body3.txt"
                                     )),
                                     Content(
                                             TestEmails.readFile(File(
-                                                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body4.txt"""
+                                                    "${path}5_quotes_plus_signs${File.separator}body4.txt"
                                             )),
                                             Content(
                                                     TestEmails.readFile(File(
-                                                            """.\src\test\resources\testFiles\content\5_quotes_plus_signs\body5.txt"""
+                                                            "${path}5_quotes_plus_signs${File.separator}body5.txt"
                                                     )),
                                                     null,
                                                     null
                                             ),
                                             TestEmails.readFile(File(
-                                                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\signature4.txt"""
+                                                    "${path}5_quotes_plus_signs${File.separator}signature4.txt"
                                             ))
                                     ),
                                     TestEmails.readFile(File(
-                                            """.\src\test\resources\testFiles\content\5_quotes_plus_signs\signature3.txt"""
+                                            "${path}5_quotes_plus_signs${File.separator}signature3.txt"
                                     ))
                             ),
                             null
@@ -173,7 +177,7 @@ object TestContents {
                     null
             ),
             TestEmails.readFile(File(
-                    """.\src\test\resources\testFiles\content\5_quotes_plus_signs\signature0.txt"""
+                    "${path}5_quotes_plus_signs${File.separator}signature0.txt"
             ))
     )
 }
