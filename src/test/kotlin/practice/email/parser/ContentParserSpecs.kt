@@ -3,10 +3,9 @@ package practice.email.parser
 import org.jetbrains.spek.api.Spek
 import java.io.File
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class ContentParserSpec : Spek() {
+class ContentParserSpecs : Spek() {
     private val path = 
             ".${File.separator}src${File.separator}test${File.separator}" + 
             "resources${File.separator}contentTests${File.separator}"
