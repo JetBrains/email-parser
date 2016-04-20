@@ -29,7 +29,6 @@ internal fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
         }
 
 internal fun getEditingDistance(a: String, b: String): Int {
-    // shuld i ignore commas?
     val firstTokens = getTokens(a)
     val secondTokens = getTokens(b)
 

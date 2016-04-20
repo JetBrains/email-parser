@@ -14,9 +14,16 @@ fun main(args: Array<String>) {
     if (args.size > 0) {
         val file = File(args[0])
         if (file.exists()) {
-            val parser = EmailParser(file, ContentParseMode.MODE_DEEP)
+            var mode =  ContentParseMode.MODE_DEEP
+            if (args.size == 2 && args[1] == "simple") {
+                mode = ContentParseMode.MODE_SIMPLE
+            }
+            val parser = EmailParser(file, mode)
             var email = parser.parse()
-            println(email.getTreeRepresentation())
+            when (mode) {
+                ContentParseMode.MODE_SIMPLE -> println(email)
+                ContentParseMode.MODE_DEEP   -> println(email.getTreeRepresentation())
+            }
         } else {
             println(incorrectFileMsg)
         }
