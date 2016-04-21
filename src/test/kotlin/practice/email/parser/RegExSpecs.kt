@@ -3,6 +3,7 @@ package practice.email.parser
 import org.jetbrains.spek.api.Spek
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class RegExSpecs : Spek() {
@@ -10,23 +11,17 @@ class RegExSpecs : Spek() {
         given("2016, token") {
             val token = Token("2016,")
             on("it's creation") {
-                it("has true isDigits") {
-                    assertTrue { token.isDigits }
+                it("has DIGITS type") {
+                    assertEquals(TokenType.DIGITS, token.type)
                 }
-                it("has true isLastComma") {
-                    assertTrue { token.hasLastComma } 
+                it("has true lastComma") {
+                    assertTrue { token.attrs.lastComma }
                 }
-                it("has false isWithAngleBrackets") {
-                    assertFalse { token.hasWithAngleBrackets }
+                it("has false withAngleBrackets") {
+                    assertFalse { token.attrs.withAngleBrackets }
                 }
-                it("has false isEmail") {
-                    assertFalse { token.isEmail }
-                }
-                it("has false isTime") {
-                    assertFalse { token.isTime }
-                }
-                it("has false isMeridiem") {
-                    assertFalse { token.isMeridiem }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
                 }
             }
         }
@@ -34,23 +29,50 @@ class RegExSpecs : Spek() {
         given("email token") {
             val token = Token("<mariya.davydova@jetbrains.com>")
             on("it's creation") {
-                it("has false isDigits") {
-                    assertFalse { token.isDigits }
+                it("has EMAIL type") {
+                    assertEquals(TokenType.EMAIL, token.type)
                 }
-                it("has false isLastComma") {
-                    assertFalse { token.hasLastComma }
+                it("has false lastComma") {
+                    assertFalse { token.attrs.lastComma }
                 }
-                it("has true isWithAngleBrackets") {
-                    assertTrue { token.hasWithAngleBrackets }
+                it("has true withAngleBrackets") {
+                    assertTrue { token.attrs.withAngleBrackets }
                 }
-                it("has true isEmail") {
-                    assertTrue { token.isEmail }
+                it("has true hasAtSymbol") {
+                    assertTrue { token.attrs.hasAtSymbol }
                 }
-                it("has false isTime") {
-                    assertFalse { token.isTime }
+                it("has false nonAlphabetic") {
+                    assertFalse { token.attrs.nonAlphabetic }
                 }
-                it("has false isMeridiem") {
-                    assertFalse { token.isMeridiem }
+            }
+        }
+
+        given("@ token") {
+            val token = Token("@")
+            on("it's creation") {
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true hasAtSymbol") {
+                    assertTrue { token.attrs.hasAtSymbol }
+                }
+                it("has true nonLetterOrDigit") {
+                    assertTrue { token.attrs.nonLetterOrDigit }
+                }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
+                }
+            }
+        }
+
+        given("@ppzhuk token") {
+            val token = Token("@ppzhuk")
+            on("it's creation") {
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true hasAtSymbol") {
+                    assertTrue { token.attrs.hasAtSymbol }
                 }
             }
         }
@@ -58,23 +80,14 @@ class RegExSpecs : Spek() {
         given("email token without brackets") {
             val token = Token("ppzhuk@gmail.com")
             on("it's creation") {
-                it("has false isDigits") {
-                    assertFalse { token.isDigits }
+                it("has EMAIL type") {
+                    assertEquals(TokenType.EMAIL, token.type)
                 }
-                it("has false isLastComma") {
-                    assertFalse { token.hasLastComma }
+                it("has false lastComma") {
+                    assertFalse { token.attrs.lastComma }
                 }
-                it("has false isWithAngleBrackets") {
-                    assertFalse { token.hasWithAngleBrackets }
-                }
-                it("has true isEmail") {
-                    assertTrue { token.isEmail }
-                }
-                it("has false isTime") {
-                    assertFalse { token.isTime }
-                }
-                it("has false isMeridiem") {
-                    assertFalse { token.isMeridiem }
+                it("has false withAngleBrackets") {
+                    assertFalse { token.attrs.withAngleBrackets }
                 }
             }
         }
@@ -82,23 +95,17 @@ class RegExSpecs : Spek() {
         given("time token") {
             val token = Token("00:00")
             on("it's creation") {
-                it("has false isDigits") {
-                    assertFalse { token.isDigits }
+                it("has TIME type") {
+                    assertEquals(TokenType.TIME, token.type)
                 }
-                it("has false isLastComma") {
-                    assertFalse { token.hasLastComma }
+                it("has false lastComma") {
+                    assertFalse { token.attrs.lastComma }
                 }
-                it("has false isWithAngleBrackets") {
-                    assertFalse { token.hasWithAngleBrackets }
+                it("has false withAngleBrackets") {
+                    assertFalse { token.attrs.withAngleBrackets }
                 }
-                it("has false isEmail") {
-                    assertFalse { token.isEmail }
-                }
-                it("has true isTime") {
-                    assertTrue { token.isTime }
-                }
-                it("has false isMeridiem") {
-                    assertFalse { token.isMeridiem }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
                 }
             }
         }
@@ -106,8 +113,14 @@ class RegExSpecs : Spek() {
         given("incorrect time token") {
             val token = Token("+10:00")
             on("it's creation") {
-                it("has false isTime") {
-                    assertFalse { token.isTime }
+                it("has not TIME type") {
+                    assertNotEquals(TokenType.TIME, token.type)
+                }
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
                 }
             }
         }
@@ -115,8 +128,8 @@ class RegExSpecs : Spek() {
         given("meridiem token") {
             val token = Token("PM")
             on("it's creation") {
-                it("has true isMeridiem") {
-                    assertTrue { token.isMeridiem }
+                it("has MERIDIEM type") {
+                    assertEquals(TokenType.MERIDIEM, token.type)
                 }
             }
         }
@@ -124,8 +137,8 @@ class RegExSpecs : Spek() {
         given("another meridiem token") {
             val token = Token("a.m.,")
             on("it's creation") {
-                it("has true isMeridiem") {
-                    assertTrue { token.isMeridiem }
+                it("has MERIDIEM type") {
+                    assertEquals(TokenType.MERIDIEM, token.type)
                 }
             }
         }
@@ -133,8 +146,8 @@ class RegExSpecs : Spek() {
         given("date1 token") {
             val token = Token("2006.05.04")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -142,8 +155,8 @@ class RegExSpecs : Spek() {
         given("date2 token") {
             val token = Token("2006-5-4")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -151,8 +164,8 @@ class RegExSpecs : Spek() {
         given("date3 token") {
             val token = Token("2006/5/4")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -160,8 +173,8 @@ class RegExSpecs : Spek() {
         given("date4 token") {
             val token = Token("4.5.2006")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -169,8 +182,8 @@ class RegExSpecs : Spek() {
         given("date5 token") {
             val token = Token("4-5-2006")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -178,8 +191,8 @@ class RegExSpecs : Spek() {
         given("date6 token") {
             val token = Token("4/5/2006")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -187,8 +200,8 @@ class RegExSpecs : Spek() {
         given("date7 token") {
             val token = Token("04.05.2006")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -196,8 +209,8 @@ class RegExSpecs : Spek() {
         given("date8 token") {
             val token = Token("04-05-2006")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
             }
         }
@@ -205,29 +218,53 @@ class RegExSpecs : Spek() {
         given("date9 token") {
             val token = Token("04/05/2006,")
             on("it's creation") {
-                it("has true isDate") {
-                    assertTrue { token.isDate }
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
                 }
-                it("has true isLastComma") {
-                    assertTrue { token.hasLastComma }
-                }
-            }
-        }
-
-        given("last token with column") {
-            val token = Token("написал:\n")
-            on("it's creation") {
-                it("has true isLastTokenColumn") {
-                    assertTrue { token.hasLastTokenColumn }
+                it("has true lastComma") {
+                    assertTrue { token.attrs.lastComma }
                 }
             }
         }
 
-        given("last token") {
-            val token = Token("wrote\n")
+        given("token with column") {
+            val token = Token("wrote:")
             on("it's creation") {
-                it("has true isLastToken") {
-                    assertTrue { token.isLastToken }
+                it("has true lastColumn") {
+                    assertTrue { token.attrs.lastColumn }
+                }
+            }
+        }
+
+        given("non letter or digit token") {
+            val token = Token("""}{[]\|\|?/.,><';:"~`""")
+            on("it's creation") {
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true nonLetterOrDigit") {
+                    assertTrue { token.attrs.nonLetterOrDigit }
+                }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
+                }
+            }
+        }
+
+        given(">: token") {
+            val token = Token(">:")
+            on("it's creation") {
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true nonLetterOrDigit") {
+                    assertTrue { token.attrs.nonLetterOrDigit }
+                }
+                it("has true lastColumn") {
+                    assertTrue { token.attrs.lastColumn }
+                }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
                 }
             }
         }

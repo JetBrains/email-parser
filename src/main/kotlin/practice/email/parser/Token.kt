@@ -2,62 +2,141 @@ package practice.email.parser
 
 import java.util.regex.Pattern
 
-val COMMA_END_REGEX = ",?"
+enum class TokenRegEx(val regex: String) {
+    COMMA_END(",?"),
+    DIGITS("\\d+" + COMMA_END.regex),
+    DATE("[0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2}" + COMMA_END.regex),
+    DATE_REVERSE("(?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]" + COMMA_END.regex),
+    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9]" + COMMA_END.regex),
+    MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END.regex),
+    EMAIL(".+@.+\\..+")
+}
 
-val DIGITS_REGEX = "\\d+" + COMMA_END_REGEX
-val ANGLE_BRACETS_REGEX = "<.*>" + COMMA_END_REGEX
-val COMMA_REGEX = ".*,"
-val EMAIL_REGEX = "<?.+@.+\\..+>?"
-val TIME_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]" + COMMA_END_REGEX
-val MERIDIEM_REGEX = "(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END_REGEX
-val DATE_REGEX = "[0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2}" + COMMA_END_REGEX
-val DATE_REVERSE_REGEX = "(?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]" + COMMA_END_REGEX
-val LAST_TOKEN_REGEX = ".*\\n"
-val LAST_TOKEN_COLUMN_REGEX = ".*:\\n"
+enum class AttributeRegEx(val regex: String) {
+    ANGLE_BRACKETS("<.*>" + TokenRegEx.COMMA_END.regex),
+    LAST_COMMA(".*,"),
+    LAST_COLUMN(".*:"),
+    HAS_AT(".*@.*"),
+    NON_LETTER_OR_DIGIT("([!-/]|[:-@]|[\\[-`]|[{-~])+"),
+    NON_ALPHABETIC("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+")
+}
+
+enum class TokenType {
+    DEFAULT,
+    DIGITS,
+    DATE,
+    TIME,
+    MERIDIEM,
+    EMAIL
+}
 
 class Token(val text: String) {
 
-    val isDigits = check(DIGITS_REGEX)
-    val isEmail = check(EMAIL_REGEX)
-    val isTime = check(TIME_REGEX)
-    val isMeridiem = check(MERIDIEM_REGEX)
-    val isDate = check(DATE_REGEX) || check(DATE_REVERSE_REGEX)
-    val isLastToken = check(LAST_TOKEN_REGEX)
+    private companion object Types {
+        private val types: Array<Pair<TokenType, Array<TokenRegEx>>> = arrayOf(
+                Pair(TokenType.DIGITS, arrayOf(TokenRegEx.DIGITS)),
+                Pair(TokenType.EMAIL, arrayOf(TokenRegEx.EMAIL)),
+                Pair(TokenType.TIME, arrayOf(TokenRegEx.TIME)),
+                Pair(TokenType.DATE, arrayOf(TokenRegEx.DATE, TokenRegEx.DATE_REVERSE)),
+                Pair(TokenType.MERIDIEM, arrayOf(TokenRegEx.MERIDIEM))
+        )
+    }
 
-    val hasLastComma = check(COMMA_REGEX)
-    val hasWithAngleBrackets = check(ANGLE_BRACETS_REGEX)
-    val hasLastTokenColumn = check(LAST_TOKEN_COLUMN_REGEX)
+    var type = getTokenType()
+    val attrs = getAttributes()
 
+    inner class Attributes {
+        var lastComma: Boolean
+        var withAngleBrackets: Boolean
+        var lastColumn: Boolean
+        var hasAtSymbol: Boolean
+        var nonLetterOrDigit: Boolean
+        var nonAlphabetic: Boolean
 
-    private fun check(regexp: String) = Pattern.matches(regexp, text)
+        init {
+            lastComma = check(AttributeRegEx.LAST_COMMA.regex)
+            withAngleBrackets = check(AttributeRegEx.ANGLE_BRACKETS.regex)
+            lastColumn = check(AttributeRegEx.LAST_COLUMN.regex)
+            hasAtSymbol = check(AttributeRegEx.HAS_AT.regex)
+            nonLetterOrDigit = check(AttributeRegEx.NON_LETTER_OR_DIGIT.regex)
+            nonAlphabetic = check(AttributeRegEx.NON_ALPHABETIC.regex)
+        }
+
+        override fun equals(other: Any?): Boolean{
+            if (this === other) return true
+            if (other?.javaClass != javaClass) return false
+
+            other as Attributes
+
+            if (lastComma != other.lastComma) return false
+            if (withAngleBrackets != other.withAngleBrackets) return false
+            if (lastColumn != other.lastColumn) return false
+            if (hasAtSymbol != other.hasAtSymbol) return false
+            if (nonLetterOrDigit != other.nonLetterOrDigit) return false
+            if (nonAlphabetic != other.nonAlphabetic) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int{
+            var result = lastComma.hashCode()
+            result += 31 * result + withAngleBrackets.hashCode()
+            result += 31 * result + lastColumn.hashCode()
+            result += 31 * result + hasAtSymbol.hashCode()
+            result += 31 * result + nonLetterOrDigit.hashCode()
+            result += 31 * result + nonAlphabetic.hashCode()
+            return result
+        }
+
+    }
+
+    fun check(regexp: String) = Pattern.matches(regexp, text)
+
+    private fun getTokenType(): TokenType {
+        var type = TokenType.DEFAULT
+        for (pair in types) {
+            var checked = false
+            for (tokenRegEx in pair.second) {
+                checked = check(tokenRegEx.regex)
+                if (checked) {
+                    break;
+                }
+            }
+            if (checked) {
+                type = pair.first
+            }
+        }
+        return type
+    }
+
+    private fun getAttributes() = Attributes()
 
     fun getDifference(other: Token): Int {
         var res = 0;
 
-        val lengthDiff = Math.abs(this.text.length - other.text.length)
-        
-        if (isDigits != other.isDigits) {
+        if (type != other.type)
             res++
-        } 
-        else if (isDigits && other.isDigits && lengthDiff > 1) {
-            res++
+        else {
+            val lengthDiff = Math.abs(this.text.length - other.text.length)
+            if (type == TokenType.DIGITS && lengthDiff > 0)
+                res++
         }
-        if (isEmail != other.isEmail) 
+
+        res += getAttributesDifference(other)
+
+        return res
+    }
+
+    private fun getAttributesDifference(other: Token): Int {
+        var res = 0
+
+        if (attrs.lastColumn != other.attrs.lastColumn)
             res++
-        if (isTime != other.isTime) 
+
+        if (attrs.lastComma != other.attrs.lastComma)
             res++
-        if (isMeridiem != other.isMeridiem) 
-            res++
-        if (isDate != other.isDate) 
-            res++
-        if (isLastToken != other.isLastToken) 
-            res++
-        
-        if (hasLastComma != other.hasLastComma) 
-            res++
-        if (hasWithAngleBrackets != other.hasWithAngleBrackets) 
-            res++
-        if (hasLastTokenColumn != other.hasLastTokenColumn) 
+
+        if (attrs.withAngleBrackets != other.attrs.withAngleBrackets)
             res++
 
         return res
@@ -69,31 +148,18 @@ class Token(val text: String) {
 
         other as Token
 
-        if (isDigits != other.isDigits) return false
-        if (isEmail != other.isEmail) return false
-        if (isTime != other.isTime) return false
-        if (isMeridiem != other.isMeridiem) return false
-        if (isDate != other.isDate) return false
-        if (isLastToken != other.isLastToken) return false
-        if (hasLastComma != other.hasLastComma) return false
-        if (hasWithAngleBrackets != other.hasWithAngleBrackets) return false
-        if (hasLastTokenColumn != other.hasLastTokenColumn) return false
+        if (type != other.type) return false
+        if (attrs != other.attrs) return false
 
         return true
     }
-    
-    override fun hashCode(): Int{
-        var result = text.hashCode()
-        result += 31 * result + isDigits.hashCode()
-        result += 31 * result + isEmail.hashCode()
-        result += 31 * result + isTime.hashCode()
-        result += 31 * result + isMeridiem.hashCode()
-        result += 31 * result + isDate.hashCode()
-        result += 31 * result + isLastToken.hashCode()
-        result += 31 * result + hasLastComma.hashCode()
-        result += 31 * result + hasWithAngleBrackets.hashCode()
-        result += 31 * result + hasLastTokenColumn.hashCode()
+
+    override fun hashCode(): Int {
+        var result = type.hashCode()
+        result += 31 * result + attrs.hashCode()
         return result
     }
 
+
 }
+
