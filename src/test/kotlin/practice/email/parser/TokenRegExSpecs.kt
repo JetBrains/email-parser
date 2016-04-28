@@ -6,7 +6,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
-class RegExSpecs : Spek() {
+class TokenRegExSpecs : Spek() {
     init {
         given("2016, token") {
             val token = Token("2016,")
@@ -27,7 +27,7 @@ class RegExSpecs : Spek() {
         }
 
         given("email token") {
-            val token = Token("<mariya.davydova@jetbrains.com>")
+            val token = Token("<mdfg.dfgg@cvbvc.com>")
             on("it's creation") {
                 it("has EMAIL type") {
                     assertEquals(TokenType.EMAIL, token.type)
@@ -77,6 +77,18 @@ class RegExSpecs : Spek() {
             }
         }
 
+        given("xyz@ppzhuk token") {
+            val token = Token("xyz@ppzhuk")
+            on("it's creation") {
+                it("has DEFAULT type") {
+                    assertEquals(TokenType.DEFAULT, token.type)
+                }
+                it("has true hasAtSymbol") {
+                    assertTrue { token.attrs.hasAtSymbol }
+                }
+            }
+        }
+
         given("email token without brackets") {
             val token = Token("ppzhuk@gmail.com")
             on("it's creation") {
@@ -109,7 +121,7 @@ class RegExSpecs : Spek() {
                 }
             }
         }
-        
+
         given("incorrect time token") {
             val token = Token("+10:00")
             on("it's creation") {
@@ -217,6 +229,18 @@ class RegExSpecs : Spek() {
 
         given("date9 token") {
             val token = Token("04/05/2006,")
+            on("it's creation") {
+                it("has DATE type") {
+                    assertEquals(TokenType.DATE, token.type)
+                }
+                it("has true lastComma") {
+                    assertTrue { token.attrs.lastComma }
+                }
+            }
+        }
+
+        given("date9 token") {
+            val token = Token("2006/04/05,")
             on("it's creation") {
                 it("has DATE type") {
                     assertEquals(TokenType.DATE, token.type)

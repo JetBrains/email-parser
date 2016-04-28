@@ -1,6 +1,7 @@
 package practice.email.parser
 
-import java.util.regex.Pattern
+import practice.email.parser.QuotesHeaderSuggestions.getQuoteHeader
+import java.io.File
 
 enum class ContentParseMode {
     /**
@@ -76,14 +77,14 @@ internal fun getEditingDistance2(a: String, b: String, resA: MutableList<Token>,
     val y = --m
 
     while (n > 0 || m > 0) {
-        if  (n == 0) {
-            val dash = getDash(secondTokens.elementAt(m-1).text.length)
+        if (n == 0) {
+            val dash = getDash(secondTokens.elementAt(m - 1).text.length)
             resA.add(0, Token(dash))
-            resB.add(0, secondTokens.elementAt(m-1))
+            resB.add(0, secondTokens.elementAt(m - 1))
             m--
-        }else if (m == 0) {
-            val dash = getDash(firstTokens.elementAt(n-1).text.length)
-            resA.add(0, firstTokens.elementAt(n-1))
+        } else if (m == 0) {
+            val dash = getDash(firstTokens.elementAt(n - 1).text.length)
+            resA.add(0, firstTokens.elementAt(n - 1))
             resB.add(0, Token(dash))
             n--
         } else {
@@ -92,19 +93,19 @@ internal fun getEditingDistance2(a: String, b: String, resA: MutableList<Token>,
             val repl = d[m - 1][n - 1] + replCost(firstTokens[n - 1], secondTokens[m - 1]);
 
             if (ins <= del && ins <= repl) {
-                val dash = getDash(secondTokens.elementAt(m-1).text.length)
+                val dash = getDash(secondTokens.elementAt(m - 1).text.length)
                 resA.add(0, Token(dash))
-                resB.add(0, secondTokens.elementAt(m-1))
+                resB.add(0, secondTokens.elementAt(m - 1))
                 m--
             } else {
                 if (del <= repl) {
-                    val dash = getDash(firstTokens.elementAt(n-1).text.length)
-                    resA.add(0, firstTokens.elementAt(n-1))
+                    val dash = getDash(firstTokens.elementAt(n - 1).text.length)
+                    resA.add(0, firstTokens.elementAt(n - 1))
                     resB.add(0, Token(dash))
                     n--
                 } else {
-                    var t1: Token = firstTokens.elementAt(n-1)
-                    var t2: Token = secondTokens.elementAt(m-1)
+                    var t1: Token = firstTokens.elementAt(n - 1)
+                    var t2: Token = secondTokens.elementAt(m - 1)
                     if (t1 == t2) {
                         t1 = Token("+${t1.text}")
                         t2 = Token("+${t2.text}")
@@ -130,6 +131,20 @@ fun getDash(length: Int): String {
 
 private fun insCost(t: Token): Int = 1
 private fun delCost(t: Token): Int = 1
-private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else 1 //t1.getDifference(t2)
+private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else 1
 
-fun getTokens(text: String) = text.split(" ").map { Token(it) }
+fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
+
+fun getEstimate(eml1: File, eml2: File): Int {
+    val content1 = EmailParser(eml1).parse().content.body
+    val content2 = EmailParser(eml2).parse().content.body
+
+    val header1 = getQuoteHeader(content1)
+    val header2 = getQuoteHeader(content2)
+
+    return when {
+        header1 == null && header2 == null -> 0
+        header1 == null || header2 == null -> Int.MAX_VALUE
+        else -> getEditingDistance(header1, header2)
+    }
+}

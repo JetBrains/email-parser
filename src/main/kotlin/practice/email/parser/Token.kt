@@ -9,7 +9,7 @@ enum class TokenRegEx(val regex: String) {
     DATE_REVERSE("(?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]" + COMMA_END.regex),
     TIME("([01]?[0-9]|2[0-3]):[0-5][0-9]" + COMMA_END.regex),
     MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END.regex),
-    EMAIL(".+@.+\\..+")
+    EMAIL("\\S+@\\S+\\.\\S+")
 }
 
 enum class AttributeRegEx(val regex: String) {
@@ -35,10 +35,10 @@ class Token(val text: String) {
     private companion object Types {
         private val types: Array<Pair<TokenType, Array<TokenRegEx>>> = arrayOf(
                 Pair(TokenType.DIGITS, arrayOf(TokenRegEx.DIGITS)),
-                Pair(TokenType.EMAIL, arrayOf(TokenRegEx.EMAIL)),
-                Pair(TokenType.TIME, arrayOf(TokenRegEx.TIME)),
                 Pair(TokenType.DATE, arrayOf(TokenRegEx.DATE, TokenRegEx.DATE_REVERSE)),
-                Pair(TokenType.MERIDIEM, arrayOf(TokenRegEx.MERIDIEM))
+                Pair(TokenType.TIME, arrayOf(TokenRegEx.TIME)),
+                Pair(TokenType.MERIDIEM, arrayOf(TokenRegEx.MERIDIEM)),
+                Pair(TokenType.EMAIL, arrayOf(TokenRegEx.EMAIL))
         )
     }
 
@@ -46,8 +46,8 @@ class Token(val text: String) {
     val attrs = getAttributes()
 
     inner class Attributes {
-        var lastComma: Boolean
         var withAngleBrackets: Boolean
+        var lastComma: Boolean
         var lastColumn: Boolean
         var hasAtSymbol: Boolean
         var nonLetterOrDigit: Boolean
@@ -62,7 +62,7 @@ class Token(val text: String) {
             nonAlphabetic = check(AttributeRegEx.NON_ALPHABETIC.regex)
         }
 
-        override fun equals(other: Any?): Boolean{
+        override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other?.javaClass != javaClass) return false
 
@@ -78,7 +78,7 @@ class Token(val text: String) {
             return true
         }
 
-        override fun hashCode(): Int{
+        override fun hashCode(): Int {
             var result = lastComma.hashCode()
             result += 31 * result + withAngleBrackets.hashCode()
             result += 31 * result + lastColumn.hashCode()
@@ -115,11 +115,11 @@ class Token(val text: String) {
         var res = 0;
 
         if (type != other.type)
-            res++
+            res += 1
         else {
             val lengthDiff = Math.abs(this.text.length - other.text.length)
             if (type == TokenType.DIGITS && lengthDiff > 0)
-                res++
+                res += 1
         }
 
         res += getAttributesDifference(other)
@@ -130,13 +130,22 @@ class Token(val text: String) {
     private fun getAttributesDifference(other: Token): Int {
         var res = 0
 
-        if (attrs.lastColumn != other.attrs.lastColumn)
-            res++
-
         if (attrs.lastComma != other.attrs.lastComma)
             res++
 
         if (attrs.withAngleBrackets != other.attrs.withAngleBrackets)
+            res++
+
+        if (attrs.lastColumn != other.attrs.lastColumn)
+            res++
+
+        if (attrs.hasAtSymbol != other.attrs.hasAtSymbol)
+            res++
+
+        if (attrs.nonLetterOrDigit != other.attrs.nonLetterOrDigit)
+            res++
+
+        if (attrs.nonAlphabetic != other.attrs.nonAlphabetic)
             res++
 
         return res
