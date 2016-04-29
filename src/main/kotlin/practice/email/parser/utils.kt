@@ -37,17 +37,17 @@ private fun insCost(t: Token): Int = INS_COST
 private fun delCost(t: Token): Int = DEL_COST
 private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else REPL_COST
 
-internal fun getEditingDistance(a: String, b: String): Int {
-    val firstTokens = getTokens(a)
-    val secondTokens = getTokens(b)
+internal fun getEditingDistance(firstHeader: String, secondHeader: String): Int {
+    val firstTokens = getTokens(firstHeader)
+    val secondTokens = getTokens(secondHeader)
 
-    val n = firstTokens.size + 1;
-    val m = secondTokens.size + 1;
-    var prev = IntArray(n) { it * INS_COST }
-    var curr = IntArray(n)
-    for (j in 1..m - 1) {
+    val firstSize = firstTokens.size;
+    val secondSize = secondTokens.size;
+    var prev = IntArray(firstSize + 1) { it * INS_COST }
+    var curr = IntArray(firstSize + 1)
+    for (j in 1..secondSize) {
         curr[0] = j * DEL_COST
-        for (i in 1..n - 1) {
+        for (i in 1..firstSize) {
             val ins = prev[i] + insCost(secondTokens[j - 1]);
             val del = curr[i - 1] + delCost(firstTokens[i - 1]);
             val repl = prev[i - 1] + replCost(firstTokens[i - 1], secondTokens[j - 1]);
@@ -57,87 +57,92 @@ internal fun getEditingDistance(a: String, b: String): Int {
         curr = prev
         prev = temp
     }
-    return prev[n - 1]
+    return prev[firstSize]
 }
 
-internal fun getEditingDistance2(a: String, b: String, resA: MutableList<Token>, resB: MutableList<Token>): Int {
-    val firstTokens = getTokens(a)
-    val secondTokens = getTokens(b)
+internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
+                                 alignmentFirst: MutableList<Token>, alignmentSecond: MutableList<Token>): Int {
+    val firstTokens = getTokens(firstHeader)
+    val secondTokens = getTokens(secondHeader)
 
-    var n = firstTokens.size + 1;
-    var m = secondTokens.size + 1;
-    var d = Array(m) { IntArray(n) { 0 } }
-    for (i in d[0].indices) {
-        d[0][i] = i * INS_COST
+    var firstSize = firstTokens.size + 1;
+    var secondSize = secondTokens.size + 1;
+    var distance = Array(secondSize) { IntArray(firstSize) { 0 } }
+    for (i in distance[0].indices) {
+        distance[0][i] = i * INS_COST
     }
 
-    for (j in 1..m - 1) {
-        d[j][0] = j * DEL_COST
-        for (i in 1..n - 1) {
-            val ins = d[j - 1][i] + insCost(secondTokens[j - 1]);
-            val del = d[j][i - 1] + delCost(firstTokens[i - 1]);
-            val repl = d[j - 1][i - 1] + replCost(firstTokens[i - 1], secondTokens[j - 1]);
-            d[j][i] = Math.min(Math.min(ins, del), repl);
+    for (j in 1..secondSize - 1) {
+        distance[j][0] = j * DEL_COST
+        for (i in 1..firstSize - 1) {
+            val ins = distance[j - 1][i] + insCost(secondTokens[j - 1]);
+            val del = distance[j][i - 1] + delCost(firstTokens[i - 1]);
+            val repl = distance[j - 1][i - 1] + replCost(firstTokens[i - 1], secondTokens[j - 1]);
+            distance[j][i] = Math.min(Math.min(ins, del), repl);
         }
     }
 
-    val x = --n
-    val y = --m
+    val firstDistanceIndex = --firstSize
+    val secondDistanceIndex = --secondSize
 
-    while (n > 0 || m > 0) {
-        if (n == 0) {
-            val dash = getDash(secondTokens.elementAt(m - 1).text.length)
-            resA.add(0, Token(dash))
-            resB.add(0, secondTokens.elementAt(m - 1))
-            m--
-        } else if (m == 0) {
-            val dash = getDash(firstTokens.elementAt(n - 1).text.length)
-            resA.add(0, firstTokens.elementAt(n - 1))
-            resB.add(0, Token(dash))
-            n--
+    while (firstSize > 0 || secondSize > 0) {
+        if (firstSize == 0) {
+            val dash = getDash(secondTokens.elementAt(secondSize - 1).text.length)
+            alignmentFirst.add(0, Token(dash))
+            alignmentSecond.add(0, secondTokens.elementAt(secondSize - 1))
+            secondSize--
+        } else if (secondSize == 0) {
+            val dash = getDash(firstTokens.elementAt(firstSize - 1).text.length)
+            alignmentFirst.add(0, firstTokens.elementAt(firstSize - 1))
+            alignmentSecond.add(0, Token(dash))
+            firstSize--
         } else {
-            val ins = d[m - 1][n] + insCost(secondTokens[m - 1]);
-            val del = d[m][n - 1] + delCost(firstTokens[n - 1]);
-            val repl = d[m - 1][n - 1] + replCost(firstTokens[n - 1], secondTokens[m - 1]);
+            val ins = distance[secondSize - 1][firstSize] + insCost(secondTokens[secondSize - 1]);
+            val del = distance[secondSize][firstSize - 1] + delCost(firstTokens[firstSize - 1]);
+            val repl = distance[secondSize - 1][firstSize - 1] + 
+                    replCost(firstTokens[firstSize - 1], secondTokens[secondSize - 1]);
 
             if (ins <= del && ins <= repl) {
-                val dash = getDash(secondTokens.elementAt(m - 1).text.length)
-                resA.add(0, Token(dash))
-                resB.add(0, secondTokens.elementAt(m - 1))
-                m--
+                val dash = getDash(secondTokens.elementAt(secondSize - 1).text.length)
+                alignmentFirst.add(0, Token(dash))
+                alignmentSecond.add(0, secondTokens.elementAt(secondSize - 1))
+                secondSize--
             } else {
                 if (del <= repl) {
-                    val dash = getDash(firstTokens.elementAt(n - 1).text.length)
-                    resA.add(0, firstTokens.elementAt(n - 1))
-                    resB.add(0, Token(dash))
-                    n--
+                    val dash = getDash(firstTokens.elementAt(firstSize - 1).text.length)
+                    alignmentFirst.add(0, firstTokens.elementAt(firstSize - 1))
+                    alignmentSecond.add(0, Token(dash))
+                    firstSize--
                 } else {
-                    var t1: Token = firstTokens.elementAt(n - 1)
-                    var t2: Token = secondTokens.elementAt(m - 1)
+                    var t1: Token = firstTokens.elementAt(firstSize - 1)
+                    var t2: Token = secondTokens.elementAt(secondSize - 1)
+                    
                     if (t1 == t2) {
                         t1 = Token("+${t1.text}")
                         t2 = Token("+${t2.text}")
                     }
-                    resA.add(0, t1)
-                    resB.add(0, t2)
-                    n--
-                    m--
+                    
+                    alignmentFirst.add(0, t1)
+                    alignmentSecond.add(0, t2)
+                    
+                    firstSize--
+                    secondSize--
                 }
             }
         }
     }
 
-    return d[y][x]
+    return distance[secondDistanceIndex][firstDistanceIndex]
 }
 
-fun getDash(length: Int): String {
+private fun getDash(length: Int): String {
     val sb = StringBuilder()
     for (i in 1..length)
         sb.append("-")
     return sb.toString()
 }
 
-fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
+private fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
 
 fun getEstimate(eml1: File, eml2: File): Int {
     val content1 = EmailParser(eml1).parse().content.body
