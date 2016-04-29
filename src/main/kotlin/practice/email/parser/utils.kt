@@ -29,16 +29,24 @@ internal fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
             res.joinToString(separator = "\n")
         }
 
+private val INS_COST = 1
+private val DEL_COST = 1
+private val REPL_COST = 1
+
+private fun insCost(t: Token): Int = INS_COST
+private fun delCost(t: Token): Int = DEL_COST
+private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else REPL_COST
+
 internal fun getEditingDistance(a: String, b: String): Int {
     val firstTokens = getTokens(a)
     val secondTokens = getTokens(b)
 
     val n = firstTokens.size + 1;
     val m = secondTokens.size + 1;
-    var prev = IntArray(n) { it }
+    var prev = IntArray(n) { it * INS_COST }
     var curr = IntArray(n)
     for (j in 1..m - 1) {
-        curr[0] = j;
+        curr[0] = j * DEL_COST
         for (i in 1..n - 1) {
             val ins = prev[i] + insCost(secondTokens[j - 1]);
             val del = curr[i - 1] + delCost(firstTokens[i - 1]);
@@ -60,11 +68,11 @@ internal fun getEditingDistance2(a: String, b: String, resA: MutableList<Token>,
     var m = secondTokens.size + 1;
     var d = Array(m) { IntArray(n) { 0 } }
     for (i in d[0].indices) {
-        d[0][i] = i
+        d[0][i] = i * INS_COST
     }
 
     for (j in 1..m - 1) {
-        d[j][0] = j;
+        d[j][0] = j * DEL_COST
         for (i in 1..n - 1) {
             val ins = d[j - 1][i] + insCost(secondTokens[j - 1]);
             val del = d[j][i - 1] + delCost(firstTokens[i - 1]);
@@ -128,10 +136,6 @@ fun getDash(length: Int): String {
         sb.append("-")
     return sb.toString()
 }
-
-private fun insCost(t: Token): Int = 1
-private fun delCost(t: Token): Int = 1
-private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else 1
 
 fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
 

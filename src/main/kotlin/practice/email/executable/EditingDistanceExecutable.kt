@@ -14,16 +14,13 @@ fun main(args: Array<String>) {
     headers.add("Воскресенье, 13 марта 2016, 6:55 +10:00 от Павел Жук < ppp@zzz.com >:")
 //    headers.add("Воскресенье, 13 марта 2016, 7:09 +10:00 от Павел Жук <lkjk@jl.com>:")
 
-//    headers.add("On 04/15/2016 05:08 PM, Павел Жук wrote:")
+    headers.add("On 04/15/2016 05:08 PM, Павел Жук wrote:")
     headers.add("El 02/04/16 a las 19:03, Zhuk Pavel escribió:")
 //
     headers.add("On Mar 1, 2016, at 13:35, Павел Жук <pp@g.c> wrote:")
 //    headers.add("On Thu, Mar 31, 2016 at 4:04 PM, Zhuk Pavel <y-k@jjjjj.com> wrote:")
 
-//    headers.add("Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее масштабная. Признаки, кроме: даты, не зависят от языка.")
-
-    headers.add("> On Mar 1, 2016, at 13:35, Павел Жук <zxc@zxc.zxc> wrote:")
-    headers.add("Дата: 	Sun, 13 Mar 2016 01:01:33 +0300От: 	pav9147@yandex.ru")
+    headers.add("Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее масштабная. Признаки, кроме: даты, не зависят от языка.")
 
     headers.forEachIndexed { i, a ->
         headers.filterIndexed { j, s -> j > i }.forEach { b ->

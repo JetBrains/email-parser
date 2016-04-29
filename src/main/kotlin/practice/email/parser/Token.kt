@@ -93,20 +93,14 @@ class Token(val text: String) {
     fun check(regexp: String) = Pattern.matches(regexp, text)
 
     private fun getTokenType(): TokenType {
-        var type = TokenType.DEFAULT
-        for (pair in types) {
-            var checked = false
-            for (tokenRegEx in pair.second) {
-                checked = check(tokenRegEx.regex)
-                if (checked) {
-                    break;
+        types.forEach { pair ->
+            pair.second.forEach { tokenRegEx ->
+                if (check(tokenRegEx.regex)) {
+                    return@getTokenType pair.first
                 }
             }
-            if (checked) {
-                type = pair.first
-            }
         }
-        return type
+        return@getTokenType TokenType.DEFAULT
     }
 
     private fun getAttributes() = Attributes()
