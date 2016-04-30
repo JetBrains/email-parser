@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
     headers.add("On Mar 1, 2016, at 13:35, Павел Жук <pp@g.c> wrote:")
 //    headers.add("On Thu, Mar 31, 2016 at 4:04 PM, Zhuk Pavel <y-k@jjjjj.com> wrote:")
 
-    headers.add("Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее масштабная. Признаки, кроме: даты, не зависят от языка.")
+//    headers.add("Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее масштабная. Признаки, кроме: даты, не зависят от языка.")
 
     headers.forEachIndexed { i, a ->
         headers.filterIndexed { j, s -> j > i }.forEach { b ->
@@ -40,4 +40,5 @@ fun printAlignment(a: String, b: String) {
     getEditingDistance2(a, b, resA, resB)
     println(resA.joinToString(prefix = "a = ", separator = "|") { "${it.text}" })
     println(resB.joinToString(prefix = "b = ", separator = "|") { "${it.text}" })
+    
 }

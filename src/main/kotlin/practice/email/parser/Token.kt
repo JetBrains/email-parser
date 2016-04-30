@@ -17,8 +17,8 @@ enum class AttributeRegEx(val regex: String) {
     LAST_COMMA(".*,"),
     LAST_COLUMN(".*:"),
     HAS_AT(".*@.*"),
-    NON_LETTER_OR_DIGIT("([!-/]|[:-@]|[\\[-`]|[{-~])+"),
-    NON_ALPHABETIC("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+")
+    NON_ALPHABETIC("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+"),
+    NON_ALPHABETIC_OR_DIGIT("([!-/]|[:-@]|[\\[-`]|[{-~])+")
 }
 
 enum class TokenType {
@@ -30,9 +30,14 @@ enum class TokenType {
     EMAIL
 }
 
-class Token(val text: String) {
+class Token(var text: String) {
 
-    private companion object Types {
+    companion object Static {
+        val INSERTION_COST = 10
+        val DELETION_COST = 10
+        val REPLACEMENT_COST = 10
+        val ATTRIBUTE_INEQUALITY_COST = 1
+        
         private val types: Array<Pair<TokenType, TokenRegEx>> = arrayOf(
                 Pair(TokenType.DIGITS, TokenRegEx.DIGITS),
                 Pair(TokenType.DATE, TokenRegEx.DATE),
@@ -58,7 +63,7 @@ class Token(val text: String) {
             this.withAngleBrackets = check(AttributeRegEx.ANGLE_BRACKETS.regex)
             this.lastColumn = check(AttributeRegEx.LAST_COLUMN.regex)
             this.hasAtSymbol = check(AttributeRegEx.HAS_AT.regex)
-            this.nonLetterOrDigit = check(AttributeRegEx.NON_LETTER_OR_DIGIT.regex)
+            this.nonLetterOrDigit = check(AttributeRegEx.NON_ALPHABETIC_OR_DIGIT.regex)
             this.nonAlphabetic = check(AttributeRegEx.NON_ALPHABETIC.regex)
         }
 
@@ -88,12 +93,17 @@ class Token(val text: String) {
             return result
         }
 
+        override fun toString(): String{
+            return "Attributes(withAngleBrackets=$withAngleBrackets, lastComma=$lastComma, lastColumn=$lastColumn, hasAtSymbol=$hasAtSymbol, nonLetterOrDigit=$nonLetterOrDigit, nonAlphabetic=$nonAlphabetic)"
+        }
+
+
     }
 
     fun check(regexp: String) = Pattern.matches(regexp, text)
 
     private fun getTokenType(): TokenType {
-        Types.types.forEach { pair ->
+        Static.types.forEach { pair ->
             if (check(pair.second.regex)) {
                 return@getTokenType pair.first
             }
@@ -107,41 +117,36 @@ class Token(val text: String) {
         var difference = 0;
 
         if (this.type != other.type)
-            difference += 1
+            difference += REPLACEMENT_COST
         else {
             val lengthDiff = Math.abs(this.text.length - other.text.length)
             if (this.type == TokenType.DIGITS && lengthDiff > 0)
-                difference += 1
+                difference += REPLACEMENT_COST
         }
 
         difference += getAttributesDifference(other)
 
         return difference
     }
-
+    
     private fun getAttributesDifference(other: Token): Int {
         var difference = 0
 
-        if (this.attrs.lastComma != other.attrs.lastComma)
-            difference++
-
-        if (this.attrs.withAngleBrackets != other.attrs.withAngleBrackets)
-            difference++
-
-        if (this.attrs.lastColumn != other.attrs.lastColumn)
-            difference++
-
-        if (this.attrs.hasAtSymbol != other.attrs.hasAtSymbol)
-            difference++
-
-        if (this.attrs.nonLetterOrDigit != other.attrs.nonLetterOrDigit)
-            difference++
-
-        if (this.attrs.nonAlphabetic != other.attrs.nonAlphabetic)
-            difference++
-
+        difference += attributeDifference(this.attrs.lastComma, other.attrs.lastComma)
+        difference += attributeDifference(this.attrs.withAngleBrackets, other.attrs.withAngleBrackets)
+        difference += attributeDifference(this.attrs.lastColumn, other.attrs.lastColumn)
+        difference += attributeDifference(this.attrs.hasAtSymbol, other.attrs.hasAtSymbol)
+        difference += attributeDifference(this.attrs.nonLetterOrDigit, other.attrs.nonLetterOrDigit)
+        difference += attributeDifference(this.attrs.nonAlphabetic, other.attrs.nonAlphabetic)
+        
         return difference
     }
+
+    private fun attributeDifference(firstAttribute: Boolean, secondAttribute: Boolean): Int = 
+            if (firstAttribute != secondAttribute) 
+                ATTRIBUTE_INEQUALITY_COST
+            else 
+                0
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -159,6 +164,10 @@ class Token(val text: String) {
         var result = this.type.hashCode()
         result += 31 * result + this.attrs.hashCode()
         return result
+    }
+
+    override fun toString(): String{
+        return "Token(text='$text', type=$type, attrs=$attrs)"
     }
 
 

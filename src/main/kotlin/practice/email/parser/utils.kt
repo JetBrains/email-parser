@@ -29,13 +29,9 @@ internal fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
             res.joinToString(separator = "\n")
         }
 
-private val INS_COST = 1
-private val DEL_COST = 1
-private val REPL_COST = 1
-
-private fun insCost(t: Token): Int = INS_COST
-private fun delCost(t: Token): Int = DEL_COST
-private fun replCost(t1: Token, t2: Token): Int = if (t1 == t2) 0 else REPL_COST
+private fun insCost(t: Token): Int = Token.INSERTION_COST
+private fun delCost(t: Token): Int = Token.DELETION_COST
+private fun replCost(t1: Token, t2: Token): Int = t1.getDifference(t2)
 
 internal fun getEditingDistance(firstHeader: String, secondHeader: String): Int {
     val firstTokens = getTokens(firstHeader)
@@ -43,10 +39,10 @@ internal fun getEditingDistance(firstHeader: String, secondHeader: String): Int 
 
     val firstSize = firstTokens.size;
     val secondSize = secondTokens.size;
-    var prev = IntArray(firstSize + 1) { it * INS_COST }
+    var prev = IntArray(firstSize + 1) { it * Token.INSERTION_COST }
     var curr = IntArray(firstSize + 1)
     for (j in 1..secondSize) {
-        curr[0] = j * DEL_COST
+        curr[0] = j * Token.DELETION_COST
         for (i in 1..firstSize) {
             val ins = prev[i] + insCost(secondTokens[j - 1]);
             val del = curr[i - 1] + delCost(firstTokens[i - 1]);
@@ -69,11 +65,11 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
     var secondSize = secondTokens.size + 1;
     var distance = Array(secondSize) { IntArray(firstSize) { 0 } }
     for (i in distance[0].indices) {
-        distance[0][i] = i * INS_COST
+        distance[0][i] = i * Token.INSERTION_COST
     }
 
     for (j in 1..secondSize - 1) {
-        distance[j][0] = j * DEL_COST
+        distance[j][0] = j * Token.DELETION_COST
         for (i in 1..firstSize - 1) {
             val ins = distance[j - 1][i] + insCost(secondTokens[j - 1]);
             val del = distance[j][i - 1] + delCost(firstTokens[i - 1]);
@@ -118,8 +114,8 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
                     var t2: Token = secondTokens.elementAt(secondSize - 1)
                     
                     if (t1 == t2) {
-                        t1 = Token("+${t1.text}")
-                        t2 = Token("+${t2.text}")
+                        t1.text = "+${t1.text}"
+                        t2.text = "+${t2.text}"
                     }
                     
                     alignmentFirst.add(0, t1)
