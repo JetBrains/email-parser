@@ -31,7 +31,7 @@ public class ClusteringDemo
 
     public static void main(String[] args) throws Exception
     {
-        String optionsLine = "-I 10 -M 1000 -J 1000 -L 1 -H 100 -B 1.0 -C 0.5 -D \"practice.email.clustering.TokenEditDistance -D -R first\" -S 10";
+        String optionsLine = "-I 10 -M 1000 -J 1000 -L 1 -H 100 -B 1.0 -C 0.5 -D \"TokenEditDistance -D -R first\" -S 10";
 
         String[] options = Utils.splitOptions(optionsLine);
         XMeans xmean = new XMeans();
