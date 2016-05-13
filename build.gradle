@@ -20,6 +20,10 @@ mainClassName = 'practice.email.executable.MailParserExampleKt'
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'javax.mail:mail:1.4.7'
+    compile 'nz.ac.waikato.cms.weka:weka-stable:3.8.0'
+    compile 'nz.ac.waikato.cms.weka:XMeans:1.0.4'
+    compile 'nz.ac.waikato.cms.weka:levenshteinEditDistance:1.0.2'
+
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.jetbrains.spek:spek:0.1.195'

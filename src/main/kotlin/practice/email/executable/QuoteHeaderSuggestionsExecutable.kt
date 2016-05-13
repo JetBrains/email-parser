@@ -12,8 +12,8 @@ fun main(args: Array<String>) {
     val f1 = "quote_plus_inner_sig.eml"
     val f2 = "only_nested_quotes.eml"
 
-    val eml1 =  File("$path$f1")
-    val eml2 =  File("$path$f2")
+    val eml1 = File("$path$f1")
+    val eml2 = File("$path$f2")
 
     val content1 = EmailParser(eml1).parse().content.body
     val content2 = EmailParser(eml2).parse().content.body
