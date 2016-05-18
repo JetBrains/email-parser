@@ -2,7 +2,7 @@
 
 To run:     
 1. Clone project via git and change directory to `email-parser`.          
-2. Enter `gradlew run -PemlFile="path"` in the console, where `path` is path to eml file.
+2. Enter `gradlew run -PemlFile="path"` in the console, where `path` is path to eml file.                 
 3. Get a result.        
 
 To test:         
