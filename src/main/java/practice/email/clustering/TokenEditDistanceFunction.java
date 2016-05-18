@@ -1,13 +1,13 @@
 package practice.email.clustering;
 
-import practice.email.parser.UtilsKt;
+import practice.email.parser.TokenEditDistanceKt;
 import weka.core.Instances;
 
-public class TokenEditDistance extends AbstractStringDistanceFunction {
-    public TokenEditDistance() {
+public class TokenEditDistanceFunction extends AbstractStringDistanceFunction {
+    public TokenEditDistanceFunction() {
     }
 
-    public TokenEditDistance(Instances data) {
+    public TokenEditDistanceFunction(Instances data) {
         super(data);
     }
 
@@ -22,6 +22,6 @@ public class TokenEditDistance extends AbstractStringDistanceFunction {
     }
 
     double stringDistance(String stringA, String stringB) {
-        return (double) UtilsKt.getEditingDistance(stringA, stringB);
+        return (double) TokenEditDistanceKt.getEditDistance(stringA, stringB);
     }
 }

@@ -3,10 +3,10 @@ package practice.email.parser
 import java.io.File
 
 object TestContents {
-    private val path = 
-            ".${File.separator}src${File.separator}test${File.separator}" + 
-            "resources${File.separator}testFiles${File.separator}content${File.separator}"
-    
+    private val path =
+            ".${File.separator}src${File.separator}test${File.separator}" +
+                    "resources${File.separator}testFiles${File.separator}content${File.separator}"
+
     val simple_sig = Content(
             TestEmails.readFile(File(
                     "${path}simple_sig${File.separator}body.txt"

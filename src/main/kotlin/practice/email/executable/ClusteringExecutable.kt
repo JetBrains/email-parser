@@ -1,15 +1,17 @@
 package practice.email.executable
 
-import practice.email.clustering.TokenEditDistance
 import practice.email.clustering.getBestClusteringParams
 import weka.clusterers.ClusterEvaluation
 import weka.clusterers.HierarchicalClusterer
 import weka.core.Instances
 import weka.core.Utils
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileReader
 
 fun main(args: Array<String>) {
-    val options = "-L SINGLE -A \"practice.email.clustering.TokenEditDistance -D -R first\" -B"
+    val options = "-L SINGLE -A \"practice.email.clustering.TokenEditDistanceFunction -D -R first\" -B"
     val datasetFilename = "test.arff"
 
     val params =

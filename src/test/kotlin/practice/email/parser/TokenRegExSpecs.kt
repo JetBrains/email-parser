@@ -50,8 +50,8 @@ class TokenRegExSpecs : Spek() {
         given("@ token") {
             val token = Token("@")
             on("it's creation") {
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has UNDEFINED type") {
+                    assertEquals(TokenType.UNDEFINED, token.type)
                 }
                 it("has true hasAtSymbol") {
                     assertTrue { token.attrs.hasAtSymbol }
@@ -68,8 +68,8 @@ class TokenRegExSpecs : Spek() {
         given("@ppzhuk token") {
             val token = Token("@ppzhuk")
             on("it's creation") {
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has UNDEFINED type") {
+                    assertEquals(TokenType.UNDEFINED, token.type)
                 }
                 it("has true hasAtSymbol") {
                     assertTrue { token.attrs.hasAtSymbol }
@@ -80,8 +80,8 @@ class TokenRegExSpecs : Spek() {
         given("xyz@ppzhuk token") {
             val token = Token("xyz@ppzhuk")
             on("it's creation") {
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has EMAIL type") {
+                    assertEquals(TokenType.EMAIL, token.type)
                 }
                 it("has true hasAtSymbol") {
                     assertTrue { token.attrs.hasAtSymbol }
@@ -128,8 +128,8 @@ class TokenRegExSpecs : Spek() {
                 it("has not TIME type") {
                     assertNotEquals(TokenType.TIME, token.type)
                 }
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has UNDEFINED type") {
+                    assertEquals(TokenType.UNDEFINED, token.type)
                 }
                 it("has true nonAlphabetic") {
                     assertTrue { token.attrs.nonAlphabetic }
@@ -263,8 +263,8 @@ class TokenRegExSpecs : Spek() {
         given("non letter or digit token") {
             val token = Token("""}{[]\|\|?/.,><';:"~`""")
             on("it's creation") {
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has UNDEFINED type") {
+                    assertEquals(TokenType.UNDEFINED, token.type)
                 }
                 it("has true nonLetterOrDigit") {
                     assertTrue { token.attrs.nonLetterOrDigit }
@@ -278,8 +278,8 @@ class TokenRegExSpecs : Spek() {
         given(">: token") {
             val token = Token(">:")
             on("it's creation") {
-                it("has DEFAULT type") {
-                    assertEquals(TokenType.DEFAULT, token.type)
+                it("has UNDEFINED type") {
+                    assertEquals(TokenType.UNDEFINED, token.type)
                 }
                 it("has true nonLetterOrDigit") {
                     assertTrue { token.attrs.nonLetterOrDigit }

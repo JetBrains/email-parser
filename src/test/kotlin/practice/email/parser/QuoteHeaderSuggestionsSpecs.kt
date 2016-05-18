@@ -4,7 +4,6 @@ import org.jetbrains.spek.api.Spek
 import practice.email.parser.QuotesHeaderSuggestions.getQuoteHeader
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import kotlin.test.assertTrue
 
 class QuoteHeaderSuggestionsSpecs : Spek() {
     init {
@@ -34,7 +33,7 @@ mariya.davydova@jetbrains.com> написал:
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
                 val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch quote header") {
                     assertEquals(expected, actual)
                 }
@@ -65,13 +64,13 @@ mariya.davydova@jetbrains.com> написал:
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
                 val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("still should fetch quote header") {
                     assertEquals(expected, actual)
                 }
             }
 
-            on("calling with content text with concentrated fake quote suggestions") {
+            on("calling with text with concentrated fake quote suggestions") {
                 val text = """Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных
 случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее
 масштабная. Признаки, кроме даты, не: зависят от языка.
@@ -96,15 +95,15 @@ mariya.davydova@jetbrains.com> написал:
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
                 val expected = "Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных" +
-                    "случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее" +
-                    "масштабная. Признаки, кроме даты, не: зависят от языка."
-                val actual   = getQuoteHeader(text)
+                        "случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее" +
+                        "масштабная. Признаки, кроме даты, не: зависят от языка."
+                val actual = getQuoteHeader(text)
                 it("should fetch the first paragraph") {
                     assertEquals(expected, actual)
                 }
             }
 
-            on("calling with some content text") {
+            on("calling with some text") {
                 val text = """Это в общих чертах, на деле, видимо, еще придется учесть несколько частных
 случаев, но в целом, кажется, что задача поиска заголовка цитаты менее
 масштабная. Признаки, кроме даты, не зависят от языка.
@@ -129,13 +128,13 @@ mariya.davydova@jetbrains.com> написал:
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
                 val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch quote header") {
                     assertEquals(expected, actual)
                 }
             }
 
-            on("calling with some another content text with some nested quotes") {
+            on("calling with some another text with some nested quotes") {
                 val text = """Привет,
 
 В принципе, я более-менее живая и в офисе. Если не напишу до 15-00,
@@ -160,7 +159,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >> Sent from my iPad"""
 
                 val expected = "On 03/02/2016 12:10 AM, Павел Жук wrote:"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch the first one") {
                     assertEquals(expected, actual)
                 }
@@ -176,7 +175,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >>  без цитаты"""
 
                 val expected = """13.03.2016, 01:01, "Паша Жук" <jojograf@yandex.ru>:"""
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch the first one") {
                     assertEquals(expected, actual)
                 }
@@ -194,7 +193,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >Жук Павел."""
 
                 val expected = ">Воскресенье, 13 марта 2016, 6:55 +10:00 от Павел Жук <ppzhuk@gmail.com>:"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch that ticked header") {
                     assertEquals(expected, actual)
                 }
@@ -211,7 +210,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 """
 
                 val expected = "Дата: 	Sun, 13 Mar 2016 01:01:33 +0300От: 	pav9147@yandex.ru"
-                val actual   = getQuoteHeader(text)
+                val actual = getQuoteHeader(text)
                 it("should fetch Data and From as a quote header") {
                     assertEquals(expected, actual)
                 }

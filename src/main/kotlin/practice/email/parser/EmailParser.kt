@@ -32,7 +32,7 @@ class EmailParser(var emlFile: File, var mode: ContentParseMode = ContentParseMo
 
     fun prepare(emlFile: File = this.emlFile, mode: ContentParseMode = this.mode): EmailParser {
         this.emlFile = emlFile
-        this.mode    = mode
+        this.mode = mode
 
         checkMode()
 

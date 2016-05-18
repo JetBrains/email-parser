@@ -6,10 +6,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ContentParserSpecs : Spek() {
-    private val path = 
-            ".${File.separator}src${File.separator}test${File.separator}" + 
-            "resources${File.separator}contentTests${File.separator}"
-    
+    private val path =
+            ".${File.separator}src${File.separator}test${File.separator}" +
+                    "resources${File.separator}contentTests${File.separator}"
+
     init {
         given("email content parser with parseMode ONE") {
             on("simple email with signature") {
@@ -29,7 +29,7 @@ class ContentParserSpecs : Spek() {
                     assertEquals(expectedContent.signature, actualContent.signature)
                 }
             }
-            
+
             on("second simple email with signature") {
                 val expectedContent = TestContents.simple_sig_2
                 var actualContent = EmailParser(
@@ -138,7 +138,7 @@ class ContentParserSpecs : Spek() {
                 }
             }
         }
-        
+
         given("email content parser with parseMode DEEP") {
             on("simple email with signature") {
                 val expectedContent = TestContents.simple_sig_deep
@@ -231,7 +231,7 @@ class ContentParserSpecs : Spek() {
                     assertEquals(expectedContent.quote?.signature, actualContent.quote?.signature)
                 }
             }
-            
+
             on("email with some nested quotes") {
                 val expectedContent = TestContents.only_nested_quotes_deep
                 val actualContent = EmailParser(

@@ -1,15 +1,15 @@
 package practice.email.parser
 
 import org.jetbrains.spek.api.Spek
+import org.junit.Assert.assertArrayEquals
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import org.junit.Assert.assertArrayEquals
 
 class MailParserSpecs : Spek() {
-    private val path = 
-            ".${File.separator}src${File.separator}test${File.separator}" + 
-            "resources${File.separator}emailTests${File.separator}"
+    private val path =
+            ".${File.separator}src${File.separator}test${File.separator}" +
+                    "resources${File.separator}emailTests${File.separator}"
 
     init {
         given("email parser with SIMPLE parse mode") {

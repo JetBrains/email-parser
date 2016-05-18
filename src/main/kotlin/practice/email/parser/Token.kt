@@ -6,10 +6,10 @@ enum class TokenRegEx(val regex: String) {
     COMMA_END(",?"),
     DIGITS("\\d+" + COMMA_END.regex),
     DATE("(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
-         "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))"  + COMMA_END.regex),
+            "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + COMMA_END.regex),
     TIME("([01]?[0-9]|2[0-3]):[0-5][0-9]" + COMMA_END.regex),
     MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END.regex),
-    EMAIL("\\S+@\\S+\\.\\S+")
+    EMAIL("\\S+@\\S+")
 }
 
 enum class AttributeRegEx(val regex: String) {
@@ -22,7 +22,7 @@ enum class AttributeRegEx(val regex: String) {
 }
 
 enum class TokenType {
-    DEFAULT,
+    UNDEFINED,
     DIGITS,
     DATE,
     TIME,
@@ -37,13 +37,13 @@ class Token(var text: String) {
         val DELETION_COST = 10
         val REPLACEMENT_COST = 10
         val ATTRIBUTE_INEQUALITY_COST = 1
-        
+
         private val types: Array<Pair<TokenType, TokenRegEx>> = arrayOf(
                 Pair(TokenType.DIGITS, TokenRegEx.DIGITS),
                 Pair(TokenType.DATE, TokenRegEx.DATE),
                 Pair(TokenType.TIME, TokenRegEx.TIME),
                 Pair(TokenType.MERIDIEM, TokenRegEx.MERIDIEM),
-                Pair(TokenType.EMAIL, TokenRegEx.EMAIL) 
+                Pair(TokenType.EMAIL, TokenRegEx.EMAIL)
         )
     }
 
@@ -85,15 +85,15 @@ class Token(var text: String) {
 
         override fun hashCode(): Int {
             var result = this.lastComma.hashCode()
-            result += 31 * result + this.withAngleBrackets.hashCode()
-            result += 31 * result + this.lastColumn.hashCode()
-            result += 31 * result + this.hasAtSymbol.hashCode()
-            result += 31 * result + this.nonLetterOrDigit.hashCode()
-            result += 31 * result + this.nonAlphabetic.hashCode()
+            result += 13 * result + this.withAngleBrackets.hashCode()
+            result += 13 * result + this.lastColumn.hashCode()
+            result += 13 * result + this.hasAtSymbol.hashCode()
+            result += 13 * result + this.nonLetterOrDigit.hashCode()
+            result += 13 * result + this.nonAlphabetic.hashCode()
             return result
         }
 
-        override fun toString(): String{
+        override fun toString(): String {
             return "Attributes(withAngleBrackets=$withAngleBrackets, lastComma=$lastComma, lastColumn=$lastColumn, hasAtSymbol=$hasAtSymbol, nonLetterOrDigit=$nonLetterOrDigit, nonAlphabetic=$nonAlphabetic)"
         }
 
@@ -108,7 +108,7 @@ class Token(var text: String) {
                 return@getTokenType pair.first
             }
         }
-        return TokenType.DEFAULT
+        return TokenType.UNDEFINED
     }
 
     private fun getAttributes() = Attributes()
@@ -128,7 +128,7 @@ class Token(var text: String) {
 
         return difference
     }
-    
+
     private fun getAttributesDifference(other: Token): Int {
         var difference = 0
 
@@ -138,14 +138,14 @@ class Token(var text: String) {
         difference += attributeDifference(this.attrs.hasAtSymbol, other.attrs.hasAtSymbol)
         difference += attributeDifference(this.attrs.nonLetterOrDigit, other.attrs.nonLetterOrDigit)
         difference += attributeDifference(this.attrs.nonAlphabetic, other.attrs.nonAlphabetic)
-        
+
         return difference
     }
 
-    private fun attributeDifference(firstAttribute: Boolean, secondAttribute: Boolean): Int = 
-            if (firstAttribute != secondAttribute) 
+    private fun attributeDifference(firstAttribute: Boolean, secondAttribute: Boolean): Int =
+            if (firstAttribute != secondAttribute)
                 ATTRIBUTE_INEQUALITY_COST
-            else 
+            else
                 0
 
     override fun equals(other: Any?): Boolean {
@@ -162,11 +162,11 @@ class Token(var text: String) {
 
     override fun hashCode(): Int {
         var result = this.type.hashCode()
-        result += 31 * result + this.attrs.hashCode()
+        result += 13 * result + this.attrs.hashCode()
         return result
     }
 
-    override fun toString(): String{
+    override fun toString(): String {
         return "Token(text='$text', type=$type, attrs=$attrs)"
     }
 

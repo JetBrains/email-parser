@@ -2,8 +2,25 @@ package practice.email.parser
 
 import javax.mail.internet.ParseException
 
+enum class ContentParseMode {
+    /**
+     * Return plain email body content without any parsing.
+     */
+    MODE_SIMPLE,
+
+    /**
+     * Parse just outer quote and signature.
+     */
+    MODE_ONE,
+
+    /**
+     * Parse all quotes and signatures recursively.
+     */
+    MODE_DEEP
+}
+
 /**
- * Use cases: 
+ * Use cases:
  * 1. Create EmailContentParser object and call parse().
  * 2. For another parsing, call prepare() and after that call parse().
  */
@@ -15,29 +32,29 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
     private val QUOTE_PATTERN = ">"
 
 
-    private var lines: Array<String> 
+    private var lines: Array<String>
     private var linesIdx: Int
     private var buffer: Array<String>
     private var bufferLength: Int
-    
+
     private var body: String
     private var quote: Content?
-    private var sign:  String?
-    
+    private var sign: String?
+
     private var isPrepared: Boolean
-    
+
     init {
-            checkMode()
-            this.lines = this.content.split("\n").toTypedArray()
-            this.linesIdx = this.lines.size - 1
-            this.buffer = Array(this.lines.size) {""}
-            this.bufferLength = 0
+        checkMode()
+        this.lines = this.content.split("\n").toTypedArray()
+        this.linesIdx = this.lines.size - 1
+        this.buffer = Array(this.lines.size) { "" }
+        this.bufferLength = 0
 
-            this.body = ""
-            this.quote = null
-            this.sign = null
+        this.body = ""
+        this.quote = null
+        this.sign = null
 
-            this.isPrepared = true
+        this.isPrepared = true
     }
 
     /**
@@ -50,7 +67,7 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
         checkMode()
         this.lines = this.content.split("\n").toTypedArray()
         this.linesIdx = this.lines.size - 1
-        this. buffer = Array(this.lines.size) {""}
+        this.buffer = Array(this.lines.size) { "" }
         this.bufferLength = 0
 
         this.body = ""
@@ -58,13 +75,13 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
         this.sign = null
 
         this.isPrepared = true
-        
+
         return this
     }
 
-    private fun hasContent()   = this.linesIdx > -1
+    private fun hasContent() = this.linesIdx > -1
     private fun gotSignature() = this.lines[this.linesIdx].trim().equals(SIGNATURE_PATTERN)
-    private fun gotQuote()     = this.lines[this.linesIdx].trim().startsWith(QUOTE_PATTERN)
+    private fun gotQuote() = this.lines[this.linesIdx].trim().startsWith(QUOTE_PATTERN)
 
     /**
      *
@@ -74,7 +91,7 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
             throw ParseException("EmailContentParser is not prepared.")
         }
         isPrepared = false;
-        
+
         while (hasContent() && !gotSignature() && !gotQuote()) {
             buffer[bufferLength++] = lines[linesIdx--]
         }
@@ -92,7 +109,7 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
         if (gotSignature()) {
             parseSignaturePart()
             bufferLength = 0
-            while (hasContent() && !gotQuote())  {
+            while (hasContent() && !gotQuote()) {
                 buffer[bufferLength++] = lines[linesIdx--]
             }
 
@@ -100,7 +117,7 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
                 parseBodyPart()
                 return Content(body, quote, sign)
             }
-            
+
             if (gotQuote()) {
                 parseQuotePart()
                 return Content(body, quote, sign)
@@ -115,7 +132,7 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
         body = reverseAndJoin(buffer, bufferLength)
         body += "\n"
     }
-    
+
     private fun parseQuotePart() {
         bufferLength = 0
         buffer[bufferLength++] = lines[linesIdx--].substring(1)
@@ -148,3 +165,11 @@ class EmailContentParser(var content: String, var mode: ContentParseMode = Conte
     }
 }
 
+internal fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
+        if (bufferLength == 0) {
+            ""
+        } else {
+            val res = buffer.take(bufferLength).toTypedArray()
+            res.reverse()
+            res.joinToString(separator = "\n")
+        }

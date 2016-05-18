@@ -8,9 +8,9 @@ import javax.mail.internet.MailDateFormat
 
 object TestEmails {
     private val path =
-        ".${File.separator}src${File.separator}test${File.separator}resources${File.separator}" + 
-        "testFiles${File.separator}email${File.separator}"
-    
+            ".${File.separator}src${File.separator}test${File.separator}resources${File.separator}" +
+                    "testFiles${File.separator}email${File.separator}"
+
     private val mailDateFormat = MailDateFormat();
 
     private fun getAddressesList(vararg addresses: String): ArrayList<String> {

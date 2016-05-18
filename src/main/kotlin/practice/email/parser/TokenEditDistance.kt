@@ -1,39 +1,12 @@
 package practice.email.parser
 
-import practice.email.parser.QuotesHeaderSuggestions.getQuoteHeader
-import java.io.File
-
-enum class ContentParseMode {
-    /**
-     * Return plain email body content without any parsing.
-     */
-    MODE_SIMPLE,
-
-    /**
-     * Parse just outer quote and signature.
-     */
-    MODE_ONE,
-
-    /**
-     * Parse all quotes and signatures recursively.
-     */
-    MODE_DEEP
-}
-
-internal fun reverseAndJoin(buffer: Array<String>, bufferLength: Int): String =
-        if (bufferLength == 0) {
-            ""
-        } else {
-            val res = buffer.take(bufferLength).toTypedArray()
-            res.reverse()
-            res.joinToString(separator = "\n")
-        }
+import java.util.*
 
 private fun insCost(t: Token): Int = Token.INSERTION_COST
 private fun delCost(t: Token): Int = Token.DELETION_COST
 private fun replCost(t1: Token, t2: Token): Int = t1.getDifference(t2)
 
-internal fun getEditingDistance(firstHeader: String, secondHeader: String): Int {
+internal fun getEditDistance(firstHeader: String, secondHeader: String): Int {
     val firstTokens = getTokens(firstHeader)
     val secondTokens = getTokens(secondHeader)
 
@@ -56,10 +29,12 @@ internal fun getEditingDistance(firstHeader: String, secondHeader: String): Int 
     return prev[firstSize]
 }
 
-internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
-                                 alignmentFirst: MutableList<Token>, alignmentSecond: MutableList<Token>): Int {
+internal fun getEditDistanceAlignment(firstHeader: String, secondHeader: String): Pair<MutableList<Token>, MutableList<Token>> {
     val firstTokens = getTokens(firstHeader)
     val secondTokens = getTokens(secondHeader)
+
+    val alignmentFirst: MutableList<Token> = ArrayList<Token>()
+    val alignmentSecond: MutableList<Token> = ArrayList<Token>()
 
     var firstSize = firstTokens.size + 1;
     var secondSize = secondTokens.size + 1;
@@ -78,8 +53,8 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
         }
     }
 
-    val firstDistanceIndex = --firstSize
-    val secondDistanceIndex = --secondSize
+    --firstSize
+    --secondSize
 
     while (firstSize > 0 || secondSize > 0) {
         if (firstSize == 0) {
@@ -95,7 +70,7 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
         } else {
             val ins = distance[secondSize - 1][firstSize] + insCost(secondTokens[secondSize - 1]);
             val del = distance[secondSize][firstSize - 1] + delCost(firstTokens[firstSize - 1]);
-            val repl = distance[secondSize - 1][firstSize - 1] + 
+            val repl = distance[secondSize - 1][firstSize - 1] +
                     replCost(firstTokens[firstSize - 1], secondTokens[secondSize - 1]);
 
             if (ins <= del && ins <= repl) {
@@ -112,15 +87,15 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
                 } else {
                     var t1: Token = firstTokens.elementAt(firstSize - 1)
                     var t2: Token = secondTokens.elementAt(secondSize - 1)
-                    
+
                     if (t1 == t2) {
                         t1.text = "+${t1.text}"
                         t2.text = "+${t2.text}"
                     }
-                    
+
                     alignmentFirst.add(0, t1)
                     alignmentSecond.add(0, t2)
-                    
+
                     firstSize--
                     secondSize--
                 }
@@ -128,7 +103,7 @@ internal fun getEditingDistance2(firstHeader: String, secondHeader: String,
         }
     }
 
-    return distance[secondDistanceIndex][firstDistanceIndex]
+    return Pair(alignmentFirst, alignmentSecond)
 }
 
 private fun getDash(length: Int): String {
@@ -140,16 +115,4 @@ private fun getDash(length: Int): String {
 
 private fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
 
-fun getEstimate(eml1: File, eml2: File): Int {
-    val content1 = EmailParser(eml1).parse().content.body
-    val content2 = EmailParser(eml2).parse().content.body
 
-    val header1 = getQuoteHeader(content1)
-    val header2 = getQuoteHeader(content2)
-
-    return when {
-        header1 == null && header2 == null -> 0
-        header1 == null || header2 == null -> Int.MAX_VALUE
-        else -> getEditingDistance(header1, header2)
-    }
-}

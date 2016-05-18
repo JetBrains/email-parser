@@ -73,7 +73,7 @@ object QuotesHeaderSuggestions {
             }
         }
     }
-    
+
     private fun getHeader(lines: List<String>): String {
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE

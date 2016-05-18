@@ -1,13 +1,12 @@
 package practice.email.clustering
 
-import practice.email.parser.getEditingDistance
-import weka.clusterers.ClusterEvaluation
+import practice.email.parser.EmailParser
+import practice.email.parser.QuotesHeaderSuggestions
+import practice.email.parser.getEditDistance
 import weka.clusterers.HierarchicalClusterer
 import weka.core.Instances
 import weka.core.Utils
 import weka.core.converters.ArffLoader
-import java.io.BufferedOutputStream
-import java.io.BufferedWriter
 import java.io.File
 
 data class ClusteringParams(var clustersAmount: Int, var estimate: Double) {
@@ -80,13 +79,27 @@ fun estimateClusterer(clusterer: HierarchicalClusterer, data: Instances, distanc
 
 fun getDistanceMatrix(data: Instances): Array<IntArray> {
     val n = data.numInstances()
-    val distances =  Array(n) { IntArray(n) { 0 } }
+    val distances = Array(n) { IntArray(n) { 0 } }
     for (i in 1..n - 1) {
         for (j in 0..i - 1) {
             distances[i][j] =
-                    getEditingDistance(data.instance(i).stringValue(0), data.instance(j).stringValue(0))
+                    getEditDistance(data.instance(i).stringValue(0), data.instance(j).stringValue(0))
 
         }
     }
     return distances
+}
+
+fun getEstimate(eml1: File, eml2: File): Int {
+    val content1 = EmailParser(eml1).parse().content.body
+    val content2 = EmailParser(eml2).parse().content.body
+
+    val header1 = QuotesHeaderSuggestions.getQuoteHeader(content1)
+    val header2 = QuotesHeaderSuggestions.getQuoteHeader(content2)
+
+    return when {
+        header1 == null && header2 == null -> 0
+        header1 == null || header2 == null -> Int.MAX_VALUE
+        else -> getEditDistance(header1, header2)
+    }
 }

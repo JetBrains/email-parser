@@ -1,14 +1,13 @@
 package practice.email.executable;
 
+import practice.email.clustering.TokenEditDistanceFunction;
+import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.HierarchicalClusterer;
+import weka.core.Instances;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
-import practice.email.clustering.TokenEditDistance;
-import weka.clusterers.ClusterEvaluation;
-import weka.clusterers.HierarchicalClusterer;
-import weka.clusterers.MakeDensityBasedClusterer;
-import weka.core.Instances;
 
 
 public class WekaTest {
@@ -30,7 +29,7 @@ public class WekaTest {
         clusterer = new HierarchicalClusterer();
         clusterer.setOptions(new String[]{"-L", "SINGLE"});
         clusterer.setNumClusters(5);
-        clusterer.setDistanceFunction(new TokenEditDistance());
+        clusterer.setDistanceFunction(new TokenEditDistanceFunction());
         clusterer.setDistanceIsBranchLength(true);
 
         BufferedReader datafile = readDataFile("test.arff");
