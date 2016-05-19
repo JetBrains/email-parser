@@ -19,39 +19,37 @@
  *
  */
 
-package practice.email.clustering;
+package practice.email.clustering
 
-import weka.core.Attribute;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.NormalizableDistance;
-import weka.core.neighboursearch.PerformanceStats;
+import weka.core.Attribute
+import weka.core.Instance
+import weka.core.Instances
+import weka.core.NormalizableDistance
+import weka.core.neighboursearch.PerformanceStats
 
 /**
  * Represents the abstract ancestor for string-based distance functions, like
  * EditDistance.
- *
+
  * @author Bruno Woltzenlogel Paleo
+ * *
  * @version $Revision: 8108 $
  */
-public abstract class AbstractStringDistanceFunction
-        extends NormalizableDistance {
+abstract class AbstractStringDistanceFunction : NormalizableDistance {
 
     /**
      * Constructor that doesn't set the data
      */
-    public AbstractStringDistanceFunction() {
-        super();
+    constructor() : super() {
     }
 
     /**
      * Constructor that sets the data
-     *
+
      * @param data the set of instances that will be used for
-     *             later distance comparisons
+     * *             later distance comparisons
      */
-    public AbstractStringDistanceFunction(Instances data) {
-        super(data);
+    constructor(data: Instances) : super(data) {
     }
 
 
@@ -59,41 +57,48 @@ public abstract class AbstractStringDistanceFunction
      * Updates the current distance calculated so far with the new difference
      * between two attributes. The difference between the attributes was
      * calculated with the difference(int,double,double) method.
-     *
+
      * @param currDist the current distance calculated so far
+     * *
      * @param diff     the difference between two new attributes
+     * *
      * @return the update distance
-     * @see        #difference(int, double, double)
+     * *
+     * @see .difference
      */
-    protected double updateDistance(double currDist, double diff) {
-        return (currDist + (diff * diff));
+    override fun updateDistance(currDist: Double, diff: Double): Double {
+        return currDist + diff * diff
     }
 
     /**
      * Computes the difference between two given attribute
      * values.
-     *
+
      * @param index the attribute index
+     * *
      * @param val1  the first value
+     * *
      * @param val2  the second value
+     * *
      * @return the difference
      */
-    protected double difference(int index, String string1, String string2) {
-        switch (m_Data.attribute(index).type()) {
-            case Attribute.STRING:
-                double diff = stringDistance(string1, string2);
+    protected fun difference(index: Int, string1: String, string2: String): Double {
+        when (m_Data.attribute(index).type()) {
+            Attribute.STRING -> {
+                val diff = stringDistance(string1, string2)
                 if (m_DontNormalize == true) {
-                    return diff;
+                    return diff
                 } else {
-                    if (string1.length() > string2.length()) {
-                        return diff / ((double) string1.length());
+                    if (string1.length > string2.length) {
+                        return diff / string1.length.toDouble()
                     } else {
-                        return diff / ((double) string2.length());
+                        return diff / string2.length.toDouble()
                     }
                 }
+                return 0.0
+            }
 
-            default:
-                return 0;
+            else -> return 0.0
         }
     }
 
@@ -103,46 +108,51 @@ public abstract class AbstractStringDistanceFunction
      * taking into account the cutOff or maximum distance. Depending on the
      * distance function class, post processing of the distances by
      * postProcessDistances(double []) may be required if this function is used.
-     *
+
      * @param first       the first instance
+     * *
      * @param second      the second instance
+     * *
      * @param cutOffValue If the distance being calculated becomes larger than
-     *                    cutOffValue then the rest of the calculation is
-     *                    discarded.
+     * *                    cutOffValue then the rest of the calculation is
+     * *                    discarded.
+     * *
      * @param stats       the performance stats object
+     * *
      * @return the distance between the two given instances or
-     * Double.POSITIVE_INFINITY if the distance being
-     * calculated becomes larger than cutOffValue.
+     * * Double.POSITIVE_INFINITY if the distance being
+     * * calculated becomes larger than cutOffValue.
      */
-    @Override
-    public double distance(Instance first, Instance second, double cutOffValue, PerformanceStats stats) {
-        double sqDistance = 0;
-        int numAttributes = m_Data.numAttributes();
+    override fun distance(first: Instance, second: Instance, cutOffValue: Double, stats: PerformanceStats?): Double {
+        var sqDistance = 0.0
+        val numAttributes = m_Data.numAttributes()
 
-        validate();
+        validate()
 
-        double diff;
+        var diff: Double
 
-        for (int i = 0; i < numAttributes; i++) {
-            diff = 0;
+        for (i in 0..numAttributes - 1) {
+            diff = 0.0
             if (m_ActiveIndices[i]) {
-                diff = difference(i, first.stringValue(i), second.stringValue(i));
+                diff = difference(i, first.stringValue(i), second.stringValue(i))
             }
-            sqDistance = updateDistance(sqDistance, diff);
-            if (sqDistance > (cutOffValue * cutOffValue)) return Double.POSITIVE_INFINITY;
+            sqDistance = updateDistance(sqDistance, diff)
+            if (sqDistance > cutOffValue * cutOffValue) return java.lang.Double.POSITIVE_INFINITY
         }
-        double distance = Math.sqrt(sqDistance);
-        return distance;
+        val distance = Math.sqrt(sqDistance)
+        return distance
     }
 
     /**
      * Calculates the distance between two strings.
      * Must be implemented by any non-abstract StringDistance class
-     *
+
      * @param stringA the first string
+     * *
      * @param stringB the second string
+     * *
      * @return the distance between the two given strings
      */
-    abstract double stringDistance(String stringA, String stringB);
+    internal abstract fun stringDistance(stringA: String, stringB: String): Double
 
 }
