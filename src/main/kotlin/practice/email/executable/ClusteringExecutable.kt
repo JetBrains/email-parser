@@ -5,47 +5,43 @@ import weka.clusterers.ClusterEvaluation
 import weka.clusterers.HierarchicalClusterer
 import weka.core.Instances
 import weka.core.Utils
-import java.io.BufferedReader
+import weka.core.converters.ArffLoader
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileReader
+import java.util.*
 
 fun main(args: Array<String>) {
     val options = "-L SINGLE -A \"practice.email.clustering.TokenEditDistanceFunction -D -R first\" -B"
-    val datasetFilename = "test.arff"
+    val loader = ArffLoader()
 
-    val params =
-            getBestClusteringParams(File(datasetFilename), options, true)
+    loader.setSource(File("test.arff"))
+    val data: Instances = loader.dataSet
+
+    val params = getBestClusteringParams(data, options, debug = true)
 
     // Instantiate clusterer
     val clusterer = HierarchicalClusterer()
     clusterer.options = Utils.splitOptions("$options -N ${params.clustersAmount}")
-
-    val datafile = readDataFile("test.arff")
-    val data = Instances(datafile)
-
-    // Cluster network
     clusterer.buildClusterer(data)
 
+    // Evaluate clusterer
     val eval = ClusterEvaluation()
     eval.setClusterer(clusterer)
     eval.evaluateClusterer(Instances(data))
     println(eval.clusterResultsToString())
 
-    for (i in 0..data.numInstances() - 1) {
-        println(data.instance(i))
-        System.out.printf(" -> Cluster %d \n", clusterer.clusterInstance(data.instance(i)))
+    // Clustering data
+    val clusters = Array<MutableList<String>>(clusterer.numClusters) { ArrayList<String>() }
+
+    data.forEach {
+        clusters[clusterer.clusterInstance(it)].add(it.toString())
     }
-
-}
-
-fun readDataFile(filename: String): BufferedReader? {
-    var inputReader: BufferedReader? = null
-    try {
-        inputReader = BufferedReader(FileReader(filename))
-    } catch (ex: FileNotFoundException) {
-        System.err.println("File not found: " + filename)
+    clusters.forEachIndexed { clusterIndex, clusterList ->
+        println (
+                clusterList.joinToString(
+                        prefix = "Cluster $clusterIndex:\n",
+                        separator = "\n",
+                        postfix = "\n"
+                )
+        )
     }
-
-    return inputReader
 }

@@ -26,10 +26,7 @@ data class ClusteringParams(var clustersAmount: Int, var estimate: Double) {
     }
 }
 
-fun getBestClusteringParams(arffFile: File, options: String, debug: Boolean = false): ClusteringParams {
-    val loader = ArffLoader()
-    loader.setSource(arffFile)
-    val data: Instances = loader.dataSet
+fun getBestClusteringParams(data: Instances, options: String, debug: Boolean = false): ClusteringParams {
     var bestParams = ClusteringParams(data.numInstances(), Double.MAX_VALUE)
     val distances = getDistanceMatrix(data)
 
