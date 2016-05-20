@@ -10,7 +10,7 @@ private val path = ".${File.separator}src${File.separator}test${File.separator}"
 
 private val noArgsMsg = "No arguments are provided. Running with default arguments..."
 private val incorrectArgsMsg = "Incorrect number of arguments. You should specify 2 arguments."
-private val incorrectFilesMsg = "One or more files does not exist: "
+private val incorrectFilesMsg = "One or more files are not exist: "
 
 fun main(args: Array<String>) {
     val f1 = "${path}quote_plus_inner_sig.eml"

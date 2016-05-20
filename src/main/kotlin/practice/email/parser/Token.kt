@@ -33,9 +33,23 @@ enum class TokenType {
 class Token(var text: String) {
 
     companion object Static {
-        val INSERTION_COST = 10
-        val DELETION_COST = 10
-        val REPLACEMENT_COST = 10
+        val INSERTION_COST = mapOf<TokenType, Int>(
+                Pair(TokenType.UNDEFINED, 10),
+                Pair(TokenType.DIGITS, 10),
+                Pair(TokenType.DATE, 10),
+                Pair(TokenType.TIME, 10),
+                Pair(TokenType.MERIDIEM, 10),
+                Pair(TokenType.EMAIL, 50)
+        )
+        val REPLACEMENT_COST = arrayOf(
+                intArrayOf(0, 10, 10, 10, 10, 50),
+                intArrayOf(10, 0, 10, 10, 10, 50),
+                intArrayOf(10, 10, 0, 10, 10, 50),
+                intArrayOf(10, 10, 10, 0, 10, 50),
+                intArrayOf(10, 10, 10, 10, 0, 50),
+                intArrayOf(50, 50, 50, 50, 50, 0)
+        )
+        val DIGITS_INEQUALITY_COST = 10
         val ATTRIBUTE_INEQUALITY_COST = 1
 
         private val types: Array<Pair<TokenType, TokenRegEx>> = arrayOf(
@@ -117,11 +131,11 @@ class Token(var text: String) {
         var difference = 0;
 
         if (this.type != other.type)
-            difference += REPLACEMENT_COST
+            difference += REPLACEMENT_COST[this.type.ordinal][other.type.ordinal]
         else {
             val lengthDiff = Math.abs(this.text.length - other.text.length)
             if (this.type == TokenType.DIGITS && lengthDiff > 0)
-                difference += REPLACEMENT_COST
+                difference += DIGITS_INEQUALITY_COST
         }
 
         difference += getAttributesDifference(other)
@@ -147,6 +161,11 @@ class Token(var text: String) {
                 ATTRIBUTE_INEQUALITY_COST
             else
                 0
+
+    fun getInsertionCost(): Int = INSERTION_COST[type] ?: throw IllegalArgumentException()
+
+
+    fun getDeletionCost() = getInsertionCost()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

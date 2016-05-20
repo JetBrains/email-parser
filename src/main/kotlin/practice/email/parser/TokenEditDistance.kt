@@ -2,9 +2,6 @@ package practice.email.parser
 
 import java.util.*
 
-private fun insCost(t: Token): Int = Token.INSERTION_COST
-private fun delCost(t: Token): Int = Token.DELETION_COST
-private fun replCost(t1: Token, t2: Token): Int = t1.getDifference(t2)
 
 internal fun getEditDistance(firstHeader: String, secondHeader: String): Int {
     val firstTokens = getTokens(firstHeader)
@@ -12,14 +9,17 @@ internal fun getEditDistance(firstHeader: String, secondHeader: String): Int {
 
     val firstSize = firstTokens.size;
     val secondSize = secondTokens.size;
-    var prev = IntArray(firstSize + 1) { it * Token.INSERTION_COST }
+    var prev = IntArray(firstSize + 1) { 0 }
+    for (i in 1..prev.size - 1) {
+        prev[i] = prev[i - 1] + firstTokens[i - 1].getDeletionCost()
+    }
     var curr = IntArray(firstSize + 1)
     for (j in 1..secondSize) {
-        curr[0] = j * Token.DELETION_COST
+        curr[0] = prev[0] + secondTokens[j - 1].getInsertionCost()
         for (i in 1..firstSize) {
-            val ins = prev[i] + insCost(secondTokens[j - 1]);
-            val del = curr[i - 1] + delCost(firstTokens[i - 1]);
-            val repl = prev[i - 1] + replCost(firstTokens[i - 1], secondTokens[j - 1]);
+            val ins = prev[i] + secondTokens[j - 1].getInsertionCost()
+            val del = curr[i - 1] + firstTokens[i - 1].getDeletionCost()
+            val repl = prev[i - 1] + firstTokens[i - 1].getDifference(secondTokens[j - 1])
             curr[i] = Math.min(Math.min(ins, del), repl);
         }
         val temp = curr
@@ -39,16 +39,17 @@ internal fun getEditDistanceAlignment(firstHeader: String, secondHeader: String)
     var firstSize = firstTokens.size + 1;
     var secondSize = secondTokens.size + 1;
     var distance = Array(secondSize) { IntArray(firstSize) { 0 } }
-    for (i in distance[0].indices) {
-        distance[0][i] = i * Token.INSERTION_COST
+    distance[0][0] = 0
+    for (i in 1..distance[0].size - 1) {
+        distance[0][i] = distance[0][i - 1] + firstTokens[i - 1].getDeletionCost()
     }
 
     for (j in 1..secondSize - 1) {
-        distance[j][0] = j * Token.DELETION_COST
+        distance[j][0] = distance[j - 1][0] + secondTokens[j - 1].getInsertionCost()
         for (i in 1..firstSize - 1) {
-            val ins = distance[j - 1][i] + insCost(secondTokens[j - 1]);
-            val del = distance[j][i - 1] + delCost(firstTokens[i - 1]);
-            val repl = distance[j - 1][i - 1] + replCost(firstTokens[i - 1], secondTokens[j - 1]);
+            val ins = distance[j - 1][i] + secondTokens[j - 1].getInsertionCost()
+            val del = distance[j][i - 1] + firstTokens[i - 1].getDeletionCost()
+            val repl = distance[j - 1][i - 1] + firstTokens[i - 1].getDifference(secondTokens[j - 1])
             distance[j][i] = Math.min(Math.min(ins, del), repl);
         }
     }
@@ -68,10 +69,10 @@ internal fun getEditDistanceAlignment(firstHeader: String, secondHeader: String)
             alignmentSecond.add(0, Token(dash))
             firstSize--
         } else {
-            val ins = distance[secondSize - 1][firstSize] + insCost(secondTokens[secondSize - 1]);
-            val del = distance[secondSize][firstSize - 1] + delCost(firstTokens[firstSize - 1]);
+            val ins = distance[secondSize - 1][firstSize] + secondTokens[secondSize - 1].getInsertionCost()
+            val del = distance[secondSize][firstSize - 1] + firstTokens[firstSize - 1].getDeletionCost()
             val repl = distance[secondSize - 1][firstSize - 1] +
-                    replCost(firstTokens[firstSize - 1], secondTokens[secondSize - 1]);
+                    firstTokens[firstSize - 1].getDifference(secondTokens[secondSize - 1])
 
             if (ins <= del && ins <= repl) {
                 val dash = getDash(secondTokens.elementAt(secondSize - 1).text.length)
