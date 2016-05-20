@@ -40,14 +40,21 @@ fun main(args: Array<String>) {
         }
     }
 
+    val distances: MutableList<Triple<String, String, Int>> = arrayListOf()
+
     headers.forEachIndexed { i, a ->
         headers.filterIndexed { j, s -> j > i }.forEach { b ->
-            println("a = $a")
-            println("b = $b")
-            println("Editing distance = ${getEditDistance(a, b)}")
-            printAlignment(a, b)
-            println()
+            distances.add(Triple(a, b, getEditDistance(a, b)))
         }
+    }
+
+    distances.sortBy { it.third }
+    distances.forEach {
+        println("a = ${it.first}")
+        println("b = ${it.second}")
+        println("Editing distance = ${it.third}")
+        printAlignment(it.first, it.second)
+        println()
     }
 
 }
