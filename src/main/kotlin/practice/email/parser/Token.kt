@@ -41,6 +41,11 @@ class Token(var text: String) {
                 Pair(TokenType.MERIDIEM, 10),
                 Pair(TokenType.EMAIL, 50)
         )
+
+        /**
+         * The cost of replacement the first token by the second.
+         * Usage: REPLACEMENT_COST[token1.type.ordinal][token2.type.ordinal]
+         */
         val REPLACEMENT_COST = arrayOf(
                 intArrayOf(0, 10, 10, 10, 10, 50),
                 intArrayOf(10, 0, 10, 10, 10, 50),

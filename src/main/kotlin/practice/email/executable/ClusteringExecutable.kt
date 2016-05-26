@@ -1,6 +1,7 @@
 package practice.email.executable
 
 import practice.email.clustering.getBestClusteringParams
+import practice.email.clustering.getBestClusteringParamsParallel
 import weka.clusterers.ClusterEvaluation
 import weka.clusterers.HierarchicalClusterer
 import weka.core.Instances

@@ -8,6 +8,8 @@ import weka.core.Instances
 import weka.core.Utils
 import weka.core.converters.ArffLoader
 import java.io.File
+import java.util.*
+import kotlin.concurrent.thread
 
 data class ClusteringParams(var clustersAmount: Int, var estimate: Double) {
     private val delta = 0.01
@@ -26,15 +28,31 @@ data class ClusteringParams(var clustersAmount: Int, var estimate: Double) {
     }
 }
 
+/**
+ * Defines the maximum number of clusters as a percentage of data.numInstances()
+ */
+val CLUSTERS_CAP = 7 / 10.0
+
 fun getBestClusteringParams(data: Instances, options: String, debug: Boolean = false): ClusteringParams {
+    val start = System.currentTimeMillis()
+
     var bestParams = ClusteringParams(data.numInstances(), Double.MAX_VALUE)
     val distances = getDistanceMatrix(data)
 
-
-    for (clustersAmount in 1..data.numInstances()) {
+    val maxClusters = (data.numInstances() * CLUSTERS_CAP).toInt()
+    for (clustersAmount in 1..maxClusters) {
         val clusterer = HierarchicalClusterer()
         clusterer.options = Utils.splitOptions("$options -N $clustersAmount")
         clusterer.buildClusterer(Instances(data))
+
+        val classesToInstances = clustersAmount / (1.0 * data.numInstances())
+        if (classesToInstances > bestParams.estimate) {
+            if (debug) {
+                println("For $clustersAmount clusters estimate is too bad. Skipping...\n")
+            }
+            continue
+        }
+
         val estimate = estimateClusterer(clusterer, data, distances)
         val currentParams = ClusteringParams(clustersAmount, estimate)
 
@@ -47,12 +65,93 @@ fun getBestClusteringParams(data: Instances, options: String, debug: Boolean = f
         }
     }
 
+    val finish = System.currentTimeMillis()
+
     if (debug) {
         println("Best params is: ${bestParams.toString()}")
+        println("Working time: ${finish - start} ms.")
     }
 
     return bestParams
 }
+
+var bestParamsGlobal = ClusteringParams(Int.MAX_VALUE, Double.MAX_VALUE)
+var THREADS_AMOUNT = 4;
+
+fun getBestClusteringParamsParallel(data: Instances, options: String, debug: Boolean = false): ClusteringParams {
+    val start = System.currentTimeMillis()
+    val distances = getDistanceMatrix(data)
+    val numClusters = (data.numInstances() * CLUSTERS_CAP).toInt()
+
+    var from = 1;
+    val perTread = numClusters / THREADS_AMOUNT
+    val rest = numClusters % THREADS_AMOUNT
+    var to = perTread + rest
+    val trds: ArrayList<ClusterizeTread> = ArrayList(THREADS_AMOUNT)
+    for (i in 1..THREADS_AMOUNT) {
+        val thrd = ClusterizeTread(from, to, data, options, distances, debug)
+        trds.add(thrd)
+        thrd.start()
+        from = to+1
+        to += perTread
+    }
+
+    trds.forEach { it.join() }
+
+    val finish = System.currentTimeMillis()
+
+    if (debug) {
+        println("Best params is: ${bestParamsGlobal.toString()}")
+        println("Working time: ${finish - start} ms.")
+    }
+
+    return bestParamsGlobal
+}
+
+class ClusterizeTread(val from: Int, val to: Int, val data: Instances, val options: String,
+                      val distances: Array<IntArray>, val debug: Boolean = false): Thread() {
+
+    override fun run() {
+        clusterize()
+    }
+
+    private fun clusterize() {
+        for (clustersAmount in from..to) {
+            val clusterer = HierarchicalClusterer()
+            clusterer.options = Utils.splitOptions("$options -N $clustersAmount")
+            clusterer.buildClusterer(Instances(data))
+
+            val classesToInstances = clustersAmount / (1.0 * data.numInstances())
+            var isContinue = false
+            synchronized(bestParamsGlobal) {
+                if (classesToInstances > bestParamsGlobal.estimate) {
+                    isContinue = true
+                }
+            }
+            if (isContinue) {
+                if (debug) {
+                    println("For $clustersAmount clusters estimate is too bad. Skipping...\n")
+                }
+                continue
+            }
+
+
+            val estimate = estimateClusterer(clusterer, data, distances)
+            val currentParams = ClusteringParams(clustersAmount, estimate)
+
+            if (debug) {
+                println(currentParams)
+            }
+
+            synchronized(bestParamsGlobal) {
+                if (bestParamsGlobal.isWorse(currentParams)) {
+                    bestParamsGlobal = currentParams
+                }
+            }
+        }
+    }
+}
+
 
 fun estimateClusterer(clusterer: HierarchicalClusterer, data: Instances, distances: Array<IntArray>): Double {
     val n = data.numInstances()
