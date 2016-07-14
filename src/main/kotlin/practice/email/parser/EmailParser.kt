@@ -23,7 +23,7 @@ class EmailParser(var emlFile: File, var mode: ContentParseMode = ContentParseMo
     /**
      * Contains email's Content-Type header values this library is currently able to parse.
      */
-    private object ContentType {
+    object ContentType {
         val TEXT_PLAIN = "text/plain"
         val MULTIPART_ALT = "multipart/alternative"
     }
@@ -111,7 +111,7 @@ class EmailParser(var emlFile: File, var mode: ContentParseMode = ContentParseMo
      */
     private fun getContent(part: MimePart): Content {
         val content: Any = part.content ?: throw ParseException(getErrorMsg("Content"))
-        var contentType: String = part.contentType.split(";")[0].trim()
+        var contentType: String = part.contentType.split(";")[0].trim().toLowerCase()
 
         when (contentType) {
             ContentType.TEXT_PLAIN ->
