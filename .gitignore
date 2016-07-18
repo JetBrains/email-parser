@@ -1,5 +1,6 @@
 /src/test/resources/YTfeedback
 /src/main/resources/YT
+/src/main/resources/datasets
 /src/main/resources/mail.properties
 
 # Created by https://www.gitignore.io/api/gradle,intellij,java

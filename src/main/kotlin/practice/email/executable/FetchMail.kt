@@ -29,7 +29,8 @@ private class GmailMailbox(val login: String, val pass: String) {
             println("Total messages: " + inbox.messageCount);
             println("Filtering...");
 
-            val filteredMessages = filterMessages(inbox.messages)
+            val filteredMessages = 
+                    filterMessages(inbox.messages.asList())
 
             println("Total messages after filtration: " + filteredMessages.size);
 
@@ -55,7 +56,7 @@ private class GmailMailbox(val login: String, val pass: String) {
     /**
      * Фультрует сообщения только с подходящим ContentType
      */
-    private fun filterMessages(messages: Array<Message>): List<Message> =
+    private fun filterMessages(messages: List<Message>): List<Message> =
             messages.filterIndexed { i, message ->
                 if (i % 50 == 0)
                     println("$i messages filtered.")

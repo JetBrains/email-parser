@@ -65,8 +65,14 @@ class EmailParser(var emlFile: File, var mode: ContentParseMode = ContentParseMo
         if (from.size == 0) {
             throw ParseException(getErrorMsg("From"))
         }
-
-        val to: ArrayList<String> = getAddresses(msg.getRecipients(Message.RecipientType.TO))
+        
+        val addresses: Array<Address>? = msg.getRecipients(Message.RecipientType.TO)    
+ 
+        val to: ArrayList<String> = if (addresses == null) { 
+            ArrayList<String>() 
+        } else { 
+            getAddresses(addresses)
+        }
 
         val subject: String = msg.subject ?: ""
 
