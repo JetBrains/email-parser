@@ -14,8 +14,11 @@ enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
     EMAIL(
             Regex("(.*\\s)?${TokenRegEx.EMAIL.regex}(\\s.*)?")
     ),
-    COLUMN(
+    COLON(
             Regex("(.*\\s)?.*:(\\s*)?")
+    ),
+    MIDDLE_COLON(
+            Regex("(.*\\s)?\\S+(\\s)*:(\\s)*\\S+(.*\\s)?")
     )
 }
 
@@ -29,6 +32,9 @@ object QuotesHeaderSuggestions {
         val EMAIL = 2
         val COLUMN = 3
     }
+
+    // For multilines and FWD headers
+    // todo
 
     private var suggestionsFound = 0
     private val suggestions = BooleanArray(COUNT) { false }
@@ -56,7 +62,9 @@ object QuotesHeaderSuggestions {
         update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
         update(lineIndex, line, idx.TIME, QuotesHeaderSuggestionsRegEx.TIME.regex)
         update(lineIndex, line, idx.EMAIL, QuotesHeaderSuggestionsRegEx.EMAIL.regex)
-        update(lineIndex, line, idx.COLUMN, QuotesHeaderSuggestionsRegEx.COLUMN.regex)
+        update(lineIndex, line, idx.COLUMN, QuotesHeaderSuggestionsRegEx.COLON.regex)
+
+        // todo *
 
         resetOldSuggestions(lineIndex)
     }
@@ -93,6 +101,8 @@ object QuotesHeaderSuggestions {
                 toIndex = Math.max(toIndex, this.suggestionsLineIndex[i])
             }
         }
+
+        //todo **
 
         // If sufficient count of suggestions had been found in one or two lines
         // try to check the last suggestion in the following line.

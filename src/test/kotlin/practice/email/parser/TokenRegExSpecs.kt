@@ -269,11 +269,11 @@ class TokenRegExSpecs : Spek() {
             }
         }
 
-        given("token with column") {
+        given("token with colon") {
             val token = Token("wrote:")
             on("it's creation") {
-                it("has true lastColumn") {
-                    assertTrue { token.attrs.lastColumn }
+                it("has true lastColon") {
+                    assertTrue { token.attrs.lastColon }
                 }
             }
         }
@@ -302,8 +302,8 @@ class TokenRegExSpecs : Spek() {
                 it("has true nonLetterOrDigit") {
                     assertTrue { token.attrs.nonLetterOrDigit }
                 }
-                it("has true lastColumn") {
-                    assertTrue { token.attrs.lastColumn }
+                it("has true lastColon") {
+                    assertTrue { token.attrs.lastColon }
                 }
                 it("has true nonAlphabetic") {
                     assertTrue { token.attrs.nonAlphabetic }

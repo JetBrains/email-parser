@@ -9,8 +9,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "@lorem  ipsum dolor sit amet, 04/04/05, consectetuer 01:01:33 adipiscing elit. Aenean : "
             on("checking regexes") {
-                it("should match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -32,8 +32,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "Lorem:  ipsum dolor sit amet, 1.2.1999 consectetuer @ adipiscing elit. Aenean "
             on("checking regexes") {
-                it("should not match COLUMN regex") {
-                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -50,8 +50,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "13. 2015, Lorem  ipsum dolor sit amet, consec@tetuer adipiscing elit. Aenean 12:34"
             on("checking regexes") {
-                it("should not match COLUMN regex") {
-                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -73,8 +73,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "On 8 December 2014 at 15:16, superman <xxx@xxx.com> wrote:"
             on("checking regexes") {
-                it("should  match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should  match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -96,8 +96,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = """On Monday, September 15, 2014 6:50 AM, "yyyy@yyy.com" <yyyy@yyy.com> wrote:"""
             on("checking regexes") {
-                it("should  match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should  match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -119,8 +119,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = """> On 05 Nov smth 2014, at 00:30:33, yyyy@yyy.com wrote:"""
             on("checking regexes") {
-                it("should  match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should  match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -142,8 +142,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = """On Monday, September 2014, 15,  6:50 AM, "yyyy@yyy.com" <yyyy@yyy.com> wrote:"""
             on("checking regexes") {
-                it("should  match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should  match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -165,8 +165,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = """> On 2014 Nov smth 05, at 00:30:33, yyyy@yyy.com wrote:"""
             on("checking regexes") {
-                it("should  match COLUMN regex") {
-                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should  match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should match DATE_YEAR regex") {
                     assertTrue {
@@ -188,8 +188,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "12:34, lorem ipsum dolor sit amet - 3100 consectetuer adipiscing eli@t.cc Aenean "
             on("checking regexes") {
-                it("should not match COLUMN regex") {
-                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should not match DATE_YEAR regex") {
                     assertFalse {
@@ -211,8 +211,8 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
         given("string of text") {
             val s = "12:34,\t\t\t\t lorem ipsum dolor sit amet - 3100 consectetuer adipiscing \t\t\t\tpav9147@yandex.ru\t\t\t\t"
             on("checking regexes") {
-                it("should not match COLUMN regex") {
-                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLUMN.regex) }
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
                 it("should not match DATE_YEAR regex") {
                     assertFalse {
@@ -231,6 +231,70 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 }
             }
         }
-
+        given("string of text") {
+            val s = """From: "papa pa" <eeee@eee.com> """
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should match MIDDLE_COLON regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = """From : "papa pa" <eeee@eee.com> """
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should match MIDDLE_COLON regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = """From "papa pa" <eeee@eee.com>: """
+            on("checking regexes") {
+                it("should match COLON regex") {
+                    assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should not match MIDDLE_COLON regex") {
+                    assertFalse {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = """:From "papa pa" <eeee@eee.com> """
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should not match MIDDLE_COLON regex") {
+                    assertFalse {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = """From:"papa pa" <eeee@eee.com> """
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should not match MIDDLE_COLON regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
     }
 }

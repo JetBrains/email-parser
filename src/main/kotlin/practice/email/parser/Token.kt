@@ -15,7 +15,7 @@ enum class TokenRegEx(val regex: String) {
 enum class AttributeRegEx(val regex: String) {
     ANGLE_BRACKETS("<.*>" + TokenRegEx.COMMA_END.regex),
     LAST_COMMA(".*,"),
-    LAST_COLUMN(".*:"),
+    LAST_COLON(".*:"),
     HAS_AT(".*@.*"),
     NON_ALPHABETIC("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+"),
     NON_ALPHABETIC_OR_DIGIT("([!-/]|[:-@]|[\\[-`]|[{-~])+")
@@ -72,7 +72,7 @@ class Token(var text: String) {
     inner class Attributes {
         var withAngleBrackets: Boolean
         var lastComma: Boolean
-        var lastColumn: Boolean
+        var lastColon: Boolean
         var hasAtSymbol: Boolean
         var nonLetterOrDigit: Boolean
         var nonAlphabetic: Boolean
@@ -80,7 +80,7 @@ class Token(var text: String) {
         init {
             this.lastComma = check(AttributeRegEx.LAST_COMMA.regex)
             this.withAngleBrackets = check(AttributeRegEx.ANGLE_BRACKETS.regex)
-            this.lastColumn = check(AttributeRegEx.LAST_COLUMN.regex)
+            this.lastColon = check(AttributeRegEx.LAST_COLON.regex)
             this.hasAtSymbol = check(AttributeRegEx.HAS_AT.regex)
             this.nonLetterOrDigit = check(AttributeRegEx.NON_ALPHABETIC_OR_DIGIT.regex)
             this.nonAlphabetic = check(AttributeRegEx.NON_ALPHABETIC.regex)
@@ -94,7 +94,7 @@ class Token(var text: String) {
 
             if (this.lastComma != other.lastComma) return false
             if (this.withAngleBrackets != other.withAngleBrackets) return false
-            if (this.lastColumn != other.lastColumn) return false
+            if (this.lastColon != other.lastColon) return false
             if (this.hasAtSymbol != other.hasAtSymbol) return false
             if (this.nonLetterOrDigit != other.nonLetterOrDigit) return false
             if (this.nonAlphabetic != other.nonAlphabetic) return false
@@ -105,7 +105,7 @@ class Token(var text: String) {
         override fun hashCode(): Int {
             var result = this.lastComma.hashCode()
             result += 13 * result + this.withAngleBrackets.hashCode()
-            result += 13 * result + this.lastColumn.hashCode()
+            result += 13 * result + this.lastColon.hashCode()
             result += 13 * result + this.hasAtSymbol.hashCode()
             result += 13 * result + this.nonLetterOrDigit.hashCode()
             result += 13 * result + this.nonAlphabetic.hashCode()
@@ -113,7 +113,7 @@ class Token(var text: String) {
         }
 
         override fun toString(): String {
-            return "Attributes(withAngleBrackets=$withAngleBrackets, lastComma=$lastComma, lastColumn=$lastColumn, hasAtSymbol=$hasAtSymbol, nonLetterOrDigit=$nonLetterOrDigit, nonAlphabetic=$nonAlphabetic)"
+            return "Attributes(withAngleBrackets=$withAngleBrackets, lastComma=$lastComma, lastColon=$lastColon, hasAtSymbol=$hasAtSymbol, nonLetterOrDigit=$nonLetterOrDigit, nonAlphabetic=$nonAlphabetic)"
         }
 
 
@@ -153,7 +153,7 @@ class Token(var text: String) {
 
         difference += attributeDifference(this.attrs.lastComma, other.attrs.lastComma)
         difference += attributeDifference(this.attrs.withAngleBrackets, other.attrs.withAngleBrackets)
-        difference += attributeDifference(this.attrs.lastColumn, other.attrs.lastColumn)
+        difference += attributeDifference(this.attrs.lastColon, other.attrs.lastColon)
         difference += attributeDifference(this.attrs.hasAtSymbol, other.attrs.hasAtSymbol)
         difference += attributeDifference(this.attrs.nonLetterOrDigit, other.attrs.nonLetterOrDigit)
         difference += attributeDifference(this.attrs.nonAlphabetic, other.attrs.nonAlphabetic)
