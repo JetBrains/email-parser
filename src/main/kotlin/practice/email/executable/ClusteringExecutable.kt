@@ -14,10 +14,10 @@ fun main(args: Array<String>) {
     val options = "-L SINGLE -A \"practice.email.clustering.TokenEditDistanceFunction -D -R first\" -B"
     val loader = ArffLoader()
 
-    loader.setSource(File("test.arff"))
+    loader.setSource(File("test2.arff"))
     val data: Instances = loader.dataSet
 
-    val params = getBestClusteringParams(data, options, debug = true)
+    val params = getBestClusteringParamsParallel(data, options, debug = true)
 
     // Instantiate clusterer
     val clusterer = HierarchicalClusterer()

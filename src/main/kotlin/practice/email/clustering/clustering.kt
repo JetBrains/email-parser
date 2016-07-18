@@ -190,8 +190,8 @@ fun getEstimate(eml1: File, eml2: File): Int {
     val content1 = EmailParser(eml1).parse().content.body
     val content2 = EmailParser(eml2).parse().content.body
 
-    val header1 = QuotesHeaderSuggestions.getQuoteHeader(content1)
-    val header2 = QuotesHeaderSuggestions.getQuoteHeader(content2)
+    val header1 = QuotesHeaderSuggestions.getQuoteHeaderLine(content1)
+    val header2 = QuotesHeaderSuggestions.getQuoteHeaderLine(content2)
 
     return when {
         header1 == null && header2 == null -> 0

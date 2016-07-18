@@ -7,7 +7,7 @@ enum class TokenRegEx(val regex: String) {
     DIGITS("\\d+" + COMMA_END.regex),
     DATE("(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
             "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + COMMA_END.regex),
-    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9]" + COMMA_END.regex),
+    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?" + COMMA_END.regex),
     MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END.regex),
     EMAIL("\\S+@\\S+")
 }

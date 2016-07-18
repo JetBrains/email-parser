@@ -122,6 +122,24 @@ class TokenRegExSpecs : Spek() {
             }
         }
 
+        given("time+sec token") {
+            val token = Token("23:59:03,")
+            on("it's creation") {
+                it("has TIME type") {
+                    assertEquals(TokenType.TIME, token.type)
+                }
+                it("has false lastComma") {
+                    assertTrue { token.attrs.lastComma }
+                }
+                it("has false withAngleBrackets") {
+                    assertFalse { token.attrs.withAngleBrackets }
+                }
+                it("has true nonAlphabetic") {
+                    assertTrue { token.attrs.nonAlphabetic }
+                }
+            }
+        }
+
         given("incorrect time token") {
             val token = Token("+10:00")
             on("it's creation") {

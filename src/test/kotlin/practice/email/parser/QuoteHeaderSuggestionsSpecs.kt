@@ -1,7 +1,7 @@
 package practice.email.parser
 
 import org.jetbrains.spek.api.Spek
-import practice.email.parser.QuotesHeaderSuggestions.getQuoteHeader
+import practice.email.parser.QuotesHeaderSuggestions.getQuoteHeaderLine
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -32,8 +32,8 @@ mariya.davydova@jetbrains.com> написал:
 > У меня за последнее время родилось некоторое количество разрозненных
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
-                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual = getQuoteHeader(text)
+                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova < mariya.davydova@jetbrains.com> написал:"
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch quote header") {
                     assertEquals(expected, actual)
                 }
@@ -63,8 +63,8 @@ mariya.davydova@jetbrains.com> написал:
 > У меня за последнее время родилось некоторое количество разрозненных
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
-                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual = getQuoteHeader(text)
+                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova < mariya.davydova@jetbrains.com> написал:"
+                val actual = getQuoteHeaderLine(text)
                 it("still should fetch quote header") {
                     assertEquals(expected, actual)
                 }
@@ -94,10 +94,8 @@ mariya.davydova@jetbrains.com> написал:
 > У меня за последнее время родилось некоторое количество разрозненных
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
-                val expected = "Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных" +
-                        "случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее" +
-                        "масштабная. Признаки, кроме даты, не: зависят от языка."
-                val actual = getQuoteHeader(text)
+                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova < mariya.davydova@jetbrains.com> написал:"
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch the first paragraph") {
                     assertEquals(expected, actual)
                 }
@@ -127,8 +125,8 @@ mariya.davydova@jetbrains.com> написал:
 > У меня за последнее время родилось некоторое количество разрозненных
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
-                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova <mariya.davydova@jetbrains.com> написал:"
-                val actual = getQuoteHeader(text)
+                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova < mariya.davydova@jetbrains.com> написал:"
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch quote header") {
                     assertEquals(expected, actual)
                 }
@@ -159,7 +157,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >> Sent from my iPad"""
 
                 val expected = "On 03/02/2016 12:10 AM, Павел Жук wrote:"
-                val actual = getQuoteHeader(text)
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch the first one") {
                     assertEquals(expected, actual)
                 }
@@ -175,7 +173,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >>  без цитаты"""
 
                 val expected = """13.03.2016, 01:01, "Паша Жук" <jojograf@yandex.ru>:"""
-                val actual = getQuoteHeader(text)
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch the first one") {
                     assertEquals(expected, actual)
                 }
@@ -193,7 +191,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 >Жук Павел."""
 
                 val expected = ">Воскресенье, 13 марта 2016, 6:55 +10:00 от Павел Жук <ppzhuk@gmail.com>:"
-                val actual = getQuoteHeader(text)
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch that ticked header") {
                     assertEquals(expected, actual)
                 }
@@ -209,8 +207,8 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 без цитаты
 """
 
-                val expected = "Дата: 	Sun, 13 Mar 2016 01:01:33 +0300От: 	pav9147@yandex.ru"
-                val actual = getQuoteHeader(text)
+                val expected = "Дата: 	Sun, 13 Mar 2016 01:01:33 +0300 От: 	pav9147@yandex.ru"
+                val actual = getQuoteHeaderLine(text)
                 it("should fetch Data and From as a quote header") {
                     assertEquals(expected, actual)
                 }
@@ -227,7 +225,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 лифтовой площадки)."""
 
                 it("should return null") {
-                    assertNull(getQuoteHeader(text))
+                    assertNull(getQuoteHeaderLine(text))
                 }
             }
         }

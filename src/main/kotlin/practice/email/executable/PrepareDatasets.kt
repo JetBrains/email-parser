@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
         used.add(i)
         val header: String?
         try {
-            header = QuotesHeaderSuggestions.getQuoteHeader(
+            header = QuotesHeaderSuggestions.getQuoteHeaderLine(
                     EmailParser(
                             File("${pathEmails}${i}.eml")
                     ).parse().content.body
