@@ -59,7 +59,7 @@ fun main(args: Array<String>) {
             } else {
                 testSet.write("($i)")
                 testSet.write(header)
-                testSet.newLine()   
+                testSet.newLine()
             }
             count++
         }

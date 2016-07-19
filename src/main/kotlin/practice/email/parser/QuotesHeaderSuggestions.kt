@@ -4,9 +4,9 @@ import com.sun.org.apache.xpath.internal.operations.Bool
 
 enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
     DATE_YEAR(
-            Regex("(.*\\s)?((([0-3]?[0-9][\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?(20\\d\\d[\\.,]?))|"+
-                  "((20\\d\\d[\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?([0-3]?[0-9][\\.,]?))|"+
-                  "(${TokenRegEx.DATE.regex}))(\\s.*)?")
+            Regex("(.*\\s)?((([0-3]?[0-9][\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?(20\\d\\d[\\.,]?))|" +
+                    "((20\\d\\d[\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?([0-3]?[0-9][\\.,]?))|" +
+                    "(${TokenRegEx.DATE.regex}))(\\s.*)?")
     ),
     TIME(
             Regex("(.*\\s)?${TokenRegEx.TIME.regex}(\\s.*)?")
@@ -18,7 +18,7 @@ enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
             Regex("(.*\\s)?.*:(\\s*)?")
     ),
     MIDDLE_COLON(
-            Regex("(.*\\s)?\\S+(\\s)*:(\\s)*\\S+(.*\\s)?")
+            Regex(".*\\S+\\s*:\\s+\\S+.*")
     )
 }
 
@@ -34,7 +34,10 @@ object QuotesHeaderSuggestions {
     }
 
     // For multilines and FWD headers
-    // todo
+    private val MIDDLE_COLON_LINES_COUNT = 4
+    private var middleColonCount = 0
+    private val middleColonLineIndex = IntArray(MIDDLE_COLON_LINES_COUNT) { -1 }
+    // ------
 
     private var suggestionsFound = 0
     private val suggestions = BooleanArray(COUNT) { false }
@@ -64,7 +67,7 @@ object QuotesHeaderSuggestions {
         update(lineIndex, line, idx.EMAIL, QuotesHeaderSuggestionsRegEx.EMAIL.regex)
         update(lineIndex, line, idx.COLUMN, QuotesHeaderSuggestionsRegEx.COLON.regex)
 
-        // todo *
+        updateMiddleColon(lineIndex, line)
 
         resetOldSuggestions(lineIndex)
     }
@@ -81,6 +84,27 @@ object QuotesHeaderSuggestions {
         return false
     }
 
+    private fun updateMiddleColon(lineIndex: Int, line: String, shouldReset: Boolean = true): Boolean {
+        if (line.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex) &&
+                (middleColonCount == 0 || lineIndex - 1 == middleColonLineIndex[middleColonCount - 1])) {
+            if (middleColonCount == MIDDLE_COLON_LINES_COUNT) {
+                middleColonLineIndex.forEachIndexed { i, line ->
+                    if (i < middleColonCount - 1)
+                        middleColonLineIndex[i] = middleColonLineIndex[i + 1]
+                }
+                middleColonLineIndex[middleColonCount - 1] = lineIndex
+            } else {
+                middleColonLineIndex[middleColonCount++] = lineIndex
+            }
+            return true
+        } else {
+            if (shouldReset) {
+                middleColonCount = 0
+            }
+            return false
+        }
+    }
+
     private fun resetOldSuggestions(lineIndex: Int) {
         for (i in 0..COUNT - 1) {
             if (this.suggestions[i] && (lineIndex - this.suggestionsLineIndex[i] > 2)) {
@@ -91,7 +115,7 @@ object QuotesHeaderSuggestions {
         }
     }
 
-    private fun getHeader(lines: List<String>):  List<String> {
+    private fun getHeader(lines: List<String>): List<String> {
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE
 
@@ -102,22 +126,48 @@ object QuotesHeaderSuggestions {
             }
         }
 
-        //todo **
+        var additionalLine = 0
 
         // If sufficient count of suggestions had been found in one or two lines
         // try to check the last suggestion in the following line.
         val lastSuggestionIdx = this.suggestions.indexOfFirst { !it }
-        if (lastSuggestionIdx != -1 &&      // One suggestion is not found.
-                toIndex < lines.size -1 &&  // There is the following line to check.
+        if (lastSuggestionIdx != -1 && // One suggestion is not found.
+                toIndex < lines.size - 1 && // There is the following line to check.
                 toIndex - fromIndex < 2) {  // Found suggestions are placed in less than 3 lines.
             val updated = update(
-                    toIndex+1,
-                    lines[toIndex+1],
+                    toIndex + 1,
+                    lines[toIndex + 1],
                     lastSuggestionIdx,
                     QuotesHeaderSuggestionsRegEx.values()[lastSuggestionIdx].regex
             )
+
+            // Check if this line contains middle colon
+            updateMiddleColon(toIndex + 1, lines[toIndex + 1])
+            additionalLine = 1
+
             if (updated) {
                 toIndex++
+            }
+        }
+
+        // Try to check if there is a multiline header or FWD
+        if (middleColonCount >= toIndex - fromIndex + 1) {
+            var cnt = MIDDLE_COLON_LINES_COUNT - middleColonCount
+            var lineIdx = toIndex + 1 + additionalLine
+            while (cnt > 0 && lineIdx < lines.size) {
+
+                val updated = updateMiddleColon(lineIdx, lines[lineIdx], shouldReset = false)
+                if (!updated) {
+                    break
+                }
+
+                lineIdx++
+                cnt--
+            }
+
+            if (middleColonLineIndex[0] <= fromIndex && middleColonLineIndex[middleColonCount - 1] >= toIndex) {
+                fromIndex = middleColonLineIndex[0]
+                toIndex = middleColonLineIndex[middleColonCount - 1]
             }
         }
 

@@ -271,7 +271,7 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
             }
         }
         given("string of text") {
-            val s = """:From "papa pa" <eeee@eee.com> """
+            val s = """:From "papa pa" <eeee@eee.com>"""
             on("checking regexes") {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
@@ -284,12 +284,25 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
             }
         }
         given("string of text") {
-            val s = """From:"papa pa" <eeee@eee.com> """
+            val s = """Aan: Nfg FG FGfgf <xxx@xx.com>"""
             on("checking regexes") {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should not match MIDDLE_COLON regex") {
+                it("should match MIDDLE_COLON regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = """Onderwerp: [XXX YYY] Re: xxx ccc vvv bbb"""
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should match MIDDLE_COLON regex") {
                     assertTrue {
                         s.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex)
                     }
