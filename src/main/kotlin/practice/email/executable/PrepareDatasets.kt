@@ -1,7 +1,9 @@
 package practice.email.executable
 
+import practice.email.parser.Email
 import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
+import practice.email.parser.preprocess
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -10,8 +12,11 @@ import java.util.*
 
 val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-val pathEmails = ".${File.separator}src${File.separator}main${File.separator}" +
-        "resources${File.separator}YT${File.separator}"
+val pathEmails = "C:${File.separator}YT${File.separator}"
+
+
+private val FILTER_STRING = "##- Please type your reply above this line -##"
+
 val EMAILS_COUNT = 23055
 val DATASETS_SIZE = 100
 
@@ -33,13 +38,22 @@ fun main(args: Array<String>) {
             i = random.nextInt(EMAILS_COUNT)
         }
         used.add(i)
-        val header: String?
+
+        val header: List<String>?
+        val email: Email
         try {
-            header = QuotesHeaderSuggestions.getQuoteHeaderLine(
-                    EmailParser(
-                            File("${pathEmails}${i}.eml")
-                    ).parse().content.body
-            )     
+            email = EmailParser(
+                    File("${pathEmails}${i}.eml")
+            ).parse()
+
+            if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
+                header = QuotesHeaderSuggestions.getQuoteHeader(
+                        email.content.body
+                )
+            } else {
+                header = null
+            }
+
         } catch(e: Exception) {
             println("${i}.eml gave an error while parsing: ${e.message}")
             println("Skipping...")
@@ -52,19 +66,27 @@ fun main(args: Array<String>) {
         }
        
         if (header != null) {
-            if (count < DATASETS_SIZE) {
-                trainingSet.write("($i)")
-                trainingSet.write(header)
-                trainingSet.newLine()
-            } else {
-                testSet.write("($i)")
-                testSet.write(header)
-                testSet.newLine()
+
+            try {
+                val headerLine = preprocess(header)
+                if (count < DATASETS_SIZE) {
+                    trainingSet.write("${count % 100} - ${i}\t\t")
+                    trainingSet.write(headerLine)
+                    trainingSet.newLine()
+                } else {
+                    testSet.write("${count % 100} - ${i}\t\t")
+                    testSet.write(headerLine)
+                    testSet.newLine()
+                }
+                count++
+
+            } catch (e: StringIndexOutOfBoundsException) {
+                println("Indexing error with eml ${i}.")
+                throw e
             }
-            count++
         }
         
-        if (count % (DATASETS_SIZE * 2 / 5) == 0) {
+        if (count % (DATASETS_SIZE * 2 / 10) == 0) {
             println("${count} is passed")
         }
     }

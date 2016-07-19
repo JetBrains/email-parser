@@ -4,8 +4,8 @@ import com.sun.org.apache.xpath.internal.operations.Bool
 
 enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
     DATE_YEAR(
-            Regex("(.*\\s)?((([0-3]?[0-9][\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?(20\\d\\d[\\.,]?))|" +
-                    "((20\\d\\d[\\.,]?\\s+)(\\S+\\s+)?(\\S+\\s+)?([0-3]?[0-9][\\.,]?))|" +
+            Regex("(.*\\s)?((([0-3]?[0-9][\\.,]{0,2}\\s+)(\\S+\\s+)?(\\S+\\s+)?(20\\d\\d[\\.,]{0,2}))|" +
+                    "((20\\d\\d[\\.,]{0,2}\\s+)(\\S+\\s+)?(\\S+\\s+)?([0-3]?[0-9][\\.,]{0,2}))|" +
                     "(${TokenRegEx.DATE.regex}))(\\s.*)?")
     ),
     TIME(

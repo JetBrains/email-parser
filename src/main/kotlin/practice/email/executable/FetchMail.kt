@@ -10,6 +10,8 @@ import javax.mail.Folder
 import javax.mail.Message
 import javax.mail.Session
 
+private val FILTER_STRING = "##- Please type your reply above this line -##"
+
 private class GmailMailbox(val login: String, val pass: String) {
     fun readInbox() {
 
@@ -56,6 +58,9 @@ private class GmailMailbox(val login: String, val pass: String) {
     /**
      * Фультрует сообщения только с подходящим ContentType
      */
+
+    // TODO filter messages started with FILTER_STRING
+
     private fun filterMessages(messages: List<Message>): List<Message> =
             messages.filterIndexed { i, message ->
                 if (i % 50 == 0)
