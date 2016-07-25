@@ -53,26 +53,16 @@ fun main(args: Array<String>) {
     val content1 = EmailParser(eml1).parse().content.body
     val content2 = EmailParser(eml2).parse().content.body
 
-    val headerList1 = QuotesHeaderSuggestions.getQuoteHeader(content1)
-    val headerList2 = QuotesHeaderSuggestions.getQuoteHeader(content2)
+    val header1 = QuotesHeaderSuggestions.getPreprocessedQuoteHeaderLine(content1)
+    val header2 = QuotesHeaderSuggestions.getPreprocessedQuoteHeaderLine(content2)
 
-    val headerLine1 = if (headerList1 == null)
-        null
-    else
-        preprocess(headerList1)
+    println("a = $header1")
+    println("b = $header2")
 
-    val headerLine2 = if (headerList2 == null)
-        null
-    else
-        preprocess(headerList2)
-
-    println("a = $headerLine1")
-    println("b = $headerLine2")
-
-    if (headerLine1 != null && headerLine2 != null) {
+    if (header1 != null && header2 != null) {
         println("Alignment:")
-        printAlignment(headerLine1, headerLine2)
+        printAlignment(header1, header2)
     }
 
-   // println("estimate = " + getEstimate(eml1, eml2))
+    println("estimate = " + getEstimate(eml1, eml2))
 }

@@ -57,7 +57,12 @@ object QuotesHeaderSuggestions {
     }
 
     fun getQuoteHeaderLine(content: String): String? =
-            getQuoteHeader(content)?.joinToString(separator = " ")
+            getQuoteHeader(content)?.filter { it != "" }?.joinToString(separator = " ")
+
+    fun getPreprocessedQuoteHeaderLine(content: String): String? {
+        val header = getQuoteHeader(content)
+        return if (header != null ) preprocess(header) else null
+    }
 
     private fun updateSuggestions(lineIndex: Int, line: String) {
         var updated = update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE.regex)
