@@ -28,7 +28,7 @@ object QuotesHeaderSuggestions {
         val DATE_YEAR = 0
         val TIME = 1
         val EMAIL = 2
-        val COLUMN = 3
+        val COLON = 3
     }
 
     // For multilines and FWD headers
@@ -60,14 +60,18 @@ object QuotesHeaderSuggestions {
             getQuoteHeader(content)?.joinToString(separator = " ")
 
     private fun updateSuggestions(lineIndex: Int, line: String) {
-        update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE.regex)
-        update(lineIndex, line, idx.TIME, QuotesHeaderSuggestionsRegEx.TIME.regex)
-        update(lineIndex, line, idx.EMAIL, QuotesHeaderSuggestionsRegEx.EMAIL.regex)
-        update(lineIndex, line, idx.COLUMN, QuotesHeaderSuggestionsRegEx.COLON.regex)
+        var updated = update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE.regex)
+        updated = update(lineIndex, line, idx.TIME, QuotesHeaderSuggestionsRegEx.TIME.regex) || updated
+        updated = update(lineIndex, line, idx.EMAIL, QuotesHeaderSuggestionsRegEx.EMAIL.regex) || updated
+        updated = update(lineIndex, line, idx.COLON, QuotesHeaderSuggestionsRegEx.COLON.regex) || updated
 
-        updateMiddleColon(lineIndex, line)
+        updated = updateMiddleColon(lineIndex, line) || updated
 
-        resetOldSuggestions(lineIndex)
+        if (updated) {
+            resetSuggestions(lineIndex = lineIndex)
+        } else {
+            resetSuggestions(all = true)
+        }
     }
 
     private fun update(lineIndex: Int, line: String, suggestionIndex: Int, regex: Regex): Boolean {
@@ -103,9 +107,9 @@ object QuotesHeaderSuggestions {
         }
     }
 
-    private fun resetOldSuggestions(lineIndex: Int) {
+    private fun resetSuggestions(lineIndex: Int = 0, all: Boolean = false) {
         for (i in 0..COUNT - 1) {
-            if (this.suggestions[i] && (lineIndex - this.suggestionsLineIndex[i] > 2)) {
+            if (this.suggestions[i] && (all || lineIndex - this.suggestionsLineIndex[i] > 2)) {
                 this.suggestionsLineIndex[i] = -1
                 this.suggestions[i] = false
                 this.suggestionsFound--

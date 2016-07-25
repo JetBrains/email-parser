@@ -6,44 +6,9 @@ fun preprocess(lines: List<String>): String {
     var modifLines = deleteStartingAngleBrackets(lines)
     modifLines = deletePeriodsAndCommas(modifLines)
     modifLines = joinAngleBracketsAndColons(modifLines)
-    //modifLines = joinColonsWithPreviousWord(modifLines)
 
     return modifLines.filter { it != "" }.joinToString(separator = " ")
 }
-
-/*
-private fun joinColonsWithPreviousWord(lines: List<String>): List<String> {
-    var addToEnd = false
-    var wordToAdd = "some init val"
-    val linesReversed = lines.reversed()
-    val modifLines = linesReversed.mapIndexed { lineIdx, line ->
-        val words = getWords(line.trim()).toMutableList()
-        if (addToEnd) {
-            words.add(wordToAdd)
-            addToEnd = false
-        }
-        var i = words.size - 1
-        while (i >= 0) {
-            val word = words[i]
-            if (word == ":") {
-                if (i > 0) {
-                    words.removeAt(i)
-                    words[i-1] = "${words[i-1]}${word}"
-                } else if (i == 0 && lineIdx < linesReversed.size - 1) {
-                    words.removeAt(i)
-                    addToEnd = true
-                    wordToAdd = word
-                }
-            }
-            i--
-        }
-
-        words.joinToString(separator = " ")
-    }
-
-    return modifLines.reversed()
-}
-*/
 
 private fun joinAngleBracketsAndColons(lines: List<String>): List<String>  {
     var modifLines = joinOpenAngleBrackets(lines)

@@ -209,7 +209,7 @@ On 03/02/2016 12:10 AM, Павел Жук wrote:
 
                 val expected = "Тема: 	тема письма Дата: 	Sun, 13 Mar 2016 01:01:33 +0300 От: 	pav9147@yandex.ru Кому: 	jojograf@yandex.ru"
                 val actual = getQuoteHeaderLine(text)
-                it("should fetch Data and From as a quote header") {
+                it("should fetch all 4 fields as a quote header") {
                     assertEquals(expected, actual)
                 }
             }

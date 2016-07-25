@@ -209,6 +209,29 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
             }
         }
         given("string of text") {
+            val s = "> Date: 17 Jul 2015 13:25:18 GMT+3"
+            on("checking regexes") {
+                it("should not match COLON regex") {
+                    assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
+                }
+                it("should match DATE regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
+                    }
+                }
+                it("should match TIME regex") {
+                    assertTrue {
+                        s.matches(QuotesHeaderSuggestionsRegEx.TIME.regex)
+                    }
+                }
+                it("should not match EMAIL regex") {
+                    assertFalse {
+                        s.matches(QuotesHeaderSuggestionsRegEx.EMAIL.regex)
+                    }
+                }
+            }
+        }
+        given("string of text") {
             val s = "12:34,\t\t\t\t lorem ipsum dolor sit amet - 3100 consectetuer adipiscing \t\t\t\tpav9147@yandex.ru\t\t\t\t"
             on("checking regexes") {
                 it("should not match COLON regex") {

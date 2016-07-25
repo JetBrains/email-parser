@@ -173,48 +173,6 @@ some text
             }
         }
 
-        given("header with open angle bracket at the line") {
-            val header: List<String>? = QuotesHeaderSuggestions.getQuoteHeader(
-                    """
-some text
-
-> >> On Mar 6, 2015., at 06:21, XXX YYY
-> <<
-> mailto:xxx@zzz.com>> <
->
-> text text,
-> text text text text text text text text text text text xxx@zzz.com <mailto:xxx@zzz.com>."""
-            )
-            on("preprocessing") {
-                val expected = ">> On Mar 6 2015 at 06:21 XXX YYY <<mailto:xxx@zzz.com>> <"
-                val actual   = preprocess(header ?: throw NullPointerException())
-                it("should join with the following word") {
-                    assertEquals(expected, actual)
-                }
-            }
-        }
-
-        given("header with close angle bracket at the line") {
-            val header: List<String>? = QuotesHeaderSuggestions.getQuoteHeader(
-                    """
-some text
-
-> >> On Mar 6, 2015., at 06:21, XXX YYY
-> >
-> << mailto:xxx@zzz.com >> <
->
-> text text,
-> text text text text text text text text text text text xxx@zzz.com <mailto:xxx@zzz.com>."""
-            )
-            on("preprocessing") {
-                val expected = ">> On Mar 6 2015 at 06:21 XXX YYY> <<mailto:xxx@zzz.com>> <"
-                val actual   = preprocess(header ?: throw NullPointerException())
-                it("should join with previous word") {
-                    assertEquals(expected, actual)
-                }
-            }
-        }
-
         given("header with separate colons") {
             val header: List<String>? = QuotesHeaderSuggestions.getQuoteHeader(
                     """
