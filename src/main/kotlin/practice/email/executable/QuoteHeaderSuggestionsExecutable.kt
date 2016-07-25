@@ -4,6 +4,7 @@ import practice.email.clustering.getEstimate
 import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
 import practice.email.parser.getEditDistance
+import practice.email.parser.preprocess
 import java.io.File
 
 private val path = ".${File.separator}src${File.separator}test${File.separator}" +
@@ -52,16 +53,26 @@ fun main(args: Array<String>) {
     val content1 = EmailParser(eml1).parse().content.body
     val content2 = EmailParser(eml2).parse().content.body
 
-    val header1 = QuotesHeaderSuggestions.getQuoteHeaderLine(content1)
-    val header2 = QuotesHeaderSuggestions.getQuoteHeaderLine(content2)
+    val headerList1 = QuotesHeaderSuggestions.getQuoteHeader(content1)
+    val headerList2 = QuotesHeaderSuggestions.getQuoteHeader(content2)
 
-    println("a = $header1")
-    println("b = $header2")
+    val headerLine1 = if (headerList1 == null)
+        null
+    else
+        preprocess(headerList1)
 
-    if (header1 != null && header2 != null) {
+    val headerLine2 = if (headerList2 == null)
+        null
+    else
+        preprocess(headerList2)
+
+    println("a = $headerLine1")
+    println("b = $headerLine2")
+
+    if (headerLine1 != null && headerLine2 != null) {
         println("Alignment:")
-        printAlignment(header1, header2)
+        printAlignment(headerLine1, headerLine2)
     }
 
-    println("estimate = " + getEstimate(eml1, eml2))
+   // println("estimate = " + getEstimate(eml1, eml2))
 }

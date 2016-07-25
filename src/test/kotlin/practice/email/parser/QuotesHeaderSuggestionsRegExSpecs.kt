@@ -12,9 +12,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should not match EMAIL regex") {
@@ -35,9 +35,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should not match EMAIL regex") {
@@ -53,9 +53,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -76,9 +76,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should  match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -99,9 +99,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should  match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -122,9 +122,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should  match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -145,9 +145,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should  match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -168,9 +168,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should  match COLON regex") {
                     assertTrue { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should match DATE_YEAR regex") {
+                it("should match DATE regex") {
                     assertTrue {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -191,9 +191,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should not match DATE_YEAR regex") {
+                it("should not match DATE regex") {
                     assertFalse {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {
@@ -214,9 +214,9 @@ class QuotesHeaderSuggestionsRegExSpecs : Spek() {
                 it("should not match COLON regex") {
                     assertFalse { s.matches(QuotesHeaderSuggestionsRegEx.COLON.regex) }
                 }
-                it("should not match DATE_YEAR regex") {
+                it("should not match DATE regex") {
                     assertFalse {
-                        s.matches(QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+                        s.matches(QuotesHeaderSuggestionsRegEx.DATE.regex)
                     }
                 }
                 it("should match TIME regex") {

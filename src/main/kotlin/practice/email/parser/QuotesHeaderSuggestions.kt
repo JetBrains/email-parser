@@ -1,9 +1,7 @@
 package practice.email.parser
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-
 enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
-    DATE_YEAR(
+    DATE(
             Regex("(.*\\s)?((([0-3]?[0-9][\\.,]{0,2}\\s+)(\\S+\\s+)?(\\S+\\s+)?(20\\d\\d[\\.,]{0,2}))|" +
                     "((20\\d\\d[\\.,]{0,2}\\s+)(\\S+\\s+)?(\\S+\\s+)?([0-3]?[0-9][\\.,]{0,2}))|" +
                     "(${TokenRegEx.DATE.regex}))(\\s.*)?")
@@ -62,7 +60,7 @@ object QuotesHeaderSuggestions {
             getQuoteHeader(content)?.joinToString(separator = " ")
 
     private fun updateSuggestions(lineIndex: Int, line: String) {
-        update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE_YEAR.regex)
+        update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE.regex)
         update(lineIndex, line, idx.TIME, QuotesHeaderSuggestionsRegEx.TIME.regex)
         update(lineIndex, line, idx.EMAIL, QuotesHeaderSuggestionsRegEx.EMAIL.regex)
         update(lineIndex, line, idx.COLUMN, QuotesHeaderSuggestionsRegEx.COLON.regex)

@@ -10,15 +10,15 @@ import java.io.FileOutputStream
 import java.io.OutputStreamWriter
 import java.util.*
 
-val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
+private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-val pathEmails = "C:${File.separator}YT${File.separator}"
+private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
 
-val EMAILS_COUNT = 23055
-val DATASETS_SIZE = 100
+private val EMAILS_COUNT = 23055
+private val DATASETS_SIZE = 100
 
 fun main(args: Array<String>) {
     val used = mutableSetOf(-1)
