@@ -4,11 +4,10 @@ import practice.email.parser.Email
 import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
 import practice.email.parser.preprocess
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
+import java.io.*
 import java.util.*
+import java.util.regex.Pattern
+import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
@@ -30,11 +29,18 @@ fun main(args: Array<String>) {
             "${pathDatasets}test.txt"
     ))))
     val random = Random(System.currentTimeMillis())
-        
+
+    val trainingGeneralSet = getTrainingSet()
+
     while (count < DATASETS_SIZE * 2) {
         var i = random.nextInt(EMAILS_COUNT)
 
-        while (i in used) {
+        if (used.size + trainingGeneralSet.size >= EMAILS_COUNT) {
+            println("All possible emails were viewed. Aborting..")
+            break
+        }
+
+        while (i in used || i in trainingGeneralSet) {
             i = random.nextInt(EMAILS_COUNT)
         }
         used.add(i)
@@ -80,14 +86,14 @@ fun main(args: Array<String>) {
                 }
                 count++
 
+                if (count % (DATASETS_SIZE * 2 / 10) == 0) {
+                    println("${count} is passed")
+                }
+
             } catch (e: StringIndexOutOfBoundsException) {
                 println("Indexing error with eml ${i}.")
                 throw e
             }
-        }
-        
-        if (count % (DATASETS_SIZE * 2 / 10) == 0) {
-            println("${count} is passed")
         }
     }
 
@@ -95,4 +101,17 @@ fun main(args: Array<String>) {
     testSet.close()
     
     println("Done.")
+}
+
+private fun getTrainingSet(): Set<Int> {
+    val trainingSetFile = BufferedReader(InputStreamReader(FileInputStream(File(
+            "${pathDatasets}training_general.txt"
+    ))))
+    val lines = trainingSetFile.lines().collect(Collectors.toList())
+    val trainingSetNumbers =
+            lines.subList(0, lines.size - 1)
+                    .filter { it != "" }
+                    .map { (it as String).split(Pattern.compile("\\s+"))[2] }
+                    .map { Integer.parseInt(it) }
+    return trainingSetNumbers.toSet()
 }

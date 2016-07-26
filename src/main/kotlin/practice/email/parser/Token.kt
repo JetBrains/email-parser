@@ -3,17 +3,17 @@ package practice.email.parser
 import java.util.regex.Pattern
 
 enum class TokenRegEx(val regex: String) {
-    COMMA_END(",?"),
-    DIGITS("\\d+" + COMMA_END.regex),
+    TOKEN_END("[,\\.]?:?"),
+    DIGITS("\\d+" + TOKEN_END.regex),
     DATE("(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
-            "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + COMMA_END.regex),
-    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?" + COMMA_END.regex),
-    MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + COMMA_END.regex),
+            "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + TOKEN_END.regex),
+    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?" + TOKEN_END.regex),
+    MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + TOKEN_END.regex),
     EMAIL("\\S+@\\S+")
 }
 
 enum class AttributeRegEx(val regex: String) {
-    ANGLE_BRACKETS("<.*>" + TokenRegEx.COMMA_END.regex),
+    ANGLE_BRACKETS("<.*>" + TokenRegEx.TOKEN_END.regex),
     LAST_COMMA(".*,"),
     LAST_COLON(".*:"),
     HAS_AT(".*@.*"),

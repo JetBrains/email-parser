@@ -37,7 +37,7 @@ private class GmailMailbox(val login: String, val pass: String) {
             println("Total messages after filtration: " + filteredMessages.size);
 
             if (filteredMessages.size == 0) {
-                println("Nothing to save on the disk.")
+                println("Nothing to save to the disk.")
             } else {
                 saveMessages(filteredMessages)
                 

@@ -84,10 +84,12 @@ private fun joinCloseAngleBracketsAndColons(lines: List<String>): List<String> {
 private fun deleteStartingAngleBrackets(lines: List<String>): List<String> =
         lines.map {
             val line = it.trim()
-            var words = getWords(line)
+            var words = getWords(line).toMutableList()
 
             if (words[0].equals(">")) {
                 words = words.subList(1, words.size)
+            } else if (words[0].startsWith('>')) {
+                words[0] = words[0].substring(1, words[0].length)
             }
 
             words.joinToString(separator = " ")
