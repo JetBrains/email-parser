@@ -118,6 +118,6 @@ private fun getDash(length: Int): String {
  * 1 - determine date related fields
  * 2 - determine last token colon
  */
-private fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
+fun getTokens(text: String) = text.split(Regex("\\s")).filter { !it.equals("") }.map { Token(it) }
 
 

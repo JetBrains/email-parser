@@ -1,34 +1,33 @@
 import re
-import numpy as np
+import math
 
-TOKEN_END = "[,\\.]?:?"
+TOKEN_END = "[,\\.]?:?$"
 
 token_reg_ex = {
-    "DIGITS": re.compile("\\d+" + TOKEN_END),
+    "DIGITS": re.compile("^\\d+" + TOKEN_END),
     "DATE": re.compile("(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
                        "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + TOKEN_END),
-    "TIME": re.compile("([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?" + TOKEN_END),
+    "TIME": re.compile("^(([01]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?[,\\.]?:?)$"),
     "MERIDIEM": re.compile("(A|a|P|p)\\.?(M|m)\\.?" + TOKEN_END),
     "EMAIL": re.compile("\\S+@\\S+")
 }
 
 attribute_reg_ex = {
-    "ANGLE_BRACKETS": re.compile("<.*>" + TOKEN_END),
-    "LAST_COMMA": re.compile(".*,"),
-    "LAST_COLON": re.compile(".*:"),
+    "ANGLE_BRACKETS": re.compile("^<.*>$" + TOKEN_END),
+    "LAST_COMMA": re.compile(".*,$"),
+    "LAST_COLON": re.compile(".*:$"),
     "HAS_AT": re.compile(".*@.*"),
-    "NON_ALPHABETIC": re.compile("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+"),
-    "NON_ALPHABETIC_OR_DIGIT": re.compile("([!-/]|[:-@]|[\\[-`]|[{-~])+")
+    "NON_ALPHABETIC": re.compile("^[0-9!-/:-@\\[-`{-~]+$"),
+    "NON_ALPHABETIC_OR_DIGIT": re.compile("^([!-/:-@\\[-`{-~])+$")
 }
 
-TOKEN_TYPE_UNDEFINED = -1
-
 token_type = {
-    "DIGITS": 0,
-    "DATE": 1,
-    "TIME": 2,
-    "MERIDIEM": 3,
-    "EMAIL": 4
+    "UNDEFINED": 0,
+    "DIGITS": 1,
+    "DATE": 2,
+    "TIME": 3,
+    "MERIDIEM": 4,
+    "EMAIL": 5
 }
 
 
@@ -59,6 +58,22 @@ class Attributes:
             if self.nonAlphabetic != other.nonAlphabetic: return False
             return True
 
+    def __str__(self):
+        s = ""
+        if self.lastComma:
+            s += "lastComma "
+        if self.withAngleBrackets:
+            s += "withAngleBrackets "
+        if self.lastColon:
+            s += "lastColon "
+        if self.hasAtSymbol:
+            s += "hasAtSymbol "
+        if self.nonLetterOrDigit:
+            s += "nonLetterOrDigit "
+        if self.nonAlphabetic:
+            s += "nonAlphabetic "
+        return "Attributes(" + s + ")"
+
 
 class Token:
 
@@ -87,19 +102,11 @@ class Token:
     DIGITS_INEQUALITY_COST = 10
     ATTRIBUTE_INEQUALITY_COST = 1
 
-    __types = {
-        token_type["DIGITS"]: token_reg_ex["DIGITS"],
-        token_type["DATE"]: token_reg_ex["DATE"],
-        token_type["TIME"]: token_reg_ex["TIME"],
-        token_type["MERIDIEM"]: token_reg_ex["MERIDIEM"],
-        token_type["EMAIL"]: token_reg_ex["EMAIL"],
-    }
-
     def __get_token_type(self):
-        for type in token_type.keys():
-            if check(token_reg_ex[type], self.text):
-                return type
-        return "UNDEFINED"
+        for type, index in token_type.items():
+            if type != "UNDEFINED" and check(token_reg_ex[type], self.text):
+                return type, index
+        return "UNDEFINED", 0
 
     def __get_attributes(self):
         return Attributes(self)
@@ -120,15 +127,43 @@ class Token:
             return True
 
     def get_insertion_cost(self):
-        return self.INSERTION_COST[self.token_type]
+        return self.INSERTION_COST[self.token_type[0]]
 
     def get_deletion_cost(self):
-        return self.get_deletion_cost()
+        return self.get_insertion_cost()
 
-    # TODO getDifference + fix token_type dict
+    @staticmethod
+    def attribute_difference(first_attr, second_attr):
+        if first_attr != second_attr:
+            return Token.ATTRIBUTE_INEQUALITY_COST
+        else:
+            return 0
 
-    def getDifference(self, other):
+    def get_attribute_difference(self, other):
         difference = 0
 
-        # if (self.token_type != other.token_type):
-        #     difference += self.REPLACEMENT_COST[][]
+        difference += Token.attribute_difference(self.attrs.lastComma, other.attrs.lastComma)
+        difference += Token.attribute_difference(self.attrs.withAngleBrackets, other.attrs.withAngleBrackets)
+        difference += Token.attribute_difference(self.attrs.lastColon, other.attrs.lastColon)
+        difference += Token.attribute_difference(self.attrs.hasAtSymbol, other.attrs.hasAtSymbol)
+        difference += Token.attribute_difference(self.attrs.nonLetterOrDigit, other.attrs.nonLetterOrDigit)
+        difference += Token.attribute_difference(self.attrs.nonAlphabetic, other.attrs.nonAlphabetic)
+
+        return difference
+
+    def get_difference(self, other):
+        difference = 0
+
+        if self.token_type != other.token_type:
+            difference += self.REPLACEMENT_COST[self.token_type[1]][other.token_type[1]]
+        else:
+            length_diff = int(math.fabs(len(self.text) - len(other.text)))
+            if self.token_type[1] == token_type["DIGITS"] and length_diff > 0:
+                difference += self.DIGITS_INEQUALITY_COST
+
+        difference += self.get_attribute_difference(other)
+
+        return difference
+
+    def __str__(self):
+        return self.text + "(" + self.token_type[0] + ")" + str(self.attrs)

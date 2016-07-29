@@ -90,7 +90,7 @@ class TokenRegExSpecs : Spek() {
         }
 
         given("email token without brackets") {
-            val token = Token("ppzhuk@gmail.com")
+            val token = Token("ppzh@mail.com")
             on("it's creation") {
                 it("has EMAIL type") {
                     assertEquals(TokenType.EMAIL, token.type)

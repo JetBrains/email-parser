@@ -4,21 +4,21 @@ import java.util.regex.Pattern
 
 enum class TokenRegEx(val regex: String) {
     TOKEN_END("[,\\.]?:?"),
-    DIGITS("\\d+" + TOKEN_END.regex),
+    DIGITS("^\\d+" + TOKEN_END.regex + "$"),
     DATE("(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
-            "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + TOKEN_END.regex),
-    TIME("([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?" + TOKEN_END.regex),
-    MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + TOKEN_END.regex),
+            "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))" + TOKEN_END.regex + "$"),
+    TIME("^(([01]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?[,\\.]?:?)$"),
+    MERIDIEM("(A|a|P|p)\\.?(M|m)\\.?" + TOKEN_END.regex + "$"),
     EMAIL("\\S+@\\S+")
 }
 
 enum class AttributeRegEx(val regex: String) {
-    ANGLE_BRACKETS("<.*>" + TokenRegEx.TOKEN_END.regex),
-    LAST_COMMA(".*,"),
-    LAST_COLON(".*:"),
+    ANGLE_BRACKETS("^<.*>$" + TokenRegEx.TOKEN_END.regex),
+    LAST_COMMA(".*,$"),
+    LAST_COLON(".*:$"),
     HAS_AT(".*@.*"),
-    NON_ALPHABETIC("([0-9]|[!-/]|[:-@]|[\\[-`]|[{-~])+"),
-    NON_ALPHABETIC_OR_DIGIT("([!-/]|[:-@]|[\\[-`]|[{-~])+")
+    NON_ALPHABETIC("^[0-9!-/:-@\\[-`{-~]+$"),
+    NON_ALPHABETIC_OR_DIGIT("^([!-/:-@\\[-`{-~])+$")
 }
 
 enum class TokenType {
@@ -113,7 +113,15 @@ class Token(var text: String) {
         }
 
         override fun toString(): String {
-            return "Attributes(withAngleBrackets=$withAngleBrackets, lastComma=$lastComma, lastColon=$lastColon, hasAtSymbol=$hasAtSymbol, nonLetterOrDigit=$nonLetterOrDigit, nonAlphabetic=$nonAlphabetic)"
+            var s = ""
+            s += if (lastComma) "lastComma " else ""
+            s += if (withAngleBrackets) "withAngleBrackets " else ""
+            s += if (lastColon) "lastColon " else ""
+            s += if (hasAtSymbol) "hasAtSymbol " else ""
+            s += if (nonLetterOrDigit) "nonLetterOrDigit " else ""
+            s += if (nonAlphabetic) "nonAlphabetic " else ""
+            return "Attributes($s)"
+
         }
 
 
