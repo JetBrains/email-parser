@@ -31,6 +31,7 @@ def check(regex, text):
         return res.group() == text
     return False
 
+# todo replace type_tuple with 2 fields or add get methods
 
 class Token:
 

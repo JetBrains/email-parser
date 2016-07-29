@@ -1,4 +1,4 @@
-from edit_distance.token import Token
+from edit_distance.token import Token, check, attribute_reg_ex
 
 
 def get_ids(tokens, token_type):
@@ -48,14 +48,48 @@ def define_date_related_tokens(tokens):
     return tokens
 
 
-def get_tokens(text):
+def unite_undefined_tokens(tokens):
+    i = 0
+    united_tokens = []
+    while i < len(tokens):
+        while i < len(tokens) and tokens[i].type_tuple[0] != "UNDEFINED":
+            united_tokens.append(tokens[i])
+            i += 1
+        if i >= len(tokens):
+            break
+        aggregated_token = tokens[i]
+        aggregated_token.text += " "
+        i += 1
+        while i < len(tokens) and tokens[i].type_tuple[0] == "UNDEFINED":
+            # Potentially too long and useless. Fix this if will happen any problems with performance
+            aggregated_token.text += tokens[i].text + " "
+            i += 1
+        aggregated_token.text = aggregated_token.text.strip(" ")
+        #  ---------------
+        united_tokens.append(aggregated_token)
+    return united_tokens
+
+
+def split_tokens(text):
     tokens = []
     for word in text.split():
         if word != "":
             tokens.append(Token(word))
+    return tokens
 
+
+def set_attributes(tokens):
+    if check(attribute_reg_ex["LAST_COLON"], tokens[-1].text):
+        tokens[-1].has_last_colon = True
+
+
+def get_tokens(text):
+    tokens = split_tokens(text)
     tokens = define_date_related_tokens(tokens)
 
+    set_attributes(tokens)
+
+    tokens = unite_undefined_tokens(tokens)
     return tokens
 
 
