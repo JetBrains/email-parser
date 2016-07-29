@@ -13,12 +13,12 @@ enum class TokenRegEx(val regex: String) {
 }
 
 enum class AttributeRegEx(val regex: String) {
-    ANGLE_BRACKETS("^<.*>$" + TokenRegEx.TOKEN_END.regex),
+    ANGLE_BRACKETS("^<.*>" + TokenRegEx.TOKEN_END.regex + "$"),
     LAST_COMMA(".*,$"),
     LAST_COLON(".*:$"),
     HAS_AT(".*@.*"),
     NON_ALPHABETIC("^[0-9!-/:-@\\[-`{-~]+$"),
-    NON_ALPHABETIC_OR_DIGIT("^([!-/:-@\\[-`{-~])+$")
+    NON_ALPHABETIC_OR_DIGIT("^[!-/:-@\\[-`{-~]+$")
 }
 
 enum class TokenType {
