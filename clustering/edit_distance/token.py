@@ -37,10 +37,11 @@ class Token:
 
     INSERTION_COST = {
         "UNDEFINED": 10,
-        "DIGITS": 10,
-        "DATE": 10,
+        "DATE_RELATED": 15,
+        "DAY": 30,
+        "YEAR": 30,
+        "DATE_SHORT": 40,
         "TIME": 10,
-        "MERIDIEM": 10,
         "EMAIL": 50
     }
 
@@ -49,15 +50,16 @@ class Token:
     Usage: REPLACEMENT_COST[token1.type][token2.type]
     '''
     REPLACEMENT_COST = (
-        (0, 10, 10, 10, 10, 50),
-        (10, 0, 10, 10, 10, 50),
-        (10, 10, 0, 10, 10, 50),
-        (10, 10, 10, 0, 10, 50),
-        (10, 10, 10, 10, 0, 50),
-        (50, 50, 50, 50, 50, 0),
+        (0, 15, 15, 15, 35, 10, 50),
+        (15, 0, 15, 15, 35, 10, 50),
+        (15, 15, 0, 15, 35, 10, 50),
+        (15, 15, 15, 0, 35, 10, 50),
+        (35, 35, 35, 35, 0, 10, 50),
+        (10, 10, 10, 10, 10, 0, 50),
+        (50, 50, 50, 50, 50, 50,  0)
     )
 
-    LAST_COLON_INEQUALITY_COST = 1
+    LAST_COLON_INEQUALITY_COST = 35
 
     def __get_token_type_tuple(self):
         for type, index in token_type.items():
@@ -97,8 +99,8 @@ class Token:
     def get_difference(self, other):
         difference = 0
 
-        if self.type_tuple != other.token_type:
-            difference += self.REPLACEMENT_COST[self.type_tuple[1]][other.token_type[1]]
+        if self.type_tuple[0] != other.type_tuple[0]:
+            difference += self.REPLACEMENT_COST[self.type_tuple[1]][other.type_tuple[1]]
 
         difference += self.last_colon_difference(other)
 

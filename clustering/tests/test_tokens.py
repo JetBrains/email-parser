@@ -168,6 +168,21 @@ class TokenTests(unittest.TestCase):
         self.assertEqual(tokens[7].text, "xxx vvv eee")
         self.assertEqual(tokens[13].text, "PM zz")
 
+    def test_undefined_tokens_unification_4(self):
+        text = "On 04/15/2016 05:08 PM Павел Жук wrote:"
+        tokens = split_tokens(text)
+        tokens = define_date_related_tokens(tokens)
+        set_attributes(tokens)
+        tokens = unite_undefined_tokens(tokens)
+
+        self.assertEqual(len(tokens), 5)
+        self.assertEqual(tokens[0].type_tuple[0], "UNDEFINED")
+        self.assertEqual(tokens[1].type_tuple[0], "DATE_SHORT")
+        self.assertEqual(tokens[2].type_tuple[0], "TIME")
+        self.assertEqual(tokens[3].type_tuple[0], "UNDEFINED")
+        self.assertEqual(tokens[4].type_tuple[0], "UNDEFINED")
+        self.assertTrue(tokens[4].has_last_colon)
+        self.assertEqual(tokens[3].text, "PM Павел Жук")
 
 if __name__ == '__main__':
     unittest.main()
