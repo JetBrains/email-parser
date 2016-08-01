@@ -1,5 +1,4 @@
 import re
-import math
 
 token_reg_ex = {
     "DAY": re.compile("^\\d{1,2}[,\\.]?:?$"),
@@ -31,9 +30,9 @@ def check(regex, text):
         return res.group() == text
     return False
 
-# todo replace type_tuple with 2 fields or add get methods
 
 class Token:
+    # --- Customizable values ---
 
     INSERTION_COST = {
         "UNDEFINED": 10,
@@ -47,19 +46,24 @@ class Token:
 
     '''
     The cost of replacement the first token by the second.
-    Usage: REPLACEMENT_COST[token1.type][token2.type]
+    Usage:
+        type_min_id = min(token1.type_id, token2.type_id)
+        type_max_id = max(token1.type_id, token2.type_id)
+        Token.REPLACEMENT_COST[type_max_id][type_min_id]
     '''
     REPLACEMENT_COST = (
-        (0, 15, 15, 15, 35, 10, 50),
-        (15, 0, 15, 15, 35, 10, 50),
-        (15, 15, 0, 15, 35, 10, 50),
-        (15, 15, 15, 0, 35, 10, 50),
-        (35, 35, 35, 35, 0, 10, 50),
-        (10, 10, 10, 10, 10, 0, 50),
-        (50, 50, 50, 50, 50, 50,  0)
+        (0,),
+        (15, 0),
+        (15, 15, 0),
+        (15, 15, 15, 0),
+        (35, 35, 35, 35, 0),
+        (10, 10, 10, 10, 10, 0),
+        (50, 50, 50, 50, 50, 50, 0)
     )
 
     LAST_COLON_INEQUALITY_COST = 35
+
+    # ----------------------------
 
     def __get_token_type_tuple(self):
         for type, index in token_type.items():
@@ -69,7 +73,9 @@ class Token:
 
     def __init__(self, text):
         self.text = text
-        self.type_tuple = self.__get_token_type_tuple()
+        type_name, type_id = self.__get_token_type_tuple()
+        self.type_name = type_name
+        self.type_id = type_id
         self.has_last_colon = False
 
     def __ne__(self, other):
@@ -78,14 +84,14 @@ class Token:
         elif self is other:
             return True
         else:
-            if self.type_tuple != other.type_tuple:
+            if self.type_id != other.type_id:
                 return False
             if self.has_last_colon != other.has_last_colon:
                 return False
             return True
 
     def get_insertion_cost(self):
-        return self.INSERTION_COST[self.type_tuple[0]]
+        return self.INSERTION_COST[self.type_name]
 
     def get_deletion_cost(self):
         return self.get_insertion_cost()
@@ -99,18 +105,20 @@ class Token:
     def get_difference(self, other):
         difference = 0
 
-        if self.type_tuple[0] != other.type_tuple[0]:
-            difference += self.REPLACEMENT_COST[self.type_tuple[1]][other.type_tuple[1]]
+        if self.type_name != other.type_name:
+            type_min_id = min(self.type_id, other.type_id)
+            type_max_id = max(self.type_id, other.type_id)
+            difference += self.REPLACEMENT_COST[type_max_id][type_min_id]
 
         difference += self.last_colon_difference(other)
 
         return difference
 
     def __str__(self):
-        return self.text + "(" + self.type_tuple[0] + ") last_colon = " + str(self.has_last_colon)
+        return self.text + "(" + self.type_name + ") last_colon = " + str(self.has_last_colon)
 
-    def set_type(self, new_type):
-        if new_type not in token_type:
+    def set_type(self, new_type_name):
+        if new_type_name not in token_type:
             raise Exception("Illegal token type.")
-        new_type_idx = token_type[new_type]
-        self.type_tuple = (new_type, new_type_idx)
+        self.type_name = new_type_name
+        self.type_id = token_type[new_type_name]

@@ -1,24 +1,29 @@
+import sys
+import os
+
+sys.path.append(os.getcwd())
+
 from edit_distance.token_edit_distance import token_edit_distance
 
-
 headers = (
-    "15 апреля 2016 г 20:26 пользователь Mariya Davydova <mmm@jjj.com> написал:",
-    "Это в общих чертах 15:22 на деле видимо еще придется учесть несколько частных случаев но в целом g@hh.er кажется что задача поиска заголовка цитаты менее масштабная. Признаки кроме: даты не зависят от языка",
-    "El 02/04/16 a las 19:03 Zhuk Pavel escribió:",
-    "Воскресенье 13 марта 2016 6:55 +10:00 от Павел Жук <ppp@zzz.com>:",
-    "On 04/15/2016 05:08 PM Павел Жук wrote:",
-    "29 февраля 2016 г 17:56 пользователь Mariya Davydova <mdrefha@juy.com> написал:",
-    "On Mar 1 2016 at 13:35 Павел Жук <pp@g.c> wrote:",
-    "On Thu Mar 31 2016 at 4:04 PM Zhuk Pavel <y-k@jjjjj.com> wrote:",
-    "Воскресенье 13 марта 2016 7:09 +10:00 от Павел Жук <lkjk@jl.com>:",
-)
+    '''From: "XXX YYY (Someone Important)" <e@ma.il> Date: 04/23/2015 9:23 PM (GMT+08:00) To: zzz xxx <xxx@xx.ss.net> Subject: [text text] Re: [ text - text text ] text text''',
+    '''From: "zzz xxx (Someone Important)" <mail@mail.com> Date: 10/15/2015 3:58 PM (GMT-06:00) To: "xxx ccc" <aaa@ss.com> Subject: [text text] Re: text text text text text text text''',
+    "2014-12-29 18:59 GMT+03:00 VVVVV <mail@mail.com>:",
+    "2015-09-17 17:36 GMT+03:00 xxx yyy (Someone Important) <mail.mail@mail.com>:",
+    "Le 16/03/2016 13:21 XxX yYy a écrit:",
+    "W dniu 30.06.2014 15:22 yYy XxX pisze:",
+    '''On Feb 6 2015 5:47 PM "FFF GGG" <e@mail.com> wrote:''',
+    "On Jan 20 2015 at 18:47 XXX ZZZ <e@mail.com> wrote:",
+    "text text text text text www.example.com/page text text text text text text 11/25/2014 07:31 EST:")
 
 distances = []
 
 for i, a in enumerate(headers):
     for j, b in enumerate(headers):
         if j > i:
-            distances.append((a, b, token_edit_distance(a, b)))
+            distances.append(
+                (a, b, token_edit_distance(a, b))
+            )
 
 distances.sort(key=lambda x: x[2])
 

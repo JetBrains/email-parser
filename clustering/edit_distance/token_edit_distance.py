@@ -4,7 +4,7 @@ from edit_distance.token import Token, check, attribute_reg_ex
 def get_ids(tokens, token_type):
     day_ids = []
     for i in range(len(tokens)):
-        if tokens[i].type_tuple[0] == token_type:
+        if tokens[i].type_name == token_type:
             day_ids.append(i)
     return day_ids
 
@@ -14,7 +14,7 @@ def define_date_related_tokens(tokens):
     year_ids = get_ids(tokens, "YEAR")
 
     def try_to_update_token_type(token_id):
-        if tokens[token_id].type_tuple[0] == "UNDEFINED":
+        if tokens[token_id].type_name == "UNDEFINED":
             tokens[token_id].set_type("DATE_RELATED")
             return True
         return False
@@ -52,7 +52,7 @@ def unite_undefined_tokens(tokens):
     i = 0
     united_tokens = []
     while i < len(tokens):
-        while i < len(tokens) and tokens[i].type_tuple[0] != "UNDEFINED":
+        while i < len(tokens) and tokens[i].type_name != "UNDEFINED":
             united_tokens.append(tokens[i])
             i += 1
         if i >= len(tokens):
@@ -60,11 +60,11 @@ def unite_undefined_tokens(tokens):
         aggregated_token = tokens[i]
         aggregated_token.text += " "
         i += 1
-        while i < len(tokens) - 1 and tokens[i].type_tuple[0] == "UNDEFINED":
+        while i < len(tokens) - 1 and tokens[i].type_name == "UNDEFINED":
             aggregated_token.text += tokens[i].text + " "
             i += 1
 
-        if i == len(tokens) - 1 and tokens[i].type_tuple[0] == "UNDEFINED":
+        if i == len(tokens) - 1 and tokens[i].type_name == "UNDEFINED":
             if not tokens[i].has_last_colon:
                 aggregated_token.text += tokens[i].text
                 united_tokens.append(aggregated_token)
@@ -76,7 +76,6 @@ def unite_undefined_tokens(tokens):
         else:
             aggregated_token.text = aggregated_token.text.strip(" ")
             united_tokens.append(aggregated_token)
-
 
     return united_tokens
 
@@ -127,7 +126,7 @@ def token_edit_distance(first_header, second_header):
 
 def get_distance_matrix(headers):
     distances = [[0 for _ in range(len(headers))] for _ in range(len(headers))]
-    for i in range(1,len(headers)):
+    for i in range(1, len(headers)):
         for j in range(i):
             distances[i][j] = token_edit_distance(headers[i], headers[j])
             distances[j][i] = distances[i][j]
