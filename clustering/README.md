@@ -1,3 +1,5 @@
+Python 3 is used for this project.
+
 To run edit distance example: `python executable\edit_distance_executable.py` .
 
 (For windows) If `UnicodeEncodeError` has appeared then update the following value: `set PYTHONIOENCODING=utf-8`.

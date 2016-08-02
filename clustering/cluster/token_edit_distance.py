@@ -118,7 +118,8 @@ def token_edit_distance(first_header, second_header):
         for i in range(1, first_size + 1):
             ins = prev[i] + second_tokens[j - 1].get_insertion_cost()
             deletion = curr[i - 1] + first_tokens[i - 1].get_deletion_cost()
-            repl = prev[i - 1] + first_tokens[i - 1].get_difference(second_tokens[j - 1])
+            repl = prev[i - 1] + first_tokens[i - 1].get_difference(
+                second_tokens[j - 1])
             curr[i] = min(ins, deletion, repl)
         curr, prev = prev, curr
     return prev[first_size]

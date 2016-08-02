@@ -3,9 +3,11 @@ import re
 token_reg_ex = {
     "DAY": re.compile("^\\d{1,2}[,\\.]?:?$"),
     "YEAR": re.compile("^[12]\\d{3}[,\\.]?:?$"),
-    "DATE_SHORT": re.compile("^(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
-                             "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))[,\\.]?:?$"),
-    "TIME": re.compile("^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?[,\\.]?:?$"),
+    "DATE_SHORT": re.compile(
+        "^(([0-3]?[0-9][/.-][0-3]?[0-9][/.-](?:[0-9]{2})?[0-9]{2})|" +
+        "((?:[0-9]{2})?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]))[,\\.]?:?$"),
+    "TIME": re.compile(
+        "^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?[,\\.]?:?$"),
     "EMAIL": re.compile("\\S+@\\S+")
 }
 
@@ -66,9 +68,10 @@ class Token:
     # ----------------------------
 
     def __get_token_type_tuple(self):
-        for type, index in token_type.items():
-            if type != "UNDEFINED" and type != "DATE_RELATED" and check(token_reg_ex[type], self.text):
-                return type, index
+        for type_, index in token_type.items():
+            if type_ != "UNDEFINED" and type_ != "DATE_RELATED" and check(
+                    token_reg_ex[type_], self.text):
+                return type_, index
         return "UNDEFINED", 0
 
     def __init__(self, text):
@@ -115,7 +118,8 @@ class Token:
         return difference
 
     def __str__(self):
-        return self.text + "(" + self.type_name + ") last_colon = " + str(self.has_last_colon)
+        return self.text + "(" + self.type_name + ") last_colon = " + str(
+            self.has_last_colon)
 
     def set_type(self, new_type_name):
         if new_type_name not in token_type:

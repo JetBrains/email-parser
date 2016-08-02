@@ -1,12 +1,14 @@
 import unittest
 
-from cluster.token_edit_distance import split_tokens, define_date_related_tokens, set_attributes, \
+from cluster.token_edit_distance import split_tokens, \
+    define_date_related_tokens, set_attributes, \
     unite_undefined_tokens
 
 
 class TokenTests(unittest.TestCase):
     def test_token_types(self):
-        text = "On Mon Jul 1 2016 at 2:08 PM Unknown Person (some body) <xxx.yyy@zzz.com> wrote:"
+        text = "On Mon Jul 1 2016 at 2:08 PM Unknown Person " \
+               "(some body) <xxx.yyy@zzz.com> wrote:"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -25,7 +27,8 @@ class TokenTests(unittest.TestCase):
         self.assertTrue(tokens[13].has_last_colon)
 
     def test_token_types_2(self):
-        text = "*From:* Unknown Person (some body)) [mailto: xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
+        text = "*From:* Unknown Person (some body)) [mailto: xxx.ccc@aaa.ss] " \
+               "*Sent:* 19 May 2015 03:29 PM"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -42,7 +45,8 @@ class TokenTests(unittest.TestCase):
         self.assertEqual(tokens[12].type_name, "UNDEFINED")
 
     def test_double_date(self):
-        text = "*From:* Unknown 19 May 2015 Person (some body)) [mailto: xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
+        text = "*From:* Unknown 19 May 2015 Person (some body)) [mailto: " \
+               "xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -68,7 +72,8 @@ class TokenTests(unittest.TestCase):
         self.assertFalse(tokens[8].has_last_colon)
 
     def test_double_date_2(self):
-        text = "*From:* Unknown 19 May 2015 Person (some 5 body)) [mailto: xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
+        text = "*From:* Unknown 19 May 2015 Person (some 5 body)) [mailto: " \
+               "xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -95,7 +100,8 @@ class TokenTests(unittest.TestCase):
         self.assertFalse(tokens[9].has_last_colon)
 
     def test_one_date_related_token(self):
-        text = "16 февр 2016 г в 18:58 Unknown Person (X Y) <email@it.is> написал(а):"
+        text = "16 февр 2016 г в 18:58 Unknown Person (X Y) <email@it.is> " \
+               "написал(а):"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -139,7 +145,8 @@ class TokenTests(unittest.TestCase):
         self.assertTrue(tokens[-1].has_last_colon)
 
     def test_undefined_tokens_unification_2(self):
-        text = "*From:* Unknown Person (some body)) [mailto: xxx.ccc@aaa.ss] *Sent:* 19 May 2015 03:29 PM"
+        text = "*From:* Unknown Person (some body)) [mailto: xxx.ccc@aaa.ss] " \
+               "*Sent:* 19 May 2015 03:29 PM"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
@@ -147,10 +154,12 @@ class TokenTests(unittest.TestCase):
 
         self.assertEqual(len(tokens), 8)
         self.assertEqual(tokens[0].type_name, "UNDEFINED")
-        self.assertEqual(tokens[0].text, "*From:* Unknown Person (some body)) [mailto:")
+        self.assertEqual(tokens[0].text,
+                         "*From:* Unknown Person (some body)) [mailto:")
 
     def test_undefined_tokens_unification_3(self):
-        text = "*From:* Unknown 19 May 2015 Person (some body)) [mailto: xxx.ccc@aaa.ss] xxx vvv eee *Sent:* 19 May 2015 03:29 PM zz"
+        text = "*From:* Unknown 19 May 2015 Person (some body)) [mailto: " \
+               "xxx.ccc@aaa.ss] xxx vvv eee *Sent:* 19 May 2015 03:29 PM zz"
         tokens = split_tokens(text)
         tokens = define_date_related_tokens(tokens)
         set_attributes(tokens)
