@@ -3,7 +3,7 @@ import os
 
 sys.path.append(os.getcwd())
 
-from edit_distance.token_edit_distance import token_edit_distance
+from cluster.token_edit_distance import token_edit_distance
 
 headers = (
     '''From: "XXX YYY (Someone Important)" <e@ma.il> Date: 04/23/2015 9:23 PM (GMT+08:00) To: zzz xxx <xxx@xx.ss.net> Subject: [text text] Re: [ text - text text ] text text''',

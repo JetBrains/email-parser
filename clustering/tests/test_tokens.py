@@ -1,6 +1,6 @@
 import unittest
 
-from edit_distance.token_edit_distance import split_tokens, define_date_related_tokens, set_attributes, \
+from cluster.token_edit_distance import split_tokens, define_date_related_tokens, set_attributes, \
     unite_undefined_tokens
 
 

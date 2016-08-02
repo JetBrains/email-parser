@@ -1,4 +1,4 @@
-from edit_distance.token import Token, check, attribute_reg_ex
+from cluster.token import Token, check, attribute_reg_ex
 
 
 def get_ids(tokens, token_type):
@@ -125,6 +125,8 @@ def token_edit_distance(first_header, second_header):
 
 
 def get_distance_matrix(headers, verbose=False, step=10):
+    if verbose:
+        print("Evaluating distance matrix...", end="")
     size = len(headers)
     distances = [[0 for _ in range(size)] for _ in range(size)]
     for i in range(1, size):
@@ -134,5 +136,5 @@ def get_distance_matrix(headers, verbose=False, step=10):
         if verbose and i % step == 0:
             print("Distances for %d/%d computed." % (i, size))
     if verbose:
-        print("Calculated.")
+        print("Done")
     return distances

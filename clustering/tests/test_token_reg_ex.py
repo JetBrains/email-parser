@@ -1,9 +1,9 @@
 import unittest
 import re
 
-from edit_distance.token import Token
-from edit_distance.token import token_type
-from edit_distance.token import attribute_reg_ex
+from cluster.token import Token
+from cluster.token import token_type
+from cluster.token import attribute_reg_ex
 
 
 class TokenRegExTests(unittest.TestCase):
