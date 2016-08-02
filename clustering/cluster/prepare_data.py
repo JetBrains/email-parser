@@ -85,7 +85,7 @@ def read_dist_matrix(filename, verbose=False):
 
 def write_clusterized_data(filename, header_pair, labels, metrics=None, verbose=False):
     if verbose:
-        print("Writing clusterized data...")
+        print("Writing clusterized data...", end="")
 
     zipped = list(zip(header_pair, labels))
     zipped.sort(key=lambda x: x[1])
