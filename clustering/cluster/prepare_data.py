@@ -5,7 +5,7 @@ def get_headers_pairs_list(filename, verbose=False):
     """
     Read data for clustering from a given file.
 
-    Data format: email_number tabulation header.
+    Data format: <email_number> <header>.
     Clusters are separated with a blank line.
 
     :param filename: file with input data for clustering.
@@ -38,7 +38,7 @@ def get_labels(filename, verbose=False):
     """
     Determine true cluster label for a data from given file.
 
-    Data format: email_number tabulation header.
+    Data format: <email_number> <header>.
     Clusters are separated with a blank line.
 
     :param filename:  file with input data for clustering
@@ -132,7 +132,7 @@ def write_clusterized_data(filename, header_pair, labels, metrics=None,
     """
     Write clustering results into a given file.
 
-    Data format: email_number tabulation header.
+    Data format: <email_number> <header>.
     Clusters are separated with a blank line.
 
     If metrics variable is not None adds metrics to the end of the file.
