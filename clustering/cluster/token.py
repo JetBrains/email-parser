@@ -53,15 +53,15 @@ class Token:
         type_max_id = max(token1.type_id, token2.type_id)
         Token.REPLACEMENT_COST[type_max_id][type_min_id]
     '''
-    REPLACEMENT_COST = (
-        (0,),
-        (15, 0),
-        (15, 15, 0),
-        (15, 15, 15, 0),
-        (35, 35, 35, 35, 0),
-        (10, 10, 10, 10, 10, 0),
-        (50, 50, 50, 50, 50, 50, 0)
-    )
+    REPLACEMENT_COST = [
+        [0],
+        [15, 0],
+        [15, 15, 0],
+        [15, 15, 15, 0],
+        [35, 35, 35, 35, 0],
+        [10, 10, 10, 10, 10, 0],
+        [50, 50, 50, 50, 50, 50, 0]
+    ]
 
     LAST_COLON_INEQUALITY_COST = 35
 

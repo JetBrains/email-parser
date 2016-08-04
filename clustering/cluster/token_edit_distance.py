@@ -127,7 +127,7 @@ def token_edit_distance(first_header, second_header):
 
 def get_distance_matrix(headers, verbose=False, step=10):
     if verbose:
-        print("Evaluating distance matrix...", end="")
+        print("Evaluating distance matrix...")
     size = len(headers)
     distances = [[0 for _ in range(size)] for _ in range(size)]
     for i in range(1, size):

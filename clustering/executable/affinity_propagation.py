@@ -14,7 +14,19 @@ from cluster.token_edit_distance import get_distance_matrix
 from cluster.visualization import visualize
 
 
-def clusterize(dataset_filename, output_data_filename,
+def clustering(headers):
+    dist_matrix = get_distance_matrix(headers)
+
+    affinity_matr = get_affinity_matrix(dist_matrix, max_affinity=10000)
+
+    af = AffinityPropagation(affinity="precomputed", copy=True).fit(
+        affinity_matr)
+
+    return metrics.silhouette_score(np.asmatrix(dist_matrix), af.labels_,
+                             metric='precomputed')
+
+
+def main(dataset_filename, output_data_filename,
                distance_matrix_filename=None):
     start = time.perf_counter()
 
@@ -70,5 +82,5 @@ if __name__ == "__main__":
     dataset_filename_ = sys.argv[1]
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
-    clusterize(dataset_filename_, output_data_filename_,
+    main(dataset_filename_, output_data_filename_,
                distance_matrix_filename_)

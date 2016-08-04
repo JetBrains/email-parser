@@ -93,5 +93,5 @@ ENV/
 
 # Rope project settings
 .ropeproject
-/executable/test.py
+/executable/test*.py
 /data/
