@@ -67,12 +67,15 @@ def get_labels(filename, verbose=False):
         return labels
 
 
-def get_affinity_matrix(dist_matrix, verbose=False, max_affinity=1000000):
+def get_affinity_matrix(dist_matrix, verbose=False, max_affinity=-1):
+    if max_affinity == -1:
+        raise Exception("max_affinity must be specified.")
+
     if verbose:
         print("Evaluating affinity matrix...", end="")
 
     affinity_matrix = [
-        [max_affinity if elem == 0 else max_affinity / elem for elem in line]
+        [max_affinity - elem for elem in line]
         for line in dist_matrix]
 
     if verbose:
@@ -81,7 +84,7 @@ def get_affinity_matrix(dist_matrix, verbose=False, max_affinity=1000000):
     return affinity_matrix
 
 
-def write_dist_matrix(matrix, filename, verbose=False):
+def write_dist_matrix(matrix, max_dist, filename, verbose=False):
     """
     Write distance matrix into a given file.
 
@@ -95,6 +98,7 @@ def write_dist_matrix(matrix, filename, verbose=False):
         print("Writing to file...", end="")
 
     with open(filename, mode='w', encoding='utf-8') as ouf:
+        ouf.write(str(max_dist) + "\n")
         for line in matrix:
             line = map(str, line)
             ouf.write(" ".join(line) + "\n")
@@ -117,14 +121,15 @@ def read_dist_matrix(filename, verbose=False):
 
     with open(filename, mode='r', encoding='utf-8') as inf:
         lines = inf.readlines()
+        maximum = int(lines[0].strip())
         # !!!
         matrix = list(map(lambda line: list(
-            map(int, re.split(re.compile("\s+"), line.strip()))), lines))
+            map(int, re.split(re.compile("\s+"), line.strip()))), lines[1:]))
 
         if verbose:
             print("Done")
 
-        return matrix
+        return matrix, maximum
 
 
 def write_clusterized_data(filename, header_pair, labels, metrics=None,

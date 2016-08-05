@@ -12,12 +12,16 @@ from cluster.prepare_data import get_headers_pairs_list, get_labels, \
     write_clusterized_data, print_metrics
 from cluster.token_edit_distance import get_distance_matrix
 from cluster.visualization import visualize
+import cluster.prepare_data as pd
 
 
-def clustering(headers):
-    dist_matrix = get_distance_matrix(headers)
+def clustering(headers, distance_matrix_filename=None):
+    if distance_matrix_filename is None:
+        dist_matrix, max_dist = get_distance_matrix(headers)
+    else:
+        dist_matrix, max_dist = read_dist_matrix(distance_matrix_filename)
 
-    affinity_matr = get_affinity_matrix(dist_matrix, max_affinity=10000)
+    affinity_matr = get_affinity_matrix(dist_matrix, max_affinity=max_dist)
 
     af = AffinityPropagation(affinity="precomputed", copy=True).fit(
         affinity_matr)
@@ -27,20 +31,21 @@ def clustering(headers):
 
 
 def main(dataset_filename, output_data_filename,
-               distance_matrix_filename=None):
+         distance_matrix_filename=None, display=False):
     start = time.perf_counter()
 
     headers_pairs = get_headers_pairs_list(dataset_filename, verbose=True)
     labels_true = get_labels(dataset_filename, verbose=True)
 
     if distance_matrix_filename is None:
-        dist_matrix = get_distance_matrix(list(map(lambda x: x[1],
+        dist_matrix, max_dist = get_distance_matrix(list(map(lambda x: x[1],
                                           headers_pairs)), verbose=True)
     else:
-        dist_matrix = read_dist_matrix(distance_matrix_filename, verbose=True)
+        dist_matrix, max_dist = \
+            read_dist_matrix(distance_matrix_filename, verbose=True)
 
     affinity_matr = get_affinity_matrix(dist_matrix, verbose=True,
-                                        max_affinity=1000)
+                                        max_affinity=max_dist)
     print("Clustering...")
     af = AffinityPropagation(affinity="precomputed", verbose=True,
                              copy=True).fit(affinity_matr)
@@ -69,8 +74,9 @@ def main(dataset_filename, output_data_filename,
     end = time.perf_counter()
     print("\nWorking time: %f sec." % (end - start))
 
-    visualize(dist_matrix, labels, cluster_centers_indices,
-              show_cluster_sizes=True)
+    if display:
+        visualize(dist_matrix, labels, cluster_centers_indices,
+                  show_cluster_sizes=True)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -83,4 +89,4 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
     main(dataset_filename_, output_data_filename_,
-               distance_matrix_filename_)
+         distance_matrix_filename_)

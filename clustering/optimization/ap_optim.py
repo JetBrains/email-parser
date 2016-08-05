@@ -5,6 +5,11 @@ import inspyred
 import sys
 import os
 
+from inspyred.ec.analysis import fitness_statistics
+from inspyred.ec.evaluators import evaluator
+from inspyred.ec.utilities import memoize
+from inspyred.ec.variators import crossover
+
 sys.path.append(os.getcwd())
 
 from cluster.prepare_data import get_headers_pairs_list
@@ -24,6 +29,7 @@ def generate_costs(random, args):
          i in range(size-1)]
     colon_inequality_cost = int(random.uniform(MIN_COST, MAX_COST))
     return [ins_cost, repl_cost, colon_inequality_cost]
+
 
 
 def setup_costs(ins_cost, repl_matr, colon_cost):
@@ -47,6 +53,7 @@ def setup_costs(ins_cost, repl_matr, colon_cost):
     Token.LAST_COLON_INEQUALITY_COST = colon_cost
 
 
+@memoize
 def evaluate_costs(candidates, args):
     fitness = []
     headers = args.get("headers", -1)
@@ -55,6 +62,8 @@ def evaluate_costs(candidates, args):
     for cs in candidates:
         setup_costs(cs[0], cs[1], cs[2])
         fit = clustering(headers)
+        if str(fit) == "nan":
+            fitness.append(-1)
         fitness.append(fit)
     return fitness
 
@@ -77,12 +86,11 @@ bound_costs.upper_bound = MAX_COST
 
 def mutate_costs(random, candidates, args):
     mut_rate = args.get('mutation_rate', 0.1)
-    bounder = args['_ec'].bounder
-    diff = (bounder.upper_bound - bounder.lower_bound) // 4
-
+    mut_distance = args.get('mutation_distance', 0.1)
+    diff = (MAX_COST - MIN_COST) * mut_distance
     for i, cs in enumerate(candidates):
         (ins_cost, repl_matr, colon_cost) = cs
-        if random.random()-1 < mut_rate:
+        if random.random() < mut_rate:
             for k in range(len(ins_cost)):
                 ins_cost[k] += int(random.gauss(0, 1) * diff)
             for k, line in enumerate(repl_matr):
@@ -90,8 +98,48 @@ def mutate_costs(random, candidates, args):
                     repl_matr[k][j] += int(random.gauss(0, 1) * diff)
             colon_cost += int(random.gauss(0, 1) * diff)
         candidates[i][2] = colon_cost
-        candidates[i] = bounder(candidates[i], args)
+        candidates[i] = bound_costs(candidates[i], args)
     return candidates
+
+
+def costs_uniform_crossover(random, mom, dad, args):
+    (m_ins_costs, m_repl_matr, m_colon_cost) = mom
+    (d_ins_costs, d_repl_matr, d_colon_cost) = dad
+
+    ch1_ins_costs = []
+    ch2_ins_costs = []
+    for (moms, dads) in zip(m_ins_costs, d_ins_costs):
+        if random.random() < 0.5:
+            ch1_ins_costs.append(moms)
+            ch2_ins_costs.append(dads)
+        else:
+            ch1_ins_costs.append(dads)
+            ch2_ins_costs.append(moms)
+
+    ch1_repl_matr = []
+    ch2_repl_matr = []
+    for (m_line, d_line) in zip(m_repl_matr, d_repl_matr):
+        ch1_line = []
+        ch2_line = []
+        for (moms, dads) in zip(m_line, d_line):
+            if random.random() < 0.5:
+                ch1_line.append(moms)
+                ch2_line.append(dads)
+            else:
+                ch1_line.append(dads)
+                ch2_line.append(moms)
+        ch1_repl_matr.append(ch1_line)
+        ch2_repl_matr.append(ch2_line)
+
+    if random.random() < 0.5:
+        ch1_colon_cost = m_colon_cost
+        ch2_colon_cost = d_colon_cost
+    else:
+        ch1_colon_cost = d_colon_cost
+        ch2_colon_cost = m_colon_cost
+
+    return ([ch1_ins_costs, ch1_repl_matr, ch1_colon_cost],
+            [ch2_ins_costs, ch2_repl_matr, ch2_colon_cost])
 
 
 def main(dataset_filename):
@@ -104,21 +152,29 @@ def main(dataset_filename):
 
     my_ec = inspyred.ec.EvolutionaryComputation(rand)
     my_ec.selector = inspyred.ec.selectors.tournament_selection
-    my_ec.variator = [inspyred.ec.variators.uniform_crossover, mutate_costs]
+    my_ec.variator = [inspyred.ec.variators.crossover(costs_uniform_crossover),
+                      mutate_costs]
     my_ec.replacer = inspyred.ec.replacers.steady_state_replacement
-    my_ec.observer = inspyred.ec.observers.best_observer
+    my_ec.observer = [inspyred.ec.observers.best_observer,
+                      inspyred.ec.observers.file_observer]
     my_ec.terminator = inspyred.ec.terminators.generation_termination
 
-    # TODO Choose parameters
-    # TODO Investigate RuntimeWarning: invalid value encountered in true_divide
-    # TODO Investigate NaN silhouette
+    # TODO choose parameters & variate replacer
+    # TODO optimize
+
     final_pop = my_ec.evolve(generator=generate_costs,
                              evaluator=evaluate_costs,
-                             pop_size=6,
                              bounder=bound_costs,
-                             max_generations=1,
-                             num_selected=1,
-                             headers=headers)
+                             tournament_size=5,
+                             headers=headers,
+                             # --- customizable arguments ---
+                             pop_size=20,
+                             num_selected=20,
+                             mutation_rate=0.1,
+                             mutation_distance=0.1,
+                             max_generations=1
+                             #  ------------------------------
+                             )
 
     # Sort and print the best individual, who will be at index 0.
     final_pop.sort(reverse=True)

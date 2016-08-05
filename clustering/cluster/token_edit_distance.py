@@ -130,12 +130,14 @@ def get_distance_matrix(headers, verbose=False, step=10):
         print("Evaluating distance matrix...")
     size = len(headers)
     distances = [[0 for _ in range(size)] for _ in range(size)]
+    maximum = 0
     for i in range(1, size):
         for j in range(i):
             distances[i][j] = token_edit_distance(headers[i], headers[j])
             distances[j][i] = distances[i][j]
+            maximum = max(maximum, distances[i][j])
         if verbose and i % step == 0:
             print("Distances for %d/%d computed." % (i, size))
     if verbose:
         print("Done")
-    return distances
+    return distances, maximum
