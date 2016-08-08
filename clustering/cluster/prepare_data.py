@@ -1,4 +1,7 @@
+import copy
 import re
+
+from cluster.token import Token
 
 
 def get_headers_pairs_list(filename, verbose=False):
@@ -89,6 +92,7 @@ def write_dist_matrix(matrix, max_dist, filename, verbose=False):
     Write distance matrix into a given file.
 
     :param matrix: Distance matrix.
+    :param max_dist: maximum value in the matrix distance.
     :param filename: File to write to.
     :param verbose: Whether to be verbose. Default - False.
 
@@ -171,7 +175,7 @@ def write_clusterized_data(filename, header_pair, labels, metrics=None,
     zipped.sort(key=lambda x: x[1])
 
     with open(filename, mode='w', encoding='utf-8') as ouf:
-        cluster_id = 0
+        cluster_id = zipped[0][1]
         for i, triple in enumerate(zipped):
             pair = triple[0]
             label = triple[1]
@@ -180,6 +184,9 @@ def write_clusterized_data(filename, header_pair, labels, metrics=None,
                 ouf.write('\n')
 
             ouf.write(str(pair[0]) + " \t\t" + pair[1] + "\n")
+
+            if label == -1:
+                ouf.write('\n')
 
         if metrics is not None:
             ouf.write('\n')
@@ -205,3 +212,22 @@ def print_metrics(metrics):
     print("Adjusted Mutual Information: %0.3f" % metrics[5])
     print("Silhouette Coefficient: %0.3f" % metrics[6])
     print()
+
+
+def setup_costs(costs):
+    (ins_cost, repl_matr, colon_cost) = costs
+    Token.INSERTION_COST["UNDEFINED"] = ins_cost[0]
+    Token.INSERTION_COST["DATE_RELATED"] = ins_cost[1]
+    Token.INSERTION_COST["DAY"] = ins_cost[2]
+    Token.INSERTION_COST["YEAR"] = ins_cost[3]
+    Token.INSERTION_COST["DATE_SHORT"] = ins_cost[4]
+    Token.INSERTION_COST["TIME"] = ins_cost[5]
+    Token.INSERTION_COST["EMAIL"] = ins_cost[6]
+
+    repl_m = copy.deepcopy(repl_matr)
+    for line in repl_m:
+        line.append(0)
+    repl_m.insert(0, [0])
+    Token.REPLACEMENT_COST = repl_m
+
+    Token.LAST_COLON_INEQUALITY_COST = colon_cost

@@ -5,58 +5,56 @@ sys.path.append(os.getcwd())
 
 import time
 import numpy as np
-from sklearn.cluster import AffinityPropagation
+from sklearn.cluster import DBSCAN
 from sklearn import metrics
 from cluster.prepare_data import get_headers_pairs_list, get_labels, \
-    get_affinity_matrix, read_dist_matrix, \
-    write_clusterized_data, print_metrics
+    read_dist_matrix, write_clusterized_data, print_metrics, setup_costs
 from cluster.token_edit_distance import get_distance_matrix
-from cluster.visualization import visualize
+from cluster.visualization import visualize_dbscan
 
-def clustering(headers, distance_matrix_filename=None):
+
+def clustering(headers, eps, distance_matrix_filename=None):
     if distance_matrix_filename is None:
-        dist_matrix, max_dist = get_distance_matrix(headers)
+        dist_matrix, _ = get_distance_matrix(headers)
     else:
-        dist_matrix, max_dist = read_dist_matrix(distance_matrix_filename)
+        dist_matrix, _ = read_dist_matrix(distance_matrix_filename)
 
-    affinity_matr = get_affinity_matrix(dist_matrix, max_affinity=max_dist)
+    dbscan = DBSCAN(eps=eps, min_samples=2, metric="precomputed").fit(
+        dist_matrix)
 
-    af = AffinityPropagation(affinity="precomputed", copy=True).fit(
-        affinity_matr)
-
-    return metrics.silhouette_score(np.asmatrix(dist_matrix), af.labels_,
-                             metric='precomputed')
+    return metrics.silhouette_score(np.asmatrix(dist_matrix), dbscan.labels_,
+                                    metric='precomputed')
 
 
 def main(dataset_filename, output_data_filename,
-         distance_matrix_filename=None, display=False):
+         distance_matrix_filename=None, eps=10, display=False):
     start = time.perf_counter()
 
     headers_pairs = get_headers_pairs_list(dataset_filename, verbose=True)
     labels_true = get_labels(dataset_filename, verbose=True)
 
     if distance_matrix_filename is None:
-        dist_matrix, max_dist = get_distance_matrix(list(map(lambda x: x[1],
-                                          headers_pairs)), verbose=True)
+        dist_matrix, _ = get_distance_matrix(list(map(lambda x: x[1],
+                                                      headers_pairs)),
+                                             verbose=True)
     else:
-        dist_matrix, max_dist = \
+        dist_matrix, _ = \
             read_dist_matrix(distance_matrix_filename, verbose=True)
 
-    # pd.write_dist_matrix(dist_matrix, max_dist,
-    #                      r"C:\Users\pavel.zhuk\IdeaProjects\email-"
-    #                      r"parser\clustering\data\training_set_dist_matr.txt"
-    #                      r"", verbose=True)
-
-    affinity_matr = get_affinity_matrix(dist_matrix, verbose=True,
-                                        max_affinity=max_dist)
     print("Clustering...")
-    af = AffinityPropagation(affinity="precomputed", verbose=True,
-                             copy=True).fit(affinity_matr)
+    dbscan = DBSCAN(eps=eps, min_samples=2, metric="precomputed").fit(
+        dist_matrix)
     print("Done.")
 
-    cluster_centers_indices = af.cluster_centers_indices_
-    n_clusters_ = len(cluster_centers_indices)
-    labels = af.labels_
+    labels = np.copy(dbscan.labels_)
+
+    n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+    clusters_without_noise = n_clusters_
+
+    for i, l in enumerate(labels):
+        if l == -1:
+            labels[i] = n_clusters_
+            n_clusters_ += 1
 
     metrics_list = [
         n_clusters_,
@@ -78,8 +76,9 @@ def main(dataset_filename, output_data_filename,
     print("\nWorking time: %f sec." % (end - start))
 
     if display:
-        visualize(dist_matrix, labels, cluster_centers_indices,
-                  show_cluster_sizes=True)
+        visualize_dbscan(dist_matrix, dbscan.labels_,
+                         clusters_without_noise + 1, show_cluster_sizes=True)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -92,10 +91,9 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
 
-
-    # pd.setup_costs([[10, 59, 200, 10, 53, 78, 100],
-    #                 [[87], [150, 196], [113, 65, 127], [94, 86, 71, 117],
+    # setup_costs([[10, 59, 200, 10, 53, 78, 100],
+    #              [[87], [150, 196], [113, 65, 127], [94, 86, 71, 117],
     #               [155, 14, 92, 200, 135], [110, 67, 63, 76, 194, 114]], 75])
 
     main(dataset_filename_, output_data_filename_,
-         )
+         eps=10, display=True)

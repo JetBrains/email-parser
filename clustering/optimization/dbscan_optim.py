@@ -4,20 +4,18 @@ import time
 import inspyred
 import sys
 import os
-import pylab
-from inspyred.ec.analysis import fitness_statistics
-from inspyred.ec.evaluators import evaluator
 from inspyred.ec.utilities import memoize
-from inspyred.ec.variators import crossover
+
+from optimization.ap_optim import costs_uniform_crossover
 
 sys.path.append(os.getcwd())
 
 from cluster.prepare_data import get_headers_pairs_list
 from cluster.token import token_type, Token
-from executable.affinity_propagation import clustering
+from executable.dbscan import clustering
 
 MAX_COST = 200
-MIN_COST = 0
+MIN_COST = 10
 
 
 def generate_costs(random, args):
@@ -48,6 +46,12 @@ def setup_costs(ins_cost, repl_matr, colon_cost):
 
     Token.LAST_COLON_INEQUALITY_COST = colon_cost
 
+    min_cost = MAX_COST
+    for line in repl_matr:
+        min_cost = min(min_cost, min(line))
+
+    return min(colon_cost, min_cost, min(ins_cost))
+
 
 @memoize
 def evaluate_costs(candidates, args):
@@ -57,8 +61,8 @@ def evaluate_costs(candidates, args):
         raise Exception("No headers for clustering.")
     cs_len = len(candidates)
     for i, cs in enumerate(candidates):
-        setup_costs(cs[0], cs[1], cs[2])
-        fit = clustering(headers)
+        min_cost = setup_costs(cs[0], cs[1], cs[2])
+        fit = clustering(headers, min_cost)
         if str(fit) == "nan":
             fitness.append(-1)
         fitness.append(fit)
@@ -103,46 +107,6 @@ def mutate_costs(random, candidates, args):
         candidates[i] = bound_costs(candidates[i], args)
     print("{0}/{1} mutations occurred.".format(count, len(candidates)))
     return candidates
-
-
-def costs_uniform_crossover(random, mom, dad, args):
-    (m_ins_costs, m_repl_matr, m_colon_cost) = mom
-    (d_ins_costs, d_repl_matr, d_colon_cost) = dad
-
-    ch1_ins_costs = []
-    ch2_ins_costs = []
-    for (moms, dads) in zip(m_ins_costs, d_ins_costs):
-        if random.random() < 0.5:
-            ch1_ins_costs.append(moms)
-            ch2_ins_costs.append(dads)
-        else:
-            ch1_ins_costs.append(dads)
-            ch2_ins_costs.append(moms)
-
-    ch1_repl_matr = []
-    ch2_repl_matr = []
-    for (m_line, d_line) in zip(m_repl_matr, d_repl_matr):
-        ch1_line = []
-        ch2_line = []
-        for (moms, dads) in zip(m_line, d_line):
-            if random.random() < 0.5:
-                ch1_line.append(moms)
-                ch2_line.append(dads)
-            else:
-                ch1_line.append(dads)
-                ch2_line.append(moms)
-        ch1_repl_matr.append(ch1_line)
-        ch2_repl_matr.append(ch2_line)
-
-    if random.random() < 0.5:
-        ch1_colon_cost = m_colon_cost
-        ch2_colon_cost = d_colon_cost
-    else:
-        ch1_colon_cost = d_colon_cost
-        ch2_colon_cost = m_colon_cost
-
-    return ([ch1_ins_costs, ch1_repl_matr, ch1_colon_cost],
-            [ch2_ins_costs, ch2_repl_matr, ch2_colon_cost])
 
 
 def main(dataset_filename):
