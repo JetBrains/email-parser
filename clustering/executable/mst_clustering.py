@@ -71,18 +71,16 @@ def get_mst(distance_matrix):
     return __kruskal(graph)
 
 
-def get_cluster(mst_, min_gap=-1.0):
+def get_cluster(mst_, min_dist=10):
+    if min_dist <= 0:
+        raise Exception("min_dist must be positive, but {0}".format(min_dist))
     mst_sorted = sorted(mst_, key=lambda x: x[0])
-    gap = 0
-    idx = 0
-    for i in range(len(mst_sorted[:-1])):
-        (cost_1, from_1, to_1) = mst_sorted[i]
-        (cost_2, from_2, to_2) = mst_sorted[i + 1]
-        dev = cost_2 - cost_1
-        if dev > min_gap and dev > gap:
-            gap = dev
-            idx = i + 1
-    return gap, mst_sorted[:idx]
+    idx = len(mst_sorted)
+    for i in range(len(mst_sorted)):
+        if mst_sorted[i][0] > min_dist:
+            idx = i
+            break
+    return mst_sorted[:idx]
 
 
 def get_labels_predict(edges, n):
@@ -100,9 +98,9 @@ def get_labels_predict(edges, n):
     return connected_components(csr_graph, directed=False)
 
 
-def fit(dist_matr, min_gap=-1.0):
+def fit(dist_matr, min_dist=10):
     mst = get_mst(dist_matr)
-    gap, conn_components = get_cluster(mst, min_gap)
+    conn_components = get_cluster(mst, min_dist)
     n_clusters, labels = get_labels_predict(conn_components, len(dist_matr))
     return n_clusters, labels
 
@@ -110,23 +108,20 @@ def fit(dist_matr, min_gap=-1.0):
 # --------
 
 
-def clustering(headers, distance_matrix_filename=None):
+def clustering(headers, min_dist, distance_matrix_filename=None):
     if distance_matrix_filename is None:
-        dist_matrix, max_dist = get_distance_matrix(headers)
+        dist_matrix, _ = get_distance_matrix(headers)
     else:
-        dist_matrix, max_dist = read_dist_matrix(distance_matrix_filename)
+        dist_matrix, _ = read_dist_matrix(distance_matrix_filename)
 
-    affinity_matr = get_affinity_matrix(dist_matrix, max_affinity=max_dist)
+    n_clusters_, labels = fit(dist_matrix, min_dist)
 
-    af = AffinityPropagation(affinity="precomputed", copy=True).fit(
-        affinity_matr)
-
-    return metrics.silhouette_score(np.asmatrix(dist_matrix), af.labels_,
+    return metrics.silhouette_score(np.asmatrix(dist_matrix), labels,
                                     metric='precomputed')
 
 
 def main(dataset_filename, output_data_filename,
-         distance_matrix_filename=None, display=False):
+         distance_matrix_filename=None, display=False, min_dist=10):
     start = time.perf_counter()
 
     headers_pairs = get_headers_pairs_list(dataset_filename, verbose=True)
@@ -141,7 +136,7 @@ def main(dataset_filename, output_data_filename,
             read_dist_matrix(distance_matrix_filename, verbose=True)
 
     print("Clustering...")
-    n_clusters_, labels = fit(dist_matrix)
+    n_clusters_, labels = fit(dist_matrix, min_dist)
     print("Done.")
 
     print("clusters {0}".format(n_clusters_))
@@ -171,6 +166,17 @@ def main(dataset_filename, output_data_filename,
     #               show_cluster_sizes=True)
 
 
+def get_average(params):
+    (ins_cost, repl_matr, colon_cost) = params
+    sum = colon_cost
+    for line in repl_matr:
+        for x in line:
+            sum += x
+    for x in ins_cost:
+        sum += x
+
+    return sum // 29
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(
@@ -182,8 +188,11 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
 
-    # setup_costs([[104, 143, 153, 8, 175, 0, 0],
-    #              [[44], [78, 0], [34, 173, 191], [33, 188, 173, 0],
-    #               [0, 174, 115, 200, 183], [119, 162, 130, 19, 2, 199]], 150])
+    params = [[177, 164, 97, 78, 20, 42, 163],
+                 [[53], [60, 186], [43, 97, 88], [141, 182, 14, 48],
+                  [195, 50, 63, 106, 126], [71, 18, 11, 21, 41, 79]], 120]
+    setup_costs(params)
+    avg = get_average(params)
+    print(avg)
 
-    main(dataset_filename_, output_data_filename_)
+    main(dataset_filename_, output_data_filename_, min_dist=avg)
