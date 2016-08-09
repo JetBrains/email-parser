@@ -131,14 +131,14 @@ def main(dataset_filename):
                              bounder=bound_costs,
                              tournament_size=5,
                              headers=headers,
-                             statistics_file=open("stats.csv", "w"),
-                             individuals_file=open("inds.csv", "w"),
+                             statistics_file=open("stats_dbscan_steady_1.csv", "w"),
+                             individuals_file=open("inds_dbscan_steady_1.csv", "w"),
                              # --- customizable arguments ---
-                             pop_size=20,
-                             num_selected=20,
+                             pop_size=60,
+                             num_selected=30,
                              mutation_rate=0.4,
                              mutation_distance=0.15,
-                             max_evaluations=120
+                             max_evaluations=1860
                              # ------------------------------
                              )
 
@@ -150,7 +150,7 @@ def main(dataset_filename):
     end = time.perf_counter()
     print("\nWorking time: %f sec." % (end - start))
 
-    inspyred.ec.analysis.generation_plot(open("stats.csv"), errorbars=False)
+    inspyred.ec.analysis.generation_plot(open("stats_dbscan_steady_1.csv"), errorbars=False)
 
 
 if __name__ == "__main__":

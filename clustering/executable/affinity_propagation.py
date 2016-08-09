@@ -9,9 +9,10 @@ from sklearn.cluster import AffinityPropagation
 from sklearn import metrics
 from cluster.prepare_data import get_headers_pairs_list, get_labels, \
     get_affinity_matrix, read_dist_matrix, \
-    write_clusterized_data, print_metrics
+    write_clusterized_data, print_metrics, setup_costs
 from cluster.token_edit_distance import get_distance_matrix
 from cluster.visualization import visualize
+
 
 def clustering(headers, distance_matrix_filename=None):
     if distance_matrix_filename is None:
@@ -25,7 +26,7 @@ def clustering(headers, distance_matrix_filename=None):
         affinity_matr)
 
     return metrics.silhouette_score(np.asmatrix(dist_matrix), af.labels_,
-                             metric='precomputed')
+                                    metric='precomputed')
 
 
 def main(dataset_filename, output_data_filename,
@@ -37,7 +38,8 @@ def main(dataset_filename, output_data_filename,
 
     if distance_matrix_filename is None:
         dist_matrix, max_dist = get_distance_matrix(list(map(lambda x: x[1],
-                                          headers_pairs)), verbose=True)
+                                                             headers_pairs)),
+                                                    verbose=True)
     else:
         dist_matrix, max_dist = \
             read_dist_matrix(distance_matrix_filename, verbose=True)
@@ -81,6 +83,7 @@ def main(dataset_filename, output_data_filename,
         visualize(dist_matrix, labels, cluster_centers_indices,
                   show_cluster_sizes=True)
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(
@@ -92,10 +95,8 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
 
+    # setup_costs([[104, 143, 153, 8, 175, 0, 0],
+    #              [[44], [78, 0], [34, 173, 191], [33, 188, 173, 0],
+    #               [0, 174, 115, 200, 183], [119, 162, 130, 19, 2, 199]], 150])
 
-    # pd.setup_costs([[10, 59, 200, 10, 53, 78, 100],
-    #                 [[87], [150, 196], [113, 65, 127], [94, 86, 71, 117],
-    #               [155, 14, 92, 200, 135], [110, 67, 63, 76, 194, 114]], 75])
-
-    main(dataset_filename_, output_data_filename_,
-         )
+    main(dataset_filename_, output_data_filename_)

@@ -17,7 +17,7 @@ from cluster.token import token_type, Token
 from executable.affinity_propagation import clustering
 
 MAX_COST = 200
-MIN_COST = 0
+MIN_COST = 10
 
 
 def generate_costs(random, args):
@@ -26,7 +26,7 @@ def generate_costs(random, args):
         [int(random.uniform(MIN_COST, MAX_COST)) for _ in range(size)]
     repl_cost = \
         [[int(random.uniform(MIN_COST, MAX_COST)) for _ in range(i + 1)] for
-         i in range(size-1)]
+         i in range(size - 1)]
     colon_inequality_cost = int(random.uniform(MIN_COST, MAX_COST))
     return [ins_cost, repl_cost, colon_inequality_cost]
 
@@ -63,7 +63,7 @@ def evaluate_costs(candidates, args):
             fitness.append(-1)
         fitness.append(fit)
 
-        print("Evaluated {0}/{1}: {2} : {3}".format(i+1, cs_len, cs,
+        print("Evaluated {0}/{1}: {2} : {3}".format(i + 1, cs_len, cs,
                                                     fitness[i]))
 
     return fitness
@@ -157,7 +157,7 @@ def main(dataset_filename):
     my_ec.selector = inspyred.ec.selectors.tournament_selection
     my_ec.variator = [inspyred.ec.variators.crossover(costs_uniform_crossover),
                       mutate_costs]
-    my_ec.replacer = inspyred.ec.replacers.steady_state_replacement
+    my_ec.replacer = inspyred.ec.replacers.truncation_replacement
     my_ec.observer = [inspyred.ec.observers.file_observer,
                       inspyred.ec.observers.stats_observer]
     my_ec.terminator = inspyred.ec.terminators.evaluation_termination
@@ -167,14 +167,16 @@ def main(dataset_filename):
                              bounder=bound_costs,
                              tournament_size=5,
                              headers=headers,
-                             statistics_file=open("stats.csv", "w"),
-                             individuals_file=open("inds.csv", "w"),
+                             statistics_file=open(
+                                 "stats_ap_trunc_nonzero_half_2.csv", "w"),
+                             individuals_file=open(
+                                 "inds_ap_trunc_nonzero_half_2.csv", "w"),
                              # --- customizable arguments ---
-                             pop_size=20,
-                             num_selected=20,
-                             mutation_rate=0.4,
+                             pop_size=60,
+                             num_selected=30,
+                             mutation_rate=0.75,
                              mutation_distance=0.15,
-                             max_evaluations=120
+                             max_evaluations=1860
                              # ------------------------------
                              )
 
@@ -186,7 +188,8 @@ def main(dataset_filename):
     end = time.perf_counter()
     print("\nWorking time: %f sec." % (end - start))
 
-    inspyred.ec.analysis.generation_plot(open("stats.csv"), errorbars=False)
+    inspyred.ec.analysis.generation_plot(
+        open("stats_ap_trunc_nonzero_half_2.csv"), errorbars=False)
 
 
 if __name__ == "__main__":
