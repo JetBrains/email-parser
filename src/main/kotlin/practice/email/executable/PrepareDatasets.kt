@@ -76,11 +76,11 @@ fun main(args: Array<String>) {
             try {
                 val headerLine = preprocess(header)
                 if (count < DATASETS_SIZE) {
-                    trainingSet.write("${count % 100} - ${i}\t\t")
+                    trainingSet.write("${i}\t\t")
                     trainingSet.write(headerLine)
                     trainingSet.newLine()
                 } else {
-                    testSet.write("${count % 100} - ${i}\t\t")
+                    testSet.write("${i}\t\t")
                     testSet.write(headerLine)
                     testSet.newLine()
                 }

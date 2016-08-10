@@ -2,7 +2,7 @@ import unittest
 import re
 
 from cluster.token import Token
-from optimization.ap_optim import bound_costs, MAX_COST
+from optimization.ap_optim import bound_costs, MAX_COST, MIN_COST
 
 
 class OptimizationTests(unittest.TestCase):
@@ -16,9 +16,9 @@ class OptimizationTests(unittest.TestCase):
         c[1][2][1] = -1
         c[1][3][2] = 1000
         v = bound_costs(c, [])
-        self.assertEqual(0, v[0][2])
+        self.assertEqual(MIN_COST, v[0][2])
         self.assertEqual(MAX_COST, v[0][4])
-        self.assertEqual(0, v[1][2][1])
+        self.assertEqual(MIN_COST, v[1][2][1])
         self.assertEqual(MAX_COST, v[1][3][2])
         self.assertEqual(MAX_COST, v[2])
 

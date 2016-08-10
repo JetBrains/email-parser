@@ -177,6 +177,7 @@ def get_average(params):
 
     return sum // 29
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print(
@@ -188,9 +189,7 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
 
-    params = [[177, 164, 97, 78, 20, 42, 163],
-                 [[53], [60, 186], [43, 97, 88], [141, 182, 14, 48],
-                  [195, 50, 63, 106, 126], [71, 18, 11, 21, 41, 79]], 120]
+    params = [[108, 116, 112, 76, 100, 147, 158], [[66], [36, 143], [158, 41, 63], [86, 56, 61, 12], [136, 10, 10, 190, 119], [146, 10, 52, 64, 75, 122]], 157]
     setup_costs(params)
     avg = get_average(params)
     print(avg)

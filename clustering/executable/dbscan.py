@@ -91,9 +91,7 @@ if __name__ == "__main__":
     output_data_filename_ = sys.argv[2]
     distance_matrix_filename_ = sys.argv[3] if len(sys.argv) > 3 else None
 
-    # setup_costs([[104, 143, 153, 8, 175, 0, 0],
-    #              [[44], [78, 0], [34, 173, 191], [33, 188, 173, 0],
-    #               [0, 174, 115, 200, 183], [119, 162, 130, 19, 2, 199]], 150])
+    setup_costs([[108, 116, 112, 76, 100, 147, 158], [[66], [36, 143], [158, 41, 63], [86, 56, 61, 12], [136, 10, 10, 190, 119], [146, 10, 52, 64, 75, 122]], 157])
 
     main(dataset_filename_, output_data_filename_,
          eps=10)

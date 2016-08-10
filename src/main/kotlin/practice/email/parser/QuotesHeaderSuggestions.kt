@@ -53,10 +53,26 @@ object QuotesHeaderSuggestions {
         lines.forEachIndexed { i, s ->
             updateSuggestions(i, s)
             if (this.suggestionsFound >= SUFFICIENT_COUNT) {
-                return@getQuoteHeader getHeader(lines)
+                val (from, to, header_lines) = getHeader(lines)
+                return@getQuoteHeader header_lines
             }
         }
         return null
+    }
+
+    fun getQuoteHeaderWithIndexes(content: String): Triple<Int, Int, List<String>?> {
+        this.suggestionsFound = 0
+        this.suggestions.fill(false)
+        this.suggestionsLineIndex.fill(-1)
+
+        val lines = content.lines()
+        lines.forEachIndexed { i, s ->
+            updateSuggestions(i, s)
+            if (this.suggestionsFound >= SUFFICIENT_COUNT) {
+                return@getQuoteHeaderWithIndexes getHeader(lines)
+            }
+        }
+        return Triple(-1, -1, null)
     }
 
     fun getQuoteHeaderLine(content: String): String? =
@@ -94,6 +110,7 @@ object QuotesHeaderSuggestions {
         return false
     }
 
+    //    TODO didn't find middle_comma in email 40
     private fun updateMiddleColon(lineIndex: Int, line: String, shouldReset: Boolean = true): Boolean {
         if (line.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex) &&
                 (middleColonCount == 0 || lineIndex - 1 == middleColonLineIndex[middleColonCount - 1])) {
@@ -125,7 +142,7 @@ object QuotesHeaderSuggestions {
         }
     }
 
-    private fun getHeader(lines: List<String>): List<String> {
+    private fun getHeader(lines: List<String>): Triple<Int, Int, List<String>> {
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE
 
@@ -181,7 +198,7 @@ object QuotesHeaderSuggestions {
             }
         }
 
-        return lines.filterIndexed { i, s -> i >= fromIndex && i <= toIndex }
+        return Triple(fromIndex, toIndex, lines.filterIndexed { i, s -> i >= fromIndex && i <= toIndex })
     }
 }
 
