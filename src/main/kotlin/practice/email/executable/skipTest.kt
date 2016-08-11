@@ -13,7 +13,7 @@ import java.util.*
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "C:${File.separator}YT${File.separator}"
+private val pathEmails = "D:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -22,10 +22,10 @@ private val EMAILS_COUNT = 1000
 fun main(args: Array<String>) {
 
     val withHeaders = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}withHeaders.txt"
+            "${pathDatasets}withHeaders_weak.txt"
     ))))
     val empty = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}empty.txt"
+            "${pathDatasets}empty_weak.txt"
     ))))
 
     var emptyCount = 0
@@ -110,7 +110,8 @@ fun main(args: Array<String>) {
     }
 
     println("Done.")
-
+    
     println("$headerCount with headers.")
     println("$emptyCount without headers.")
+    println("${i - headerCount - emptyCount} skipped.")
 }

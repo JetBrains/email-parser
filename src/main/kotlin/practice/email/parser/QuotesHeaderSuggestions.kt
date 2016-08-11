@@ -25,7 +25,7 @@ enum class QuotesHeaderSuggestionsRegEx(val regex: Regex) {
 
 object QuotesHeaderSuggestions {
     val COUNT = 4
-    val SUFFICIENT_COUNT = 3
+    val SUFFICIENT_COUNT = 2
 
     object idx {
         val DATE_YEAR = 0

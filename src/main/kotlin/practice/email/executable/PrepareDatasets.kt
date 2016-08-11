@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "C:${File.separator}YT${File.separator}"
+private val pathEmails = "D:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -30,17 +30,15 @@ fun main(args: Array<String>) {
     ))))
     val random = Random(System.currentTimeMillis())
 
-    val trainingGeneralSet = getTrainingSet()
-
     while (count < DATASETS_SIZE * 2) {
         var i = random.nextInt(EMAILS_COUNT)
 
-        if (used.size + trainingGeneralSet.size >= EMAILS_COUNT) {
+        if (used.size >= EMAILS_COUNT) {
             println("All possible emails were viewed. Aborting..")
             break
         }
 
-        while (i in used || i in trainingGeneralSet) {
+        while (i in used) {
             i = random.nextInt(EMAILS_COUNT)
         }
         used.add(i)
