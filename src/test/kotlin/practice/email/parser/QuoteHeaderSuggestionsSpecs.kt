@@ -94,7 +94,7 @@ mariya.davydova@jetbrains.com> написал:
 > У меня за последнее время родилось некоторое количество разрозненных
 > мыслей, я ими поделюсь, а дальше будем думать :)"""
 
-                val expected = "15 апреля 2016 г., 20:26 пользователь Mariya Davydova < mariya.davydova@jetbrains.com> написал:"
+                val expected = "Это в общих чертах, 15:22 на деле, видимо, еще придется учесть несколько частных случаев, но в целом, g@hh.er кажется, что задача поиска заголовка цитаты менее"
                 val actual = getQuoteHeaderLine(text)
                 it("should fetch the first paragraph") {
                     assertEquals(expected, actual)

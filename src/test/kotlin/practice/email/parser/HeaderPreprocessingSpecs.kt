@@ -186,7 +186,7 @@ some text
 > text text text text text text text text text text text xxx@zzz.com <mailto:xxx@zzz.com>."""
             )
             on("preprocessing") {
-                val expected = ": On Mar 6 2015 at 06:21 XXX: YYY: <<mailto:xxx@zzz.com>>:"
+                val expected = ": On Mar 6 2015 at 06:21 XXX: YYY"
                 val actual   = preprocess(header ?: throw NullPointerException())
                 it("should join with previous word") {
                     assertEquals(expected, actual)

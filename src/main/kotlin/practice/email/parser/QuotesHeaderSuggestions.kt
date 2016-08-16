@@ -83,6 +83,7 @@ object QuotesHeaderSuggestions {
         return if (header != null ) preprocess(header) else null
     }
 
+    // TODO should not replace suggestion lineIndex if it is repeats. Only if it is too old.
     private fun updateSuggestions(lineIndex: Int, line: String) {
         var updated = update(lineIndex, line, idx.DATE_YEAR, QuotesHeaderSuggestionsRegEx.DATE.regex)
         updated = update(lineIndex, line, idx.TIME, QuotesHeaderSuggestionsRegEx.TIME.regex) || updated
@@ -110,7 +111,9 @@ object QuotesHeaderSuggestions {
         return false
     }
 
-    //    TODO didn't find middle_comma in email 40
+    // TODO didn't find middle_colon in email 40
+    // TODO Sometimes last colon is special case of middle colon
+    // TODO sparse multi line headers
     private fun updateMiddleColon(lineIndex: Int, line: String, shouldReset: Boolean = true): Boolean {
         if (line.matches(QuotesHeaderSuggestionsRegEx.MIDDLE_COLON.regex) &&
                 (middleColonCount == 0 || lineIndex - 1 == middleColonLineIndex[middleColonCount - 1])) {
@@ -155,10 +158,11 @@ object QuotesHeaderSuggestions {
 
         var additionalLine = 0
 
+        // TODO Check all of the remaining suggestions, not the first one.
         // If sufficient count of suggestions had been found in one or two lines
         // try to check the last suggestion in the following line.
         val lastSuggestionIdx = this.suggestions.indexOfFirst { !it }
-        if (lastSuggestionIdx != -1 && // One suggestion is not found.
+        if (lastSuggestionIdx != -1 &&      // One suggestion is not found.
                 toIndex < lines.size - 1 && // There is the following line to check.
                 toIndex - fromIndex < 2) {  // Found suggestions are placed in less than 3 lines.
             val updated = update(
@@ -170,14 +174,17 @@ object QuotesHeaderSuggestions {
 
             // Check if this line contains middle colon
             updateMiddleColon(toIndex + 1, lines[toIndex + 1])
-            additionalLine = 1
+
 
             if (updated) {
                 toIndex++
+            } else {
+                additionalLine = 1
             }
         }
 
-        // Try to check if there is a multiline header or FWD
+        // TODO check previous lines for middle colons
+        // Try to check if there is a multi line header or FWD
         if (middleColonCount >= toIndex - fromIndex + 1) {
             var cnt = MIDDLE_COLON_LINES_COUNT - middleColonCount
             var lineIdx = toIndex + 1 + additionalLine
