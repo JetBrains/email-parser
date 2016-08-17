@@ -1,8 +1,8 @@
 package quoteParser
 
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder
 import quoteParser.features.*
 
+// TODO Do smth with false-positive logs and stack traces (not urgent)
 class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // For single line headers
     private val featureSet: Set<AbstractQuoteFeature>
@@ -13,6 +13,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
 
     // For multi lines and FWD headers
     // TODO simplify this
+    // TODO what if to increase MCLC?? Will it work better or worse? Should experiment with that (not urgent)
     private val MIDDLE_COLON_LINES_COUNT = 4
     private var middleColonCount = 0
     private val middleColonFeature = MiddleColonFeature("MIDDLE_COLON")

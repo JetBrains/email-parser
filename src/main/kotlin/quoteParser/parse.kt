@@ -4,8 +4,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 import java.util.*
-import javax.mail.Address
-import javax.mail.Message
 import javax.mail.Session
 import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
@@ -22,16 +20,20 @@ private object ContentType {
 
 //TODO recursive quote parsing
 fun parse(emlFile: File): Content {
+    val emailText: String = getEmailText(emlFile)
+
+    // TODO check for special email headers
+
+    return QuoteParser(emailText.lines().map { it.trim() }).parse()
+}
+
+fun getEmailText(emlFile: File): String {
     val source: InputStream = FileInputStream(emlFile)
     val props: Properties = System.getProperties()
     val session: Session = Session.getDefaultInstance(props)
     val msg: MimeMessage = MimeMessage(session, source)
 
-    val emailText: String = getEmailText(msg)
-
-    // TODO check for special email headers
-
-    return QuoteParser(emailText.lines().map { it.trim() }).parse()
+    return getEmailText(msg)
 }
 
 /**
@@ -54,7 +56,7 @@ private fun getEmailText(part: MimePart): String {
             return getEmailText(
                     (content as MimeMultipart).getBodyPart(0) as MimePart
             )
-        // TODO add another content types
+    // TODO add another content types
         else -> throw NotImplementedError()
     }
 }

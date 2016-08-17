@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "D:${File.separator}YT${File.separator}"
+private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -20,7 +20,7 @@ private val EMAILS_COUNT = 23055
 
 fun main(args: Array<String>) {
     val dataSet = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}data.txt"
+            "${pathDatasets}expected_headers.txt"
     ))))
     var headersCount = 0
     for (i in 0.. EMAILS_COUNT - 1) {
@@ -54,9 +54,12 @@ fun main(args: Array<String>) {
         if (header != null) {
 
             try {
-                val headerLine = preprocess(header)
-                dataSet.write("${i}\t\t")
-                dataSet.write(headerLine)
+                dataSet.write(i.toString())
+                dataSet.newLine()
+                header.forEach {
+                    dataSet.write(it)
+                    dataSet.newLine()
+                }
                 dataSet.newLine()
                 headersCount++
             } catch (e: StringIndexOutOfBoundsException) {
