@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 sys.path.append(os.getcwd())
 
@@ -13,6 +14,7 @@ if len(sys.argv) < 3:
     )
     sys.exit()
 
+start = time.perf_counter()
 dataset_filename_ = sys.argv[1]
 output_data_filename_ = sys.argv[2]
 
@@ -23,3 +25,6 @@ dist_matrix, max_dist = get_distance_matrix(list(map(lambda x: x[1],
                                             verbose=True)
 
 write_dist_matrix(dist_matrix, max_dist, output_data_filename_, verbose=True)
+
+end = time.perf_counter()
+print("\nWorking time: %f sec." % (end - start))

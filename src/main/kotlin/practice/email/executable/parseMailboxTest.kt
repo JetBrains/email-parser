@@ -15,7 +15,7 @@ import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "C:${File.separator}YT${File.separator}"
+private val pathEmails = "D:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -133,7 +133,7 @@ private fun compareHeaders(expected_headers: List<Pair<Int, List<String>>>,
 
     var expected_index = 0
     var actual_index = 0
-    while (expected_index < expected_headers.size) {
+    while (expected_index < expected_headers.size && actual_index < actual_headers.size) {
         val expected_email_num = expected_headers[expected_index].first
         val expected_header = expected_headers[expected_index].second
         val actual_email_num = actual_headers[actual_index].first
@@ -146,50 +146,35 @@ private fun compareHeaders(expected_headers: List<Pair<Int, List<String>>>,
                 equals++
                 continue
             }
-            not_eqFile.write(actual_email_num.toString())
-            not_eqFile.newLine()
-            not_eqFile.newLine()
-            not_eqFile.write("Expected:\n")
-            expected_header.forEach {
-                not_eqFile.write(it)
-                not_eqFile.newLine()
-            }
-            not_eqFile.newLine()
-            not_eqFile.write("Actual:\n")
-            actual_header.forEach {
-                not_eqFile.write(it)
-                not_eqFile.newLine()
-            }
-            not_eqFile.newLine()
-            not_eqFile.write("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n")
-
+            write_not_equals(not_eqFile, actual_email_num, expected_header, actual_header)
             expected_index++
             actual_index++
             non_equals++
         } else {
             if (expected_email_num > actual_email_num) {
-                newFile.write(actual_email_num)
-                newFile.newLine()
-                actual_header.forEach {
-                    newFile.write(it)
-                    newFile.newLine()
-                }
-                newFile.newLine()
+                write_mail(newFile, actual_email_num, actual_header)
                 actual_index++
                 new++
             } else if (expected_email_num < actual_email_num) {
-                missedFile.write(expected_email_num)
-                missedFile.newLine()
-                expected_header.forEach {
-                    missedFile.write(it)
-                    missedFile.newLine()
-                }
-                missedFile.newLine()
+                write_mail(missedFile, expected_email_num, expected_header)
                 expected_index++
                 missed++
             }
         }
         passed = false
+    }
+    
+    while (expected_index < expected_headers.size) {
+        val expected_email_num = expected_headers[expected_index].first
+        val expected_header = expected_headers[expected_index].second
+        write_mail(missedFile, expected_email_num, expected_header)
+        expected_index++
+    }
+    while (actual_index < actual_headers.size) {
+        val actual_email_num = actual_headers[actual_index].first
+        val actual_header = actual_headers[actual_index].second
+        write_mail(newFile, actual_email_num, actual_header)
+        actual_index++ 
     }
 
     if (passed) {
@@ -204,4 +189,33 @@ private fun compareHeaders(expected_headers: List<Pair<Int, List<String>>>,
     missedFile.close()
     newFile.close()
     not_eqFile.close()
+}
+
+private fun write_mail(out: BufferedWriter, email_num: Int, header: List<String>) {
+    out.write(email_num.toString())
+    out.newLine()
+    header.forEach {
+        out.write(it)
+        out.newLine()
+    }
+    out.newLine()
+}
+
+private fun write_not_equals(out: BufferedWriter, email_num: Int, expected_header: List<String>, actual_header: List<String>) {
+    out.write(email_num.toString())
+    out.newLine()
+    out.newLine()
+    out.write("Expected:\n")
+    expected_header.forEach {
+        out.write(it)
+        out.newLine()
+    }
+    out.newLine()
+    out.write("Actual:\n")
+    actual_header.forEach {
+        out.write(it)
+        out.newLine()
+    }
+    out.newLine()
+    out.write("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n")
 }

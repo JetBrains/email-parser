@@ -8,7 +8,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     private val featureSet: Set<AbstractQuoteFeature>
     private val sufficientFeatureCount: Int
     private val maxFeatureCount: Int
-    private val foundFeatureMap: MutableMap<String, Int> = mutableMapOf()
+    private var foundFeatureMap: MutableMap<String, Int> = mutableMapOf()
     // ------
 
     // For multi lines and FWD headers
@@ -96,9 +96,11 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         if (all) {
             foundFeatureMap.clear()
         } else {
-            foundFeatureMap.filterTo(foundFeatureMap, {
+            val temp: MutableMap<String, Int> = mutableMapOf()
+            foundFeatureMap.filterTo(temp) {
                 lineIndex - it.value <= 2
-            })
+            }
+            foundFeatureMap = temp
         }
     }
 
