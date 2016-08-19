@@ -3,7 +3,7 @@ package quoteParser
 /**
  * Created by Pavel.Zhuk on 16.08.2016.
  */
-//TODO exclusive last index
+//TODO !!!exclusive last index
 data class QuoteHeader(val startIndex: Int,
                        val endIndex: Int = startIndex,
                        val text: List<String>?) {
