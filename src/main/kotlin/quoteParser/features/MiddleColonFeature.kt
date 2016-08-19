@@ -7,7 +7,7 @@ class MiddleColonFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "MIDDLE_COLON"
     override fun getRegex(): Regex {
-        return Regex(".*\\S+\\s*:\\s+\\S+.*")
+        return Regex(".*\\S+[\\s\\xA0]*:[\\s\\xA0]+\\S+.*")
     }
 
 }

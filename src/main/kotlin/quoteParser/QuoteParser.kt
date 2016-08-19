@@ -12,8 +12,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // ------
 
     // For multi line and FWD headers
-    // TODO !!!what if to increase MCLC?? Will it work better or worse? Should experiment with that (not urgent)
-    private val MIDDLE_COLON_LINES_COUNT = 4
+    private val MIDDLE_COLON_LINES_COUNT = 6
     private var middleColonCount = 0
     private val middleColonFeature = MiddleColonFeature()
     private var lineMatchesMiddleColon = false
@@ -38,7 +37,10 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
 
     private fun prepare() {
         foundFeatureMap.clear()
+
         middleColonCount = 0
+        lineMatchesMiddleColon = false
+        firstMiddleColonLineIndex = -1
     }
 
     fun parse(): Content {
@@ -60,7 +62,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
                 anyFeatureMatches = true
             }
 
-            // TODO !!!old line idx
             if (anyFeatureMatches) {
                 resetFeatures(oldLineIndex = lineIndex - 3)
             } else {
@@ -78,7 +79,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         foundFeatureMap[feature.name] = lineIndex
     }
 
-    // TODO !!!didn't find middle_colon in email 40
     // TODO Sometimes last colon is special case of middle colon
     // TODO sparse multi line headers
     private fun updateMultiLineFeature(lineIndex: Int) {
@@ -98,8 +98,8 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         resetMultiLineFeatures()
     }
 
-    private fun resetMultiLineFeatures() {
-        if (!lineMatchesMiddleColon) {
+    private fun resetMultiLineFeatures(shouldReset: Boolean = true) {
+        if (!lineMatchesMiddleColon && shouldReset) {
             middleColonCount = 0
 
         }
@@ -139,7 +139,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         // TODO add some tricky removal of angle brackets (not urgent)
         return Content(
                 lines.subList(0, fromIndex),
-                QuoteHeader(fromIndex, toIndex, lines.subList(fromIndex, toIndex + 1)),
+                QuoteHeader(fromIndex, toIndex+1, lines.subList(fromIndex, toIndex + 1)),
                 Content(
                         lines.subList(toIndex + 1, lines.lastIndex + 1),
                         null,
@@ -148,7 +148,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         )
     }
 
-    // TODO !!!Check all of the remaining suggestions, not the first one.
+    // TODO Check all of the remaining suggestions, not the first one.
     // If sufficient count of suggestions had been found in one or two lines
     // try to check first not found suggestion in the following line (-es??).
     /**
@@ -169,8 +169,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
 
             if (feature.matches(lines[lineIndex])) {
 
-                // useless for now
-//                updateSingleLineFeature(lineIndex, feature)
+                updateSingleLineFeature(lineIndex, feature)
 
                 if (middleColonFeature.matches(lines[lineIndex])) {
                     updateMultiLineFeature(lineIndex)
@@ -183,7 +182,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         return false
     }
 
-    // TODO check previous lines for middle colons ????
     // Try to check if there is a multi line header or FWD
     private fun checkForMultiLineHeader(fromIndex: Int, toIndex: Int): Boolean {
         if (middleColonCount >= toIndex - fromIndex + 1) {
@@ -193,7 +191,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
 
                 if (middleColonFeature.matches(lines[lineIndex])) {
                     updateMultiLineFeature(lineIndex)
-                    lineMatchesMiddleColon = false
                 } else {
                     break
                 }

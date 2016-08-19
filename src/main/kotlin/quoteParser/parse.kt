@@ -24,7 +24,7 @@ fun parse(emlFile: File): Content {
 
     // TODO check for special email headers
 
-    return QuoteParser(emailText.lines().map { it.trim() }).parse()
+    return QuoteParser(emailText.lines()).parse()
 }
 
 fun getEmailText(emlFile: File): String {

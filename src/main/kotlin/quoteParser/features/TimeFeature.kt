@@ -7,5 +7,5 @@ class TimeFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "TIME"
     override fun getRegex() =
-            Regex("(.*\\s)?(([01]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?[,\\.]?:?)(\\s.*)?")
+            Regex("(.*[\\s\\xA0])?(([01]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?[,\\.]?:?)([\\s\\xA0].*)?")
 }

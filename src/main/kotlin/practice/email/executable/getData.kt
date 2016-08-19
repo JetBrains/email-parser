@@ -4,6 +4,7 @@ import practice.email.parser.Email
 import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
 import practice.email.parser.preprocess
+import quoteParser.QuoteParser
 import java.io.*
 import java.util.*
 import java.util.regex.Pattern
@@ -33,9 +34,9 @@ fun main(args: Array<String>) {
             ).parse()
 
             if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
-                header = QuotesHeaderSuggestions.getQuoteHeader(
-                        email.content.body
-                )
+                header = QuoteParser(
+                        email.content.body.lines()
+                ).parse().header?.text
             } else {
                 header = null
             }

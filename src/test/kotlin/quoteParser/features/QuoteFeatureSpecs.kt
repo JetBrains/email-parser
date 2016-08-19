@@ -339,5 +339,27 @@ class QuoteFeatureSpecs : Spek() {
                 }
             }
         }
+        given("string of text with non-breaking spaces") {
+            val s = """Reply: xxx   17  Jul 2015  13:25:18  eee-ddd@fff.com: """
+            on("checking regexes") {
+                it("should match COLON regex") {
+                    assertTrue { colonFeature.matches(s) }
+                }
+                it("should match MIDDLE_COLON regex") {
+                    assertTrue {
+                        middleColonFeature.matches(s)
+                    }
+                }
+                it("should match DATE regex") {
+                    assertTrue { dateFeature.matches(s) }
+                }
+                it("should match TIME regex") {
+                    assertTrue {timeFeature.matches(s)}
+                }
+                it("should match EMAIL regex") {
+                    assertTrue { emailFeature.matches(s) }
+                }
+            }
+        }
     }
 }
