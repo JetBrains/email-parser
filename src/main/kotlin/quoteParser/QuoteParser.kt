@@ -12,22 +12,23 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // ------
 
     // For multi lines and FWD headers
-    // TODO simplify this
+    // TODO !!!simplify this
     // TODO what if to increase MCLC?? Will it work better or worse? Should experiment with that (not urgent)
     private val MIDDLE_COLON_LINES_COUNT = 4
     private var middleColonCount = 0
-    private val middleColonFeature = MiddleColonFeature("MIDDLE_COLON")
+    private val middleColonFeature = MiddleColonFeature()
+    private var lineMatchesMiddleColon = false
 
-    // TODO replace this array with offset
+    // TODO !!!replace this array with offset
     private val middleColonLineIndex = IntArray(MIDDLE_COLON_LINES_COUNT) { -1 }
     // ------
 
     init {
         this.featureSet = setOf(
-                DateFeature("DATE"),
-                TimeFeature("TIME"),
-                EmailFeature("EMAIL"),
-                ColonFeature("COLON")
+                DateFeature(),
+                TimeFeature(),
+                EmailFeature(),
+                ColonFeature()
         )
         this.maxFeatureCount = this.featureSet.size
         if (sufficientFeatureCount < 1 || sufficientFeatureCount > this.maxFeatureCount) {
@@ -38,61 +39,78 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         this.sufficientFeatureCount = sufficientFeatureCount
     }
 
-    fun parse(): Content {
+    private fun prepare() {
         foundFeatureMap.clear()
         middleColonCount = 0
+    }
+
+    fun parse(): Content {
+        prepare()
 
         lines.forEachIndexed { lineIndex, line ->
             // TODO should not replace suggestion lineIndex if it is repeats. Only if it is too old.
             var anyFeatureMatches = false
+
             for (feature in featureSet) {
                 if (feature.matches(line)) {
-                    foundFeatureMap[feature.name] = lineIndex
+                    updateSingleLineFeature(lineIndex, feature)
                     anyFeatureMatches = true
                 }
             }
-            if (matchMiddleColon(lineIndex, line)) {
+
+            if (middleColonFeature.matches(line)) {
+                updateMultiLineFeature(lineIndex)
                 anyFeatureMatches = true
             }
 
+            // TODO !!!old line idx
             if (anyFeatureMatches) {
-                resetSuggestions(lineIndex = lineIndex)
+                resetFeatures(lineIndex = lineIndex)
             } else {
-                resetSuggestions(all = true)
+                resetFeatures(all = true)
             }
 
             if (foundFeatureMap.size >= sufficientFeatureCount) {
-                return@parse getHeader(lines)
+                return@parse identifyHeader()
             }
         }
         return Content(lines, null, null)
     }
 
+    private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
+        foundFeatureMap[feature.name] = lineIndex
+    }
+
     // TODO didn't find middle_colon in email 40
     // TODO Sometimes last colon is special case of middle colon
     // TODO sparse multi line headers
-    private fun matchMiddleColon(lineIndex: Int, line: String, shouldReset: Boolean = true): Boolean {
-        if (middleColonFeature.matches(line) &&
-                (middleColonCount == 0 || lineIndex - 1 == middleColonLineIndex[middleColonCount - 1])) {
-            if (middleColonCount == MIDDLE_COLON_LINES_COUNT) {
-                middleColonLineIndex.forEachIndexed { i, line ->
-                    if (i < middleColonCount - 1)
-                        middleColonLineIndex[i] = middleColonLineIndex[i + 1]
-                }
-                middleColonLineIndex[middleColonCount - 1] = lineIndex
-            } else {
-                middleColonLineIndex[middleColonCount++] = lineIndex
+    private fun updateMultiLineFeature(lineIndex: Int) {
+        lineMatchesMiddleColon = true
+        if (middleColonCount == MIDDLE_COLON_LINES_COUNT) {
+            middleColonLineIndex.forEachIndexed { i, line ->
+                if (i < middleColonCount - 1)
+                    middleColonLineIndex[i] = middleColonLineIndex[i + 1]
             }
-            return true
+            middleColonLineIndex[middleColonCount - 1] = lineIndex
         } else {
-            if (shouldReset) {
-                middleColonCount = 0
-            }
-            return false
+            middleColonLineIndex[middleColonCount++] = lineIndex
         }
     }
 
-    private fun resetSuggestions(lineIndex: Int = 0, all: Boolean = false) {
+    private fun resetFeatures(lineIndex: Int = 0, all: Boolean = false) {
+        resetSingleLineFeatures(lineIndex, all)
+        resetMultiLineFeatures()
+    }
+
+    private fun resetMultiLineFeatures() {
+        if (!lineMatchesMiddleColon) {
+            middleColonCount = 0
+
+        }
+        lineMatchesMiddleColon = false
+    }
+
+    private fun resetSingleLineFeatures(lineIndex: Int = 0, all: Boolean = false) {
         if (all) {
             foundFeatureMap.clear()
         } else {
@@ -104,7 +122,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         }
     }
 
-    private fun getHeader(lines: List<String>): Content {
+    private fun identifyHeader(): Content {
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE
 
@@ -113,11 +131,12 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
             toIndex = Math.max(toIndex, it.value)
         }
 
+        // todo !!!change
         var additionalLine = 0
 
         // TODO Check all of the remaining suggestions, not the first one.
         // If sufficient count of suggestions had been found in one or two lines
-        // try to check first not found suggestion in the following line.
+        // try to check first not found suggestion in the following line (-es??).
         val feature = featureSet.firstOrNull { !foundFeatureMap.containsKey(it.name) }
         if (feature != null && // One suggestion is not found.
                 toIndex < lines.size - 1 && // There is the following line to check.
@@ -125,10 +144,13 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
 
             val lineIndex = toIndex + 1
 
-            matchMiddleColon(lineIndex, lines[lineIndex])
+            if (middleColonFeature.matches(lines[lineIndex])) {
+                updateMultiLineFeature(lineIndex)
+            }
+            resetMultiLineFeatures()
 
             if (feature.matches(lines[lineIndex])) {
-                foundFeatureMap[feature.name] = lineIndex
+                updateSingleLineFeature(lineIndex, feature)
                 toIndex++
             } else {
                 additionalLine = 1
@@ -142,8 +164,10 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
             var lineIndex = toIndex + 1 + additionalLine
             while (cnt > 0 && lineIndex < lines.size) {
 
-                val updated = matchMiddleColon(lineIndex, lines[lineIndex], shouldReset = false)
-                if (!updated) {
+                if (middleColonFeature.matches(lines[lineIndex])) {
+                    updateMultiLineFeature(lineIndex)
+                    lineMatchesMiddleColon = false
+                } else {
                     break
                 }
 

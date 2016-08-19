@@ -79,7 +79,7 @@ class ParseSpecs : Spek() {
 
             on("email with 5 nested quotes and signs") {
                 val expectedContent = TestContent.quotes_signs_5
-                var actualContent = parse(
+                val actualContent = parse(
                         File("${path}5_quotes_plus_signs.eml")
                 )
 

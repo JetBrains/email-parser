@@ -6,11 +6,11 @@ import kotlin.test.assertTrue
 
 class QuoteFeatureSpecs : Spek() {
     init {
-        val colonFeature = ColonFeature("COLON")
-        val middleColonFeature = MiddleColonFeature("MIDDLE_COLON")
-        val dateFeature = DateFeature("DATE")
-        val timeFeature = TimeFeature("TIME")
-        val emailFeature = EmailFeature("EMAIL")
+        val colonFeature = ColonFeature()
+        val middleColonFeature = MiddleColonFeature()
+        val dateFeature = DateFeature()
+        val timeFeature = TimeFeature()
+        val emailFeature = EmailFeature()
         
         given("string of text") {
             val s = "@lorem  ipsum dolor sit amet, 04/04/05, consectetuer 01:01:33 adipiscing elit. Aenean : "

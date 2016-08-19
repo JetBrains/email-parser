@@ -3,7 +3,9 @@ package quoteParser.features
 /**
  * Created by Pavel.Zhuk on 16.08.2016.
  */
-class ColonFeature(name: String) : AbstractQuoteFeature(name) {
+class ColonFeature() : AbstractQuoteFeature() {
+    override val name: String
+        get() = "COLON"
     override fun getRegex(): Regex {
         return Regex("(.*\\s)?.*:(\\s*)?")
     }

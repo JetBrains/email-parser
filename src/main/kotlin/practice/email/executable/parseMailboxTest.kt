@@ -15,7 +15,7 @@ import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "D:${File.separator}YT${File.separator}"
+private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
