@@ -3,7 +3,10 @@ package quoteParser
 import quoteParser.features.*
 
 // TODO Do smth with false-positive logs and stack traces (not urgent)
-class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
+class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
+                  private val HEADER_LINES_COUNT: Int = 3,
+                  private val MULTI_LINE_HEADER_LINES_COUNT: Int = 6) {
+
     // For single line headers
     private val featureSet: Set<AbstractQuoteFeature>
     private val sufficientFeatureCount: Int
@@ -12,7 +15,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // ------
 
     // For multi line and FWD headers
-    private val MIDDLE_COLON_LINES_COUNT = 6
     private var middleColonCount = 0
     private val middleColonFeature = MiddleColonFeature()
     private var lineMatchesMiddleColon = false
@@ -50,7 +52,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
             // TODO should not replace suggestion lineIndex if it is repeats. Only if it is too old.
             var anyFeatureMatches = false
 
-            for (feature in featureSet) {
+            featureSet.forEach { feature ->
                 if (feature.matches(line)) {
                     updateSingleLineFeature(lineIndex, feature)
                     anyFeatureMatches = true
@@ -63,7 +65,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
             }
 
             if (anyFeatureMatches) {
-                resetFeatures(oldLineIndex = lineIndex - 3)
+                resetFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT)
             } else {
                 resetFeatures(all = true)
             }
@@ -83,7 +85,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // TODO sparse multi line headers
     private fun updateMultiLineFeature(lineIndex: Int) {
         lineMatchesMiddleColon = true
-        if (middleColonCount == MIDDLE_COLON_LINES_COUNT) {
+        if (middleColonCount == MULTI_LINE_HEADER_LINES_COUNT) {
             firstMiddleColonLineIndex++
         } else  {
             if (middleColonCount == 0) {
@@ -127,7 +129,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
             toIndex = Math.max(toIndex, it.value)
         }
 
-        if (checkForRemainingFeature(fromIndex, toIndex)) {
+        while (checkForAllRemainingFeatures(fromIndex, toIndex)) {
             toIndex++
         }
 
@@ -148,35 +150,32 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
         )
     }
 
-    // TODO Check all of the remaining suggestions, not the first one.
-    // If sufficient count of suggestions had been found in one or two lines
-    // try to check first not found suggestion in the following line (-es??).
-    /**
-     * @return
-     * -1 if there is no remaining features left.
-     *
-     *  0 if feature doesn't match the following line.
-     *
-     *  1 if feature matches the following line.
-     */
-    private fun checkForRemainingFeature(fromIndex: Int, toIndex: Int): Boolean {
-        val feature = featureSet.firstOrNull { !foundFeatureMap.containsKey(it.name) }
-        if (feature != null && // One suggestion is not found.
+    // If sufficient count of features had been found in less then HEADER_LINES_COUNT
+    // lines try to check others not found features in the following line.
+    private fun checkForAllRemainingFeatures(fromIndex: Int, toIndex: Int): Boolean {
+        val remainingFeatures = featureSet.filter { !foundFeatureMap.containsKey(it.name) }
+        if (remainingFeatures.isNotEmpty() && // One suggestion is not found.
                 toIndex < lines.size - 1 && // There is the following line to check.
-                toIndex - fromIndex < 2) {  // Found suggestions are placed in less than 3 lines.
+                toIndex - fromIndex + 1 < HEADER_LINES_COUNT) {  // Found suggestions are placed in less than HEADER_LINES_COUNT lines.
 
             val lineIndex = toIndex + 1
 
-            if (feature.matches(lines[lineIndex])) {
+            var anyFeatureMatches = false
+            remainingFeatures.forEach { feature ->
+                if (feature.matches(lines[lineIndex])) {
+                    updateSingleLineFeature(lineIndex, feature)
+                    anyFeatureMatches = true
+                }
+            }
 
-                updateSingleLineFeature(lineIndex, feature)
+            if (anyFeatureMatches) {
 
                 if (middleColonFeature.matches(lines[lineIndex])) {
                     updateMultiLineFeature(lineIndex)
                 }
                 resetMultiLineFeatures()
 
-                return true
+                return@checkForAllRemainingFeatures true
             }
         }
         return false
@@ -185,7 +184,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2) {
     // Try to check if there is a multi line header or FWD
     private fun checkForMultiLineHeader(fromIndex: Int, toIndex: Int): Boolean {
         if (middleColonCount >= toIndex - fromIndex + 1) {
-            var cnt = MIDDLE_COLON_LINES_COUNT - middleColonCount
+            var cnt = MULTI_LINE_HEADER_LINES_COUNT - middleColonCount
             var lineIndex = toIndex + 1
             while (cnt > 0 && lineIndex < lines.size) {
 
