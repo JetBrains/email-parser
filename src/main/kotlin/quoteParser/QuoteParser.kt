@@ -49,7 +49,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         prepare()
 
         lines.forEachIndexed { lineIndex, line ->
-            // TODO should not replace suggestion lineIndex if it is repeats. Only if it is too old.
             var anyFeatureMatches = false
 
             featureSet.forEach { feature ->
@@ -81,8 +80,6 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         foundFeatureMap[feature.name] = lineIndex
     }
 
-    // TODO Sometimes last colon is special case of middle colon
-    // TODO sparse multi line headers
     private fun updateMultiLineFeature(lineIndex: Int) {
         lineMatchesMiddleColon = true
         if (middleColonCount == MULTI_LINE_HEADER_LINES_COUNT) {
