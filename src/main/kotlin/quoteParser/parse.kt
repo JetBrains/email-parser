@@ -27,6 +27,11 @@ fun parse(emlFile: File): Content {
     return QuoteParser(emailText.lines()).parse()
 }
 
+fun parseTrimmed(emlFile: File): Content {
+    val emailText: String = getEmailText(emlFile)
+    return QuoteParser(emailText.lines().map { it.trim() }).parse()
+}
+
 fun getEmailText(emlFile: File): String {
     val source: InputStream = FileInputStream(emlFile)
     val props: Properties = System.getProperties()

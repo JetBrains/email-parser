@@ -6,5 +6,5 @@ package quoteParser.features
 abstract class AbstractQuoteFeature() {
     abstract val name: String
     abstract protected fun getRegex(): Regex
-    fun matches(line: String): Boolean = getRegex().matches(line)
+    open fun matches(line: String): Boolean = getRegex().matches(line)
 }

@@ -21,6 +21,12 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
     private var firstMiddleColonLineIndex = -1
     // ------
 
+    // For phraseFeature
+    private var foundPhraseFeature = false
+    private var phraseFeatureLineIndex = -1
+    private val phraseFeature = PhraseFeature()
+    // ------
+
     init {
         this.featureSet = setOf(
                 DateFeature(),
@@ -43,6 +49,9 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         middleColonCount = 0
         lineMatchesMiddleColon = false
         firstMiddleColonLineIndex = -1
+
+        foundPhraseFeature = false
+        phraseFeatureLineIndex = -1
     }
 
     fun parse(): Content {
@@ -63,18 +72,30 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
                 anyFeatureMatches = true
             }
 
+            if (phraseFeature.matches(line)) {
+                updatePhraseFeature(lineIndex)
+            }
+            
             if (anyFeatureMatches) {
                 resetFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT)
             } else {
                 resetFeatures(all = true)
             }
 
-            if (foundFeatureMap.size >= sufficientFeatureCount) {
+            if (headerFound()) {
                 return@parse identifyHeader()
             }
         }
         return Content(lines, null, null)
     }
+
+    private fun updatePhraseFeature(lineIndex: Int) {
+        foundPhraseFeature = true
+        phraseFeatureLineIndex = lineIndex
+    }
+
+    private fun headerFound() = 
+            foundFeatureMap.size >= sufficientFeatureCount || foundPhraseFeature
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
         foundFeatureMap[feature.name] = lineIndex
@@ -121,20 +142,25 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE
 
-        foundFeatureMap.forEach {
-            fromIndex = Math.min(fromIndex, it.value)
-            toIndex = Math.max(toIndex, it.value)
-        }
+        if (foundPhraseFeature) {
+            fromIndex = phraseFeatureLineIndex
+            toIndex = phraseFeatureLineIndex
+        } else {
+            foundFeatureMap.forEach {
+                fromIndex = Math.min(fromIndex, it.value)
+                toIndex = Math.max(toIndex, it.value)
+            }
 
-        while (checkForAllRemainingFeatures(fromIndex, toIndex)) {
-            toIndex++
-        }
+            while (checkForAllRemainingFeatures(fromIndex, toIndex)) {
+                toIndex++
+            }
 
-        if (checkForMultiLineHeader(fromIndex, toIndex)) {
-            fromIndex = firstMiddleColonLineIndex
-            toIndex = firstMiddleColonLineIndex + middleColonCount - 1
+            if (checkForMultiLineHeader(fromIndex, toIndex)) {
+                fromIndex = firstMiddleColonLineIndex
+                toIndex = firstMiddleColonLineIndex + middleColonCount - 1
+            }
         }
-
+        
         // TODO add some tricky removal of angle brackets (not urgent)
         return Content(
                 lines.subList(0, fromIndex),

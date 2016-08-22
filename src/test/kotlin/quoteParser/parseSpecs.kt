@@ -14,7 +14,7 @@ class ParseSpecs : Spek() {
         given("eml file") {
             on("simple email with signature") {
                 val expectedContent = TestContent.simple_sig
-                val actualContent = parse(File("${path}simple_sig.eml"))
+                val actualContent = parseTrimmed(File("${path}simple_sig.eml"))
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -29,7 +29,7 @@ class ParseSpecs : Spek() {
 
             on("email with just quote") {
                 val expectedContent = TestContent.simple_quote_koi8
-                val actualContent = parse(File("${path}simple_quote_koi8.eml"))
+                val actualContent = parseTrimmed(File("${path}simple_quote_koi8.eml"))
 
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
@@ -44,7 +44,7 @@ class ParseSpecs : Spek() {
 
             on("email with inner signature") {
                 val expectedContent = TestContent.quote_plus_inner_sig
-                val actualContent = parse(
+                val actualContent = parseTrimmed(
                         File("${path}quote_plus_inner_sig.eml")
                 )
 
@@ -61,10 +61,9 @@ class ParseSpecs : Spek() {
 
             on("email with some nested quotes") {
                 val expectedContent = TestContent.only_nested_quotes
-                val actualContent = parse(
+                val actualContent = parseTrimmed(
                         File("${path}only_nested_quotes.eml")
                 )
-                println(actualContent)
                 it("should parse body correct") {
                     assertEquals(expectedContent.body, actualContent.body)
                 }
@@ -79,7 +78,7 @@ class ParseSpecs : Spek() {
 
             on("email with 5 nested quotes and signs") {
                 val expectedContent = TestContent.quotes_signs_5
-                val actualContent = parse(
+                val actualContent = parseTrimmed(
                         File("${path}5_quotes_plus_signs.eml")
                 )
 

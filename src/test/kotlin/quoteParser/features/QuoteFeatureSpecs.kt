@@ -11,6 +11,7 @@ class QuoteFeatureSpecs : Spek() {
         val dateFeature = DateFeature()
         val timeFeature = TimeFeature()
         val emailFeature = EmailFeature()
+        val phraseFeature = PhraseFeature()
         
         given("string of text") {
             val s = "@lorem  ipsum dolor sit amet, 04/04/05, consectetuer 01:01:33 adipiscing elit. Aenean : "
@@ -37,7 +38,7 @@ class QuoteFeatureSpecs : Spek() {
             }
         }
         given("string of text") {
-            val s = "Lorem:  ipsum dolor sit amet, 1.2.1999 consectetuer @ adipiscing elit. Aenean "
+            val s = "Lorem:  ipsum dolor sit amet, 1.2.2000 consectetuer @ adipiscing elit. Aenean "
             on("checking regexes") {
                 it("should not match COLON regex") {
                     assertFalse { colonFeature.matches(s) }
@@ -358,6 +359,47 @@ class QuoteFeatureSpecs : Spek() {
                 }
                 it("should match EMAIL regex") {
                     assertTrue { emailFeature.matches(s) }
+                }
+            }
+        }
+        given("header phrase") {
+            val s = """   In reply to:   """
+            on("checking regexes") {
+                it("should match COLON regex") {
+                    assertTrue { colonFeature.matches(s) }
+                }
+                it("should match PHRASE regex") {
+                    assertTrue { phraseFeature.matches(s) }
+                }
+            }
+        }
+        given("header phrase") {
+            val s = """>> In reply to:   """
+            on("checking regexes") {
+                it("should match COLON regex") {
+                    assertTrue { colonFeature.matches(s) }
+                }
+                it("should match PHRASE regex") {
+                    assertFalse { phraseFeature.matches(s) }
+                }
+            }
+        }
+        given("header phrase") {
+            val s = """   In    RePly To:   """
+            on("checking regexes") {
+                it("should match COLON regex") {
+                    assertTrue { colonFeature.matches(s) }
+                }
+                it("should match PHRASE regex") {
+                    assertTrue { phraseFeature.matches(s) }
+                }
+            }
+        }
+        given("header phrase") {
+            val s = """##- Bitte geben Sie Ihre Antwort oberhalb dieser Zeile ein. -##"""
+            on("checking regexes") {
+                it("should match PHRASE regex") {
+                    assertTrue { phraseFeature.matches(s) }
                 }
             }
         }
