@@ -7,6 +7,6 @@ class ColonFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "COLON"
     override fun getRegex(): Regex {
-        return Regex("(.*[\\s\\xA0])?.*:([\\s\\xA0]*)?")
+        return Regex("(.*[\\p{C}\\p{Z}\\s])?.*:([\\p{C}\\p{Z}\\s]*)?")
     }
 }

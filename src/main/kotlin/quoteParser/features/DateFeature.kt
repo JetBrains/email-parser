@@ -10,28 +10,23 @@ class DateFeature() : AbstractQuoteFeature() {
         get() = "DATE"
     override fun getRegex(): Regex{
         @Language("RegExp")
-        val shordDateForward = "[0-3]?[0-9][/.-][0-3]?[0-9][/.-](20)?[0-9]{2}"
+        val shordDateForward = "[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*(20)?[0-9]{2}"
         @Language("RegExp")
-        val shortDateReversed = "(20)?[0-9]{2}[/.-][0-3]?[0-9][/.-][0-3]?[0-9]"
-        val shortDate = listOf<String>(
-                shordDateForward,
-                shortDateReversed
-        ).joinToString(prefix = "((", separator = ")|(", postfix = "))[,\\.]{0,2}:?")
-
+        val shortDateReversed = "(20)?[0-9]{2}\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]"
+        val shortDate = "(($shordDateForward)|($shortDateReversed))\\p{C}*[,\\.]{0,2}:?" 
+  
         @Language("RegExp")
-        val fullDateForward = "([0-3]?[0-9][\\.,]{0,2}[\\s\\xA0]+)(\\S+[\\s\\xA0]+){0,2}(20\\d\\d[\\.,]{0,2})"
+        val fullDateForward = "([0-3]?[0-9]\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,2}(20\\d\\d\\p{C}*[\\.,]{0,2})"
         @Language("RegExp")
-        val fullDateReversed = "(20\\d\\d[\\.,]{0,2}[\\s\\xA0]+)(\\S+[\\s\\xA0]+){0,2}([0-3]?[0-9][\\.,]{0,2})"
-        val fullDate = listOf<String>(
-                fullDateForward,
-                fullDateReversed
-        ).joinToString(prefix = "(", separator = ")|(", postfix = ")")
+        val fullDateReversed = "(20\\d\\d\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,2}([0-3]?[0-9]\\p{C}*[\\.,]{0,2})"
+        val fullDate = "($fullDateForward)|($fullDateReversed)" 
         
-        val date = listOf<String>(
-                shortDate,
-                fullDate
-        ).joinToString(prefix = "(.*[\\s\\xA0:])?((", separator = ")|(", postfix = "))([\\s\\xA0].*)?")
+        val date = "(.*[\\p{C}\\p{Z}\\s:])?(($shortDate)|($fullDate))([\\p{C}\\p{Z}\\s].*)?"
 
+//      Full date regexp for testing needs.
+//        @Language("RegExp")
+//        val regex = "(.*[\\p{C}\\p{Z}\\s:])?(((([0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*(20)?[0-9]{2})|((20)?[0-9]{2}\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]))\\p{C}*[,\\.]{0,2}:?)|((([0-3]?[0-9]\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,2}(20\\d\\d\\p{C}*[\\.,]{0,2}))|((20\\d\\d\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,2}([0-3]?[0-9]\\p{C}*[\\.,]{0,2}))))([\\p{C}\\p{Z}\\s].*)?"
+        
         return Regex(date)
     }
             

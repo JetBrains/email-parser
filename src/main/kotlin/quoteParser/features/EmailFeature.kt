@@ -7,7 +7,7 @@ class EmailFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "EMAIL"
     override fun getRegex(): Regex {
-        return Regex("(.*[\\s\\xA0])?\\S+@\\S+([\\s\\xA0].*)?")
+        return Regex("(.*[\\p{C}\\p{Z}\\s])?\\S+@\\S+([\\s\\p{C}\\p{Z}].*)?")
     }
 
 }
