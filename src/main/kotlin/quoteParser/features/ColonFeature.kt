@@ -7,6 +7,7 @@ class ColonFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "COLON"
     override fun getRegex(): Regex {
-        return Regex("${startSpaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
+        // Regex for matching colon(:) in the end of the line.
+        return Regex("${startWhitespaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
     }
 }

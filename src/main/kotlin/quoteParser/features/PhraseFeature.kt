@@ -14,11 +14,6 @@ class PhraseFeature() : AbstractQuoteFeature() {
         @Language("RegExp")
         val replyAboveRegex = "[\\s\\p{C}\\p{Z}]*##-.+-##[\\s\\p{C}\\p{Z}]*"
         
-        val wholeRegex = listOf<String>(
-                inReplyToRegex, 
-                replyAboveRegex
-        ).joinToString(prefix = "(", separator = ")|(", postfix = ")") 
-        
-        return Regex(wholeRegex, RegexOption.IGNORE_CASE)
+        return Regex("($inReplyToRegex)|($replyAboveRegex)", RegexOption.IGNORE_CASE)
     }
 }

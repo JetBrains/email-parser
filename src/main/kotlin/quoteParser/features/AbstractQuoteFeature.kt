@@ -7,9 +7,9 @@ import org.intellij.lang.annotations.Language
  */
 abstract class AbstractQuoteFeature() {
     @Language("Regexp")
-    protected val startSpaceOptional = "(.*[\\s\\p{C}\\p{Z}])?"
+    protected val startWhitespaceOptional = "(.*[\\s\\p{C}\\p{Z}])?"
     @Language("Regexp")
-    protected val endSpaceOptional = "([\\p{C}\\p{Z}\\s].*)?"
+    protected val endWhitespaceOptional = "([\\p{C}\\p{Z}\\s].*)?"
     @Language("Regexp")
     protected val startBracketsOptional = "\\p{C}*[\\.,\\{\\[<\\*\\(:\"'`\\|\\\\/~]?\\p{C}*"
     @Language("Regexp")

@@ -10,11 +10,12 @@ class EmailFeature() : AbstractQuoteFeature() {
         get() = "EMAIL"
     override fun getRegex(): Regex {
         
-        // full regex fo testing needs
+        // Full regex for testing needs
 //        @Language("RegExp")
 //        val regex = "(.*[\\s\\p{C}\\p{Z}])?\\S+@\\S+([\\p{C}\\p{Z}\\s].*)?"
         
-        return Regex("${startSpaceOptional}\\S+@\\S+${endSpaceOptional}")
+        // @ symbol surrounded with at least one non-whitespace symbol.
+        return Regex("${startWhitespaceOptional}\\S+@\\S+${endWhitespaceOptional}")
     }
 
 }

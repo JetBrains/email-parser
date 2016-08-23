@@ -18,11 +18,12 @@ class TimeFeature() : AbstractQuoteFeature() {
         @Language("RegExp")
         val ampm = "\\p{C}*[aApP]\\p{C}*[,\\.]?\\p{C}*[mM]\\p{C}*[,\\.]?"
 
-        val time = "${startSpaceOptional}($startBracketsOptional($hhmm)($sec)?($ampm)?$endBracketsOptional)${endSpaceOptional}"
+        // Time regex with optional seconds and meridian. Could be surrounded with brackets. 
+        val time = "${startWhitespaceOptional}($startBracketsOptional($hhmm)($sec)?($ampm)?$endBracketsOptional)${endWhitespaceOptional}"
 
-//      Full date regexp for testing needs.
-//        @Language("RegExp")
-//        val regex = "(.*[\\s\\p{C}\\p{Z}])?(\\p{C}*[\\.,\\{\\[<\\*\\(:\"'`\\|\\\\/~]?\\p{C}*(([01]?[0-9]|2[0-3])\\p{C}*:\\p{C}*([0-5][0-9]))(\\p{C}*:\\p{C}*[0-5][0-9])?(\\p{C}*[aApP]\\p{C}*[,\\.]?\\p{C}*[mM]\\p{C}*[,\\.]?)?\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*)([\\s\\p{C}\\p{Z}].*)?"
+//      Full time regex for testing needs.
+        @Language("RegExp")
+        val regex = "(.*[\\s\\p{C}\\p{Z}])?(\\p{C}*[\\.,\\{\\[<\\*\\(:\"'`\\|\\\\/~]?\\p{C}*(([01]?[0-9]|2[0-3])\\p{C}*:\\p{C}*([0-5][0-9]))(\\p{C}*:\\p{C}*[0-5][0-9])?(\\p{C}*[aApP]\\p{C}*[,\\.]?\\p{C}*[mM]\\p{C}*[,\\.]?)?\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*)([\\s\\p{C}\\p{Z}].*)?"
 
 
         return Regex(time)
