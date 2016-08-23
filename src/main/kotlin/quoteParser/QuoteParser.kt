@@ -1,6 +1,12 @@
 package quoteParser
 
-import quoteParser.features.*
+import quoteParser.features.AbstractQuoteFeature
+import quoteParser.features.ColonFeature
+import quoteParser.features.DateFeature
+import quoteParser.features.EmailFeature
+import quoteParser.features.MiddleColonFeature
+import quoteParser.features.PhraseFeature
+import quoteParser.features.TimeFeature
 
 // TODO Do smth with false-positive logs and stack traces (not urgent)
 class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
@@ -75,7 +81,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
             if (phraseFeature.matches(line)) {
                 updatePhraseFeature(lineIndex)
             }
-            
+
             if (anyFeatureMatches) {
                 resetFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT)
             } else {
@@ -94,7 +100,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         phraseFeatureLineIndex = lineIndex
     }
 
-    private fun headerFound() = 
+    private fun headerFound() =
             foundFeatureMap.size >= sufficientFeatureCount || foundPhraseFeature
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
@@ -105,7 +111,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         lineMatchesMiddleColon = true
         if (middleColonCount == MULTI_LINE_HEADER_LINES_COUNT) {
             firstMiddleColonLineIndex++
-        } else  {
+        } else {
             if (middleColonCount == 0) {
                 firstMiddleColonLineIndex = lineIndex
             }
@@ -160,11 +166,11 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
                 toIndex = firstMiddleColonLineIndex + middleColonCount - 1
             }
         }
-        
+
         // TODO add some tricky removal of angle brackets (not urgent)
         return Content(
                 lines.subList(0, fromIndex),
-                QuoteHeader(fromIndex, toIndex+1, lines.subList(fromIndex, toIndex + 1)),
+                QuoteHeader(fromIndex, toIndex + 1, lines.subList(fromIndex, toIndex + 1)),
                 Content(
                         lines.subList(toIndex + 1, lines.lastIndex + 1),
                         null,
@@ -204,7 +210,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         return false
     }
 
-    // Try to check if there is a multi line header or FWD
+    // Check if there is a multi line header or FWD
     private fun checkForMultiLineHeader(fromIndex: Int, toIndex: Int): Boolean {
         if (middleColonCount >= toIndex - fromIndex + 1) {
             var cnt = MULTI_LINE_HEADER_LINES_COUNT - middleColonCount
