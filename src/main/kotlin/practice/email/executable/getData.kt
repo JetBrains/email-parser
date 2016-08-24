@@ -34,9 +34,12 @@ fun main(args: Array<String>) {
             ).parse()
 
             if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
-                header = QuoteParser(
-                        email.content.body.lines()
-                ).parse().header?.text
+                val H = QuoteParser(email.content.body.lines()).parse().header
+                if (H != null && H.text.isEmpty()) {
+                    header = listOf(email.content.body.lines()[H.startIndex])
+                } else {
+                    header = H?.text
+                }
             } else {
                 header = null
             }

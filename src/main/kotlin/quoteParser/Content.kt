@@ -23,4 +23,20 @@ data class Content(val body: List<String>,
                 .append(quote?.body?.joinToString(prefix = "", separator = "\n", postfix = "\n") ?: "")
                 .toString()
     }
+
+    companion object {
+        fun create(lines: List<String>) = Content(lines, null, null)
+
+        fun create(lines: List<String>, fromIndex: Int, toIndex: Int = fromIndex): Content {
+            return Content(
+                    lines.subList(0, fromIndex),
+                    QuoteHeader(fromIndex, toIndex, lines.subList(fromIndex, toIndex)),
+                    Content(
+                            lines.subList(toIndex, lines.lastIndex + 1),
+                            null,
+                            null
+                    )
+            )
+        }
+    }
 }

@@ -5,9 +5,9 @@ package quoteParser
  */
 data class QuoteHeader(val startIndex: Int,
                        val endIndex: Int = startIndex,
-                       val text: List<String>?) {
+                       val text: List<String>) {
 
     override fun toString(): String {
-        return text?.joinToString(separator = "\n") ?: ""
+        return text.joinToString(separator = "\n") ?: ""
     }
 }

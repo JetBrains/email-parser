@@ -1,12 +1,6 @@
 package quoteParser
 
-import quoteParser.features.AbstractQuoteFeature
-import quoteParser.features.ColonFeature
-import quoteParser.features.DateFeature
-import quoteParser.features.EmailFeature
-import quoteParser.features.MiddleColonFeature
-import quoteParser.features.PhraseFeature
-import quoteParser.features.TimeFeature
+import quoteParser.features.*
 
 // TODO Do smth with false-positive logs and stack traces (not urgent)
 class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
@@ -31,6 +25,11 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
     private var foundPhraseFeature = false
     private var phraseFeatureLineIndex = -1
     private val phraseFeature = PhraseFeature()
+    // ------
+
+    // For gtFeature
+    private val gtFeature = GreaterThanFeature()
+    private val matchedLines: List<Boolean> = gtFeature.matchLines(lines)
     // ------
 
     init {
@@ -92,7 +91,13 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
                 return@parse identifyHeader()
             }
         }
-        return Content(lines, null, null)
+
+        // TODO skip this if IN-REPLY-TO header exists
+        val quoteIndex = GreaterThanFeature.getQuoteIndex(matchedLines, lines)
+        if (quoteIndex != null) {
+            return Content.create(lines, quoteIndex)
+        }
+        return Content.create(lines)
     }
 
     private fun updatePhraseFeature(lineIndex: Int) {
@@ -168,15 +173,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         }
 
         // TODO add some tricky removal of angle brackets (not urgent)
-        return Content(
-                lines.subList(0, fromIndex),
-                QuoteHeader(fromIndex, toIndex + 1, lines.subList(fromIndex, toIndex + 1)),
-                Content(
-                        lines.subList(toIndex + 1, lines.lastIndex + 1),
-                        null,
-                        null
-                )
-        )
+        return Content.create(lines, fromIndex, toIndex + 1)
     }
 
     // If sufficient count of features had been found in less then HEADER_LINES_COUNT

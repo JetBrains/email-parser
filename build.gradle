@@ -23,6 +23,9 @@ dependencies {
     compile 'nz.ac.waikato.cms.weka:XMeans:1.0.4'
     compile 'nz.ac.waikato.cms.weka:levenshteinEditDistance:1.0.2'
 
+// https://mvnrepository.com/artifact/com.intellij/annotations
+    compile group: 'com.intellij', name: 'annotations', version: '12.0'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.jetbrains.spek:spek:0.1.195'
 }
