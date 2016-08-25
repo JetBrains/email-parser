@@ -92,5 +92,57 @@ class QuoteMarkFeatureSpecs : Spek() {
                 }
             }
         }
+
+        given("several text lines") {
+            val lines = listOf<String>(
+                    "text > text",
+                    ">   ",
+                    ">text",
+                    "\t> TEXT"
+            )
+            on("calling matchLines function") {
+                val matching = quoteMarkFeature.matchLines(lines)
+                it("must get appropriate value") {
+                    assertTrue { matching[0] == QuoteMarkMatchingResult.NON_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[1] == QuoteMarkMatchingResult.V_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[3] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                }
+            }
+        }
+
+        given("several text lines") {
+            val lines = listOf<String>(
+                    ">text > text",
+                    " \t  ",
+                    "\t>  > TEXT",
+                    "\t>  ",
+                    "\t TEXT"
+            )
+            on("calling matchLines function") {
+                val matching = quoteMarkFeature.matchLines(lines)
+                it("must get appropriate value") {
+                    assertTrue { matching[0] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[1] == QuoteMarkMatchingResult.EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[3] == QuoteMarkMatchingResult.V_EMPTY }
+                }
+                it("must get appropriate value") {
+                    assertTrue { matching[4] == QuoteMarkMatchingResult.NON_EMPTY }
+                }
+            }
+        }
     }
 }

@@ -1,10 +1,22 @@
 package quoteParser.features
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import org.intellij.lang.annotations.Language
 
 /**
  * Created by Pavel.Zhuk on 24.08.2016.
  */
+enum class QuoteMarkMatchingResult() {
+    V_EMPTY,
+    V_NON_EMPTY,
+    EMPTY,
+    NON_EMPTY;
+
+    fun hasQuoteMark() =
+            this == QuoteMarkMatchingResult.V_EMPTY || this == QuoteMarkMatchingResult.V_NON_EMPTY
+    fun isEmpty() = this == QuoteMarkMatchingResult.EMPTY
+}
+
 class QuoteMarkFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "QUOTE_MARK"
@@ -14,42 +26,30 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
         return Regex("[\\s\\p{C}\\p{Z}]*>.*")
     }
 
-    fun matchLines(lines: List<String>): List<Boolean> {
-        return lines.map { this.matches(it) }
-    }
-
-    companion object {
-        fun getQuoteIndex(matchesLines: List<Boolean>, lines: List<String>): Int? {
-            val startQuoteBlockIndex: Int
-            var endQuoteBlockIndex: Int = matchesLines.size - 1
-            while (endQuoteBlockIndex > -1 &&
-                    !matchesLines[endQuoteBlockIndex]) {
-                endQuoteBlockIndex--
-            }
-
-            if (endQuoteBlockIndex == -1) {
-                return null
-            } else {
-                var matchesGTIndex = endQuoteBlockIndex
-                var lineIndex = endQuoteBlockIndex
-                while (lineIndex > -1) {
-                    val isEmpty = lines[lineIndex].trim().isEmpty()
-                    val matchesGT = matchesLines[lineIndex]
-                    if (matchesGT) {
-                        matchesGTIndex = lineIndex
-                    }
-                    if (!isEmpty && !matchesGT) {
-                        break
-                    }
-                    lineIndex--
+    fun matchLines(lines: List<String>): List<QuoteMarkMatchingResult> {
+        return lines.map {
+            val matchesQuoteMark = this.matches(it)
+            val containText: Boolean
+            if (matchesQuoteMark) {
+                val quoteMarkIndex = it.indexOfFirst { it == '>' }
+                if (quoteMarkIndex == -1) {
+                    throw IllegalStateException("Line \"$it\" must contain '>' symbol, but it is not.")
                 }
-                startQuoteBlockIndex = matchesGTIndex
+                containText = !it.substring(quoteMarkIndex + 1).trim().isEmpty()
+            } else {
+                containText = !it.trim().isEmpty()
             }
-            // TODO delete that after adding IN-REPLY-TO header processing. One-line quotes are exists.
-            return if (endQuoteBlockIndex - startQuoteBlockIndex == 0)
-                null
-            else
-                startQuoteBlockIndex
+            return@map if (matchesQuoteMark) {
+                if (containText) {
+                    QuoteMarkMatchingResult.V_NON_EMPTY
+                } else {
+                    QuoteMarkMatchingResult.V_EMPTY
+                }
+            } else if (containText) {
+                QuoteMarkMatchingResult.NON_EMPTY
+            } else {
+                QuoteMarkMatchingResult.EMPTY
+            }
         }
     }
 }
