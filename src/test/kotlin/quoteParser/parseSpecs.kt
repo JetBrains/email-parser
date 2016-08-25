@@ -24,7 +24,7 @@ class ParseSpecs : Spek() {
     private val FILTER_STRING = "##- Please type your reply above this line -##"
 
     private val EMAILS_COUNT = 23055
-    
+
     init {
 
 
@@ -39,17 +39,17 @@ class ParseSpecs : Spek() {
                     val result = compareHeaders(expected_headers, actual_headers)
                     val end = System.currentTimeMillis()
                     println("Working time: ${(end - start) / 1000.0} sec.")
-                    
-                    assertEquals(expected_headers.size, actual_headers.size, 
+
+                    assertEquals(expected_headers.size, actual_headers.size,
                             "Actual headers amount doesn't meet to the expected headers amount.")
-                    
-                    result.forEach { 
-                        assertTrue("One or more headers are not equals.") { it } 
+
+                    result.forEach {
+                        assertTrue("One or more headers are not equals.") { it }
                     }
                 }
             }
         }
-        
+
     }
 
     private fun readHeaders(file: File, verbose: Boolean = false): List<Pair<Int, List<String>>> {

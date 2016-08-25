@@ -9,37 +9,37 @@ import quoteParser.features.QuoteMarkFeature
 class QuoteMarkParser() {
 
     fun parse(lines: List<String>,
-              matchesLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature()
+              matchingLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature()
                       .matchLines(lines)): Int? {
 
-        val startQuoteBlockIndex: Int
-        var endQuoteBlockIndex: Int = matchesLines.size - 1
+        val startQuotedBlockIndex: Int
+        var endQuotedBlockIndex: Int = matchingLines.size - 1
 
-        while (endQuoteBlockIndex > -1 &&
-                !matchesLines[endQuoteBlockIndex].hasQuoteMark()) {
-            endQuoteBlockIndex--
+        while (endQuotedBlockIndex > -1 &&
+                !matchingLines[endQuotedBlockIndex].hasQuoteMark()) {
+            endQuotedBlockIndex--
         }
 
-        if (endQuoteBlockIndex == -1) {
+        if (endQuotedBlockIndex == -1) {
             return null
         } else {
-            var matchesQuoteMarkIndex = endQuoteBlockIndex
-            var lineIndex = endQuoteBlockIndex
+            var matchingQuoteMarkIndex = endQuotedBlockIndex
+            var lineIndex = endQuotedBlockIndex
             while (lineIndex > -1) {
-                if (matchesLines[lineIndex].hasQuoteMark()) {
-                    matchesQuoteMarkIndex = lineIndex
+                if (matchingLines[lineIndex].hasQuoteMark()) {
+                    matchingQuoteMarkIndex = lineIndex
                 }
-                if (matchesLines[lineIndex] == QuoteMarkMatchingResult.NON_EMPTY) {
+                if (matchingLines[lineIndex] == QuoteMarkMatchingResult.NON_EMPTY) {
                     break
                 }
                 lineIndex--
             }
-            startQuoteBlockIndex = matchesQuoteMarkIndex
+            startQuotedBlockIndex = matchingQuoteMarkIndex
         }
         // TODO delete that after adding IN-REPLY-TO header processing. One-line quotes are exists.
-        return if (endQuoteBlockIndex - startQuoteBlockIndex == 0)
+        return if (endQuotedBlockIndex - startQuotedBlockIndex == 0)
             null
         else
-            startQuoteBlockIndex
+            startQuotedBlockIndex
     }
 }

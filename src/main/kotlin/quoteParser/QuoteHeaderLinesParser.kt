@@ -163,16 +163,10 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
                 fromIndex = firstMiddleColonLineIndex
                 toIndex = firstMiddleColonLineIndex + middleColonCount - 1
             }
-
-//            if (matchedLines.subList(fromIndex, toIndex + 1).all { it }) {
-//                while (fromIndex > 0 && matchedLines[fromIndex - 1]) {
-//                    --fromIndex
-//                }
-//            }
         }
 
         // TODO add some tricky removal of angle brackets (not urgent)
-        return Pair(fromIndex, toIndex + 1)
+        return Pair(fromIndex, toIndex)
     }
 
     // If sufficient count of features had been found in less then HEADER_LINES_COUNT

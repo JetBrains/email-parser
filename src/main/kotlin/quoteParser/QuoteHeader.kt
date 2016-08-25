@@ -8,6 +8,6 @@ data class QuoteHeader(val startIndex: Int,
                        val text: List<String>) {
 
     override fun toString(): String {
-        return text.joinToString(separator = "\n") ?: ""
+        return text.joinToString(separator = "\n")
     }
 }
