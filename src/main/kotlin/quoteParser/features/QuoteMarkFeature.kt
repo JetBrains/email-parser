@@ -5,9 +5,9 @@ import org.intellij.lang.annotations.Language
 /**
  * Created by Pavel.Zhuk on 24.08.2016.
  */
-class GreaterThanFeature() : AbstractQuoteFeature() {
+class QuoteMarkFeature() : AbstractQuoteFeature() {
     override val name: String
-        get() = "GREATER_THAN"
+        get() = "QUOTE_MARK"
 
     override fun getRegex(): Regex {
         // Regex for matching greater-than(>) symbol in the start of the line.

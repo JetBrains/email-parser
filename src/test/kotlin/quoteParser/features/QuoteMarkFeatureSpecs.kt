@@ -7,16 +7,16 @@ import kotlin.test.assertTrue
 /**
  * Created by Pavel.Zhuk on 24.08.2016.
  */
-class GreaterThanFeatureSpecs: Spek() {
+class QuoteMarkFeatureSpecs : Spek() {
     init {
-        val gtFeature = GreaterThanFeature()
+        val quoteMarkFeature = QuoteMarkFeature()
 
         given("standalone gt symbol") {
             val s = ">"
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -25,7 +25,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -34,7 +34,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -43,7 +43,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -52,7 +52,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -61,7 +61,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -70,7 +70,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -79,7 +79,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should match GREATER_THAN regex") {
-                    assertTrue { gtFeature.matches(s) }
+                    assertTrue { quoteMarkFeature.matches(s) }
                 }
             }
         }
@@ -88,7 +88,7 @@ class GreaterThanFeatureSpecs: Spek() {
 
             on("checking regexes") {
                 it("should not match GREATER_THAN regex") {
-                    assertFalse { gtFeature.matches(s) }
+                    assertFalse { quoteMarkFeature.matches(s) }
                 }
             }
         }

@@ -28,8 +28,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
     // ------
 
     // For gtFeature
-    private val gtFeature = GreaterThanFeature()
-    private val matchedLines: List<Boolean> = gtFeature.matchLines(lines)
+    private val matchedLines: List<Boolean> = QuoteMarkFeature().matchLines(lines)
     // ------
 
     init {
@@ -93,7 +92,7 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
         }
 
         // TODO skip this if IN-REPLY-TO header exists
-        val quoteIndex = GreaterThanFeature.getQuoteIndex(matchedLines, lines)
+        val quoteIndex = QuoteMarkFeature.getQuoteIndex(matchedLines, lines)
         if (quoteIndex != null) {
             return Content.create(lines, quoteIndex)
         }
@@ -170,6 +169,12 @@ class QuoteParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
                 fromIndex = firstMiddleColonLineIndex
                 toIndex = firstMiddleColonLineIndex + middleColonCount - 1
             }
+
+//            if (matchedLines.subList(fromIndex, toIndex + 1).all { it }) {
+//                while (fromIndex > 0 && matchedLines[fromIndex - 1]) {
+//                    --fromIndex
+//                }
+//            }
         }
 
         // TODO add some tricky removal of angle brackets (not urgent)
