@@ -11,17 +11,21 @@ data class Content(val body: List<String>,
         val prefix = if (addMarks) "> " else ""
         val separator = if (addMarks) "\n> " else "\n"
 
-        return StringBuilder(body.joinToString(separator = "\n", postfix = "\n"))
-                .append(header?.text?.joinToString(prefix = prefix, separator = separator, postfix = "\n") ?: "")
-                .append(quote?.body?.joinToString(prefix = prefix, separator = separator, postfix = "\n") ?: "")
+        val bodyText = body.joinToString(separator = "\n", postfix = "\n")
+        val headerText = if (header != null && !header.text.isEmpty())
+            header.text.joinToString(prefix = prefix, separator = separator, postfix = "\n")
+        else
+            ""
+        val quoteText = quote?.body?.joinToString(prefix = prefix, separator = separator, postfix = "\n") ?: ""
+
+        return StringBuilder(bodyText)
+                .append(headerText)
+                .append(quoteText)
                 .toString()
     }
 
     override fun toString(): String {
-        return StringBuilder(body.joinToString(separator = "\n", postfix = "\n"))
-                .append(header?.text?.joinToString(prefix = "", separator = "\n", postfix = "\n") ?: "")
-                .append(quote?.body?.joinToString(prefix = "", separator = "\n", postfix = "\n") ?: "")
-                .toString()
+        return toString(addMarks = false)
     }
 
     companion object {

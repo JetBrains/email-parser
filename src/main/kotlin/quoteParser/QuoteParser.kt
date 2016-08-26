@@ -45,8 +45,7 @@ class QuoteParser(val lines: List<String>) {
             Relation.QUOTE_MARK_IN_HEADER_LINES -> {
                 return getContentSameLinesCase(
                         startHeaderLinesIndex,
-                        endHeaderLineIndex,
-                        quoteMarkIndex
+                        endHeaderLineIndex
                 )
             }
             Relation.QUOTE_MARK_FIRST -> {
@@ -71,25 +70,23 @@ class QuoteParser(val lines: List<String>) {
     private fun getContentHeaderLinesFirstCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int, quoteMarkIndex: Int,
                                                matchingLines: List<QuoteMarkMatchingResult>): Content {
 
-        val isTextBetween = isTextBetween(quoteMarkIndex, startHeaderLinesIndex, matchingLines)
-        val isHeaderLinesHasQuoteMark = isQuoteMarksAroundHeaderLines(
+        val isTextBetween = isTextBetween(endHeaderLineIndex, quoteMarkIndex, matchingLines)
+        val isQuoteMarksAroundHeaderLines = isQuoteMarksAroundHeaderLines(
                 startHeaderLinesIndex,
                 endHeaderLineIndex,
                 quoteMarkIndex,
                 matchingLines
         )
 
-        if (!isTextBetween && !isHeaderLinesHasQuoteMark) {
+        if (!isTextBetween && !isQuoteMarksAroundHeaderLines) {
             val msg = "Relation = ${Relation.HEADER_LINES_FIRST}. Both isTextBetween and isHeaderLinesHasQuoteMark " +
-                "are false, but it can't be!"
+                    "are false, but it can't be!"
             throw IllegalStateException(msg)
         }
-        if (isTextBetween && isHeaderLinesHasQuoteMark) {
+
+        if (isTextBetween && isQuoteMarksAroundHeaderLines) {
             return Content.create(lines, quoteMarkIndex)
         } else {
-
-            // TODO assert ??
-
             return Content.create(lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
         }
     }
@@ -126,17 +123,9 @@ class QuoteParser(val lines: List<String>) {
         return Content.create(lines, startIndex, endHeaderLineIndex + 1)
     }
 
-    private fun getContentSameLinesCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int,
-                                        quoteMarkIndex: Int): Content {
+    private fun getContentSameLinesCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int) =
+            Content.create(lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
 
-        if (quoteMarkIndex != startHeaderLinesIndex) {
-            val msg = "Relation = ${Relation.QUOTE_MARK_IN_HEADER_LINES}, but quoteMarkIndex != " +
-                    "startHeaderLinesIndex. quoteMarkIndex = $quoteMarkIndex"
-            throw IllegalStateException(msg)
-        }
-
-        return Content.create(lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
-    }
 
     private fun getRelation(startHeaderLinesIndex: Int, endHeaderLinesIndex: Int,
                             quoteMarkIndex: Int) =
