@@ -47,7 +47,7 @@ private fun getActualContents(verbose: Boolean = false){
             emailText = getEmailText(File("${pathEmails}${i}.eml")).lines()
 
             if (!emailText[0].trim().equals(FILTER_STRING)) {
-                content = QuoteParser(emailText.map { it.trim() }).parse()
+                content = QuoteParser().parse(emailText.map { it.trim() })
             } else {
                 content = null
             }

@@ -8,6 +8,6 @@ class ColonFeature() : AbstractQuoteFeature() {
         get() = "COLON"
     override fun getRegex(): Regex {
         // Regex for matching colon(:) in the end of the line.
-        return Regex("${startWhitespaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
+        return Regex("${this.startWhitespaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
     }
 }

@@ -24,12 +24,12 @@ fun parse(emlFile: File): Content {
 
     // TODO check for special email headers
 
-    return QuoteParser(emailText.lines()).parse()
+    return QuoteParser().parse(emailText.lines())
 }
 
 fun parseTrimmed(emlFile: File): Content {
     val emailText: String = getEmailText(emlFile)
-    return QuoteParser(emailText.lines().map { it.trim() }).parse()
+    return QuoteParser().parse(emailText.lines().map { it.trim() })
 }
 
 fun getEmailText(emlFile: File): String {

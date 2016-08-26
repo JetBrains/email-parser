@@ -96,7 +96,7 @@ class ParseSpecs : Spek() {
                 emailText = getEmailText(File("${pathEmails}${i}.eml")).lines()
 
                 if (!emailText[0].trim().equals(FILTER_STRING)) {
-                    val H = QuoteParser(emailText).parse().header
+                    val H = QuoteParser().parse(emailText).header
                     if (H != null && H.text.isEmpty()) {
                         header = listOf(emailText[H.startIndex])
                     } else {

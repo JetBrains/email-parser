@@ -5,6 +5,7 @@ import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
 import practice.email.parser.preprocess
 import quoteParser.QuoteParser
+import quoteParser.getEmailText
 import java.io.*
 import java.util.*
 import java.util.regex.Pattern
@@ -27,16 +28,14 @@ fun main(args: Array<String>) {
     for (i in 0.. EMAILS_COUNT - 1) {
 
         val header: List<String>?
-        val email: Email
+        val email: List<String>
         try {
-            email = EmailParser(
-                    File("${pathEmails}${i}.eml")
-            ).parse()
+            email = getEmailText(File("${pathEmails}${i}.eml")).lines()
 
-            if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
-                val H = QuoteParser(email.content.body.lines()).parse().header
+            if (!email[0].trim().equals(FILTER_STRING)) {
+                val H = QuoteParser().parse(email).header
                 if (H != null && H.text.isEmpty()) {
-                    header = listOf(email.content.body.lines()[H.startIndex])
+                    header = listOf(email[H.startIndex])
                 } else {
                     header = H?.text
                 }

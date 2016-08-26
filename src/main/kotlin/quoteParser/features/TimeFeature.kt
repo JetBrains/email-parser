@@ -8,7 +8,8 @@ import org.intellij.lang.annotations.Language
 class TimeFeature() : AbstractQuoteFeature() {
     override val name: String
         get() = "TIME"
-    override fun getRegex(): Regex  {
+
+    override fun getRegex(): Regex {
         @Language("RegExp")
         val hhmm = "([01]?[0-9]|2[0-3])\\p{C}*:\\p{C}*([0-5][0-9])"
 
@@ -19,9 +20,11 @@ class TimeFeature() : AbstractQuoteFeature() {
         val ampm = "\\p{C}*[aApP]\\p{C}*[,\\.]?\\p{C}*[mM]\\p{C}*[,\\.]?"
 
         // Time regex with optional seconds and meridian. Could be surrounded with brackets. 
-        val time = "${startWhitespaceOptional}($startBracketsOptional($hhmm)($sec)?($ampm)?$endBracketsOptional)${endWhitespaceOptional}"
+        val time = "${this.startWhitespaceOptional}(${this.startBracketsOptional}" +
+                "($hhmm)($sec)?($ampm)?" +
+                "${this.endBracketsOptional})${this.endWhitespaceOptional}"
 
-//      Full time regex for testing needs.
+        // Full time regex for testing needs.
         @Language("RegExp")
         val regex = "(.*[\\s\\p{C}\\p{Z}])?(\\p{C}*[\\.,\\{\\[<\\*\\(:\"'`\\|\\\\/~]?\\p{C}*(([01]?[0-9]|2[0-3])\\p{C}*:\\p{C}*([0-5][0-9]))(\\p{C}*:\\p{C}*[0-5][0-9])?(\\p{C}*[aApP]\\p{C}*[,\\.]?\\p{C}*[mM]\\p{C}*[,\\.]?)?\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*)([\\s\\p{C}\\p{Z}].*)?"
 

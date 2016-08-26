@@ -1,8 +1,5 @@
 package quoteParser.features
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import org.intellij.lang.annotations.Language
-
 /**
  * Created by Pavel.Zhuk on 24.08.2016.
  */
@@ -12,9 +9,9 @@ enum class QuoteMarkMatchingResult() {
     EMPTY,
     NON_EMPTY;
 
-    fun hasQuoteMark() =
-            this == QuoteMarkMatchingResult.V_EMPTY || this == QuoteMarkMatchingResult.V_NON_EMPTY
-    fun isEmpty() = this == QuoteMarkMatchingResult.EMPTY
+    fun hasQuoteMark() = this == V_EMPTY || this == V_NON_EMPTY
+    fun isEmpty() = this == EMPTY
+    fun isTextWithoutQuoteMark() = this == NON_EMPTY
 }
 
 class QuoteMarkFeature() : AbstractQuoteFeature() {
@@ -39,16 +36,11 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
             } else {
                 containText = !it.trim().isEmpty()
             }
-            return@map if (matchesQuoteMark) {
-                if (containText) {
-                    QuoteMarkMatchingResult.V_NON_EMPTY
-                } else {
-                    QuoteMarkMatchingResult.V_EMPTY
-                }
-            } else if (containText) {
-                QuoteMarkMatchingResult.NON_EMPTY
-            } else {
-                QuoteMarkMatchingResult.EMPTY
+            return@map when {
+                matchesQuoteMark && containText -> QuoteMarkMatchingResult.V_NON_EMPTY
+                matchesQuoteMark && !containText -> QuoteMarkMatchingResult.V_EMPTY
+                !matchesQuoteMark && containText -> QuoteMarkMatchingResult.NON_EMPTY
+                else -> QuoteMarkMatchingResult.EMPTY
             }
         }
     }

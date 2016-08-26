@@ -5,7 +5,7 @@ import quoteParser.features.*
 /**
  * Created by Pavel.Zhuk on 25.08.2016.
  */
-class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: Int = 2,
+class QuoteHeaderLinesParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
                              private val HEADER_LINES_COUNT: Int = 3,
                              private val MULTI_LINE_HEADER_LINES_COUNT: Int = 6) {
 
@@ -29,6 +29,7 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
     private val phraseFeature = PhraseFeature()
     // ------
 
+    private var lines: List<String> = listOf()
 
     init {
         this.featureSet = setOf(
@@ -38,55 +39,56 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
                 ColonFeature()
         )
         this.maxFeatureCount = this.featureSet.size
-        if (sufficientFeatureCount < 1 || sufficientFeatureCount > this.maxFeatureCount) {
+        if (SUFFICIENT_FEATURE_COUNT < 1 || SUFFICIENT_FEATURE_COUNT > this.maxFeatureCount) {
             throw IllegalArgumentException("sufficientFeatureCount must be in range 1..${this.maxFeatureCount}")
         }
 
         // TODO modify this.sufficientFeatureCount depend of In-Reply-To header.
-        this.sufficientFeatureCount = sufficientFeatureCount
+        this.sufficientFeatureCount = SUFFICIENT_FEATURE_COUNT
     }
 
     private fun prepare() {
-        foundFeatureMap.clear()
+        this.foundFeatureMap.clear()
 
-        middleColonCount = 0
-        lineMatchesMiddleColon = false
-        firstMiddleColonLineIndex = -1
+        this.middleColonCount = 0
+        this.lineMatchesMiddleColon = false
+        this.firstMiddleColonLineIndex = -1
 
-        foundPhraseFeature = false
-        phraseFeatureLineIndex = -1
+        this.foundPhraseFeature = false
+        this.phraseFeatureLineIndex = -1
     }
 
-    fun parse(): Pair<Int, Int>? {
-        prepare()
+    fun parse(lines: List<String>): Pair<Int, Int>? {
+        this.prepare()
+        this.lines = lines
 
-        lines.forEachIndexed { lineIndex, line ->
+        this.lines.forEachIndexed { lineIndex, line ->
             var anyFeatureMatches = false
 
-            featureSet.forEach { feature ->
+            this.featureSet.forEach { feature ->
                 if (feature.matches(line)) {
-                    updateSingleLineFeature(lineIndex, feature)
+                    this.updateSingleLineFeature(lineIndex, feature)
                     anyFeatureMatches = true
                 }
             }
 
-            if (middleColonFeature.matches(line)) {
-                updateMultiLineFeature(lineIndex)
+            if (this.middleColonFeature.matches(line)) {
+                this.updateMultiLineFeature(lineIndex)
                 anyFeatureMatches = true
             }
 
-            if (phraseFeature.matches(line)) {
-                updatePhraseFeature(lineIndex)
+            if (this.phraseFeature.matches(line)) {
+                this.updatePhraseFeature(lineIndex)
             }
 
             if (anyFeatureMatches) {
-                resetFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT)
+                this.resetFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT)
             } else {
-                resetFeatures(all = true)
+                this.resetFeatures(all = true)
             }
 
-            if (headerFound()) {
-                return@parse identifyHeader()
+            if (this.headerFound()) {
+                return@parse this.identifyHeader()
             }
         }
 
@@ -94,51 +96,51 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
     }
 
     private fun updatePhraseFeature(lineIndex: Int) {
-        foundPhraseFeature = true
-        phraseFeatureLineIndex = lineIndex
+        this.foundPhraseFeature = true
+        this.phraseFeatureLineIndex = lineIndex
     }
 
     private fun headerFound() =
-            foundFeatureMap.size >= sufficientFeatureCount || foundPhraseFeature
+            this.foundFeatureMap.size >= this.sufficientFeatureCount || this.foundPhraseFeature
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
-        foundFeatureMap[feature.name] = lineIndex
+        this.foundFeatureMap[feature.name] = lineIndex
     }
 
     private fun updateMultiLineFeature(lineIndex: Int) {
-        lineMatchesMiddleColon = true
-        if (middleColonCount == MULTI_LINE_HEADER_LINES_COUNT) {
-            firstMiddleColonLineIndex++
+        this.lineMatchesMiddleColon = true
+        if (this.middleColonCount == this.MULTI_LINE_HEADER_LINES_COUNT) {
+            this.firstMiddleColonLineIndex++
         } else {
-            if (middleColonCount == 0) {
-                firstMiddleColonLineIndex = lineIndex
+            if (this.middleColonCount == 0) {
+                this.firstMiddleColonLineIndex = lineIndex
             }
-            middleColonCount++
+            this.middleColonCount++
         }
     }
 
     private fun resetFeatures(oldLineIndex: Int = -1, all: Boolean = false) {
-        resetSingleLineFeatures(oldLineIndex, all)
-        resetMultiLineFeatures()
+        this.resetSingleLineFeatures(oldLineIndex, all)
+        this.resetMultiLineFeatures()
     }
 
     private fun resetMultiLineFeatures(shouldReset: Boolean = true) {
-        if (!lineMatchesMiddleColon && shouldReset) {
-            middleColonCount = 0
+        if (!this.lineMatchesMiddleColon && shouldReset) {
+            this.middleColonCount = 0
 
         }
-        lineMatchesMiddleColon = false
+        this.lineMatchesMiddleColon = false
     }
 
     private fun resetSingleLineFeatures(oldLineIndex: Int, all: Boolean) {
         if (all) {
-            foundFeatureMap.clear()
+            this.foundFeatureMap.clear()
         } else {
             val temp: MutableMap<String, Int> = mutableMapOf()
-            foundFeatureMap.filterTo(temp) {
+            this.foundFeatureMap.filterTo(temp) {
                 it.value > oldLineIndex
             }
-            foundFeatureMap = temp
+            this.foundFeatureMap = temp
         }
     }
 
@@ -146,22 +148,22 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
         var fromIndex = Int.MAX_VALUE
         var toIndex = Int.MIN_VALUE
 
-        if (foundPhraseFeature) {
-            fromIndex = phraseFeatureLineIndex
-            toIndex = phraseFeatureLineIndex
+        if (this.foundPhraseFeature) {
+            fromIndex = this.phraseFeatureLineIndex
+            toIndex = this.phraseFeatureLineIndex
         } else {
-            foundFeatureMap.forEach {
+            this.foundFeatureMap.forEach {
                 fromIndex = Math.min(fromIndex, it.value)
                 toIndex = Math.max(toIndex, it.value)
             }
 
-            while (checkForAllRemainingFeatures(fromIndex, toIndex)) {
+            while (this.checkForAllRemainingFeatures(fromIndex, toIndex)) {
                 toIndex++
             }
 
-            if (checkForMultiLineHeader(fromIndex, toIndex)) {
-                fromIndex = firstMiddleColonLineIndex
-                toIndex = firstMiddleColonLineIndex + middleColonCount - 1
+            if (this.checkForMultiLineHeader(fromIndex, toIndex)) {
+                fromIndex = this.firstMiddleColonLineIndex
+                toIndex = this.firstMiddleColonLineIndex + this.middleColonCount - 1
             }
         }
 
@@ -172,27 +174,27 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
     // If sufficient count of features had been found in less then HEADER_LINES_COUNT
     // lines try to check others not found features in the following line.
     private fun checkForAllRemainingFeatures(fromIndex: Int, toIndex: Int): Boolean {
-        val remainingFeatures = featureSet.filter { !foundFeatureMap.containsKey(it.name) }
+        val remainingFeatures = this.featureSet.filter { !this.foundFeatureMap.containsKey(it.name) }
         if (remainingFeatures.isNotEmpty() && // One suggestion is not found.
-                toIndex < lines.size - 1 && // There is the following line to check.
-                toIndex - fromIndex + 1 < HEADER_LINES_COUNT) {  // Found suggestions are placed in less than HEADER_LINES_COUNT lines.
+                toIndex < this.lines.size - 1 && // There is the following line to check.
+                toIndex - fromIndex + 1 < this.HEADER_LINES_COUNT) {  // Found suggestions are placed in less than HEADER_LINES_COUNT lines.
 
             val lineIndex = toIndex + 1
 
             var anyFeatureMatches = false
             remainingFeatures.forEach { feature ->
-                if (feature.matches(lines[lineIndex])) {
-                    updateSingleLineFeature(lineIndex, feature)
+                if (feature.matches(this.lines[lineIndex])) {
+                    this.updateSingleLineFeature(lineIndex, feature)
                     anyFeatureMatches = true
                 }
             }
 
             if (anyFeatureMatches) {
 
-                if (middleColonFeature.matches(lines[lineIndex])) {
-                    updateMultiLineFeature(lineIndex)
+                if (this.middleColonFeature.matches(this.lines[lineIndex])) {
+                    this.updateMultiLineFeature(lineIndex)
                 }
-                resetMultiLineFeatures()
+                this.resetMultiLineFeatures()
 
                 return@checkForAllRemainingFeatures true
             }
@@ -202,13 +204,13 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
 
     // Check if there is a multi line header or FWD
     private fun checkForMultiLineHeader(fromIndex: Int, toIndex: Int): Boolean {
-        if (middleColonCount >= toIndex - fromIndex + 1) {
-            var cnt = MULTI_LINE_HEADER_LINES_COUNT - middleColonCount
+        if (this.middleColonCount >= toIndex - fromIndex + 1) {
+            var cnt = this.MULTI_LINE_HEADER_LINES_COUNT - this.middleColonCount
             var lineIndex = toIndex + 1
-            while (cnt > 0 && lineIndex < lines.size) {
+            while (cnt > 0 && lineIndex < this.lines.size) {
 
-                if (middleColonFeature.matches(lines[lineIndex])) {
-                    updateMultiLineFeature(lineIndex)
+                if (this.middleColonFeature.matches(this.lines[lineIndex])) {
+                    this.updateMultiLineFeature(lineIndex)
                 } else {
                     break
                 }
@@ -217,8 +219,8 @@ class QuoteHeaderLinesParser(val lines: List<String>, sufficientFeatureCount: In
                 cnt--
             }
 
-            return firstMiddleColonLineIndex <= fromIndex &&
-                    firstMiddleColonLineIndex + middleColonCount - 1 >= toIndex
+            return this.firstMiddleColonLineIndex <= fromIndex &&
+                    this.firstMiddleColonLineIndex + this.middleColonCount - 1 >= toIndex
         }
         return false
     }
