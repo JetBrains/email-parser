@@ -11,12 +11,15 @@ data class Content(val body: List<String>,
         val prefix = if (addMarks) "> " else ""
         val separator = if (addMarks) "\n> " else "\n"
 
-        val bodyText = this.body.joinToString(separator = "\n", postfix = "\n")
+        val bodyText = this.body.joinToString(
+                separator = "\n",
+                postfix = if (this.header != null) "\n" else ""
+        )
         val headerText = if (this.header != null && !this.header.text.isEmpty())
             this.header.text.joinToString(prefix = prefix, separator = separator, postfix = "\n")
         else
             ""
-        val quoteText = this.quote?.body?.joinToString(prefix = prefix, separator = separator, postfix = "\n") ?: ""
+        val quoteText = this.quote?.body?.joinToString(prefix = prefix, separator = separator, postfix = "") ?: ""
 
         return StringBuilder(bodyText)
                 .append(headerText)
