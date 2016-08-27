@@ -85,7 +85,7 @@ class EmailParser(var emlFile: File, var mode: ContentParseMode = ContentParseMo
         return Email(date, from, to, subject, content)
     }
 
-    private fun getErrorMsg(fieldName: String) = "Could not found '$fieldName' field."
+    private fun getErrorMsg(fieldName: String) = "Could not find '$fieldName' field."
 
     /**
      * Transform addresses from array of Address objects to their string representation.
