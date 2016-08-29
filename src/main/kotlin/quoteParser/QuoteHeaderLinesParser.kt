@@ -10,7 +10,7 @@ class QuoteHeaderLinesParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
                              private val MULTI_LINE_HEADER_LINES_COUNT: Int = 6) {
 
     // For single line headers
-    private val featureSet: Set<AbstractQuoteFeature>
+    private val featureSet: Array<AbstractQuoteFeature>
     private val sufficientFeatureCount: Int
     private val maxFeatureCount: Int
     private var foundFeatureMap: MutableMap<String, Int> = mutableMapOf()
@@ -32,11 +32,11 @@ class QuoteHeaderLinesParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
     private var lines: List<String> = listOf()
 
     init {
-        this.featureSet = setOf(
+        this.featureSet = arrayOf(
                 DateFeature(),
                 TimeFeature(),
                 EmailFeature(),
-                ColonFeature()
+                LastColonFeature()
         )
         this.maxFeatureCount = this.featureSet.size
         if (SUFFICIENT_FEATURE_COUNT < 1 || SUFFICIENT_FEATURE_COUNT > this.maxFeatureCount) {
@@ -63,6 +63,9 @@ class QuoteHeaderLinesParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
         this.lines = lines
 
         this.lines.forEachIndexed { lineIndex, line ->
+
+            this.resetSingleLineFeatures(oldLineIndex = lineIndex - HEADER_LINES_COUNT, all = false)
+
             var anyFeatureMatches = false
 
             this.featureSet.forEach { feature ->
@@ -104,6 +107,32 @@ class QuoteHeaderLinesParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
             this.foundFeatureMap.size >= this.sufficientFeatureCount || this.foundPhraseFeature
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
+        if (feature is LastColonFeature) {
+
+            // LastColonFeature cannot be the first feature of the quote.
+            if (foundFeatureMap.size == 0) {
+                return
+            }
+
+            // LastColonFeature cannot be in multi line header.
+            if (middleColonCount > 0) {
+                var startIndex = lineIndex
+                foundFeatureMap.forEach { startIndex = Math.min(it.value, startIndex) }
+                val headerLinesCount = lineIndex - startIndex
+
+                // It seems like MiddleColonFeature instead LastColonFeature.
+                if (middleColonCount <= headerLinesCount) {
+                    updateMultiLineFeature(lineIndex)
+
+                    // If line contains the real MiddleColonFeature
+                    // then we should decrease its count.
+                    if (this.middleColonFeature.matches(lines[lineIndex])) {
+                        this.middleColonCount--
+                    }
+                }
+                return
+            }
+        }
         this.foundFeatureMap[feature.name] = lineIndex
     }
 

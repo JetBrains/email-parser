@@ -17,14 +17,14 @@ import javax.mail.internet.MimeMessage
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
 
-private val pathEmails = "D:${File.separator}YT${File.separator}"
+private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 fun main(args: Array<String>) {
     val out = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}q_nonh_out.txt"
+            "${pathDatasets}q_h_out.txt"
     ))))
     val inf = BufferedReader(InputStreamReader(FileInputStream(File(
-            "${pathDatasets}q_nonh.txt"
+            "${pathDatasets}q_h.txt"
     ))))
     
     inf.lines().filter { it != "" }.map { it.toInt() }.forEach {
@@ -50,9 +50,8 @@ fun main(args: Array<String>) {
         out.write("Downgraded-In-Reply-To: ${dwgrd_irt?.joinToString()}\n")
         out.write("Downgraded-References: ${dwgrd_rfrncs?.joinToString()}\n")
         out.write("---------------------------------------------\n")
-        out.write(c.toString(addMarks = true))
         c.body.forEach { out.write(it); out.newLine() }
-        c.header?.text?.forEach {out.write("> "); out.write(it); out.newLine() }
+        c.header?.text?.forEach {out.write("> "); out.write(it.toUpperCase()); out.newLine() }
         if (c.quote != null) {
 
             val xx = c.quote.body.size

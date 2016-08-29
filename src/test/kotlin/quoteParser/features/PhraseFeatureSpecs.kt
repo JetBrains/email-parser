@@ -22,8 +22,8 @@ class PhraseFeatureSpecs : Spek() {
         given("header phrase") {
             val s = """>> In reply to:   """
             on("checking regexes") {
-                it("should not match PHRASE regex") {
-                    assertFalse { phraseFeature.matches(s) }
+                it("should match PHRASE regex") {
+                    assertTrue { phraseFeature.matches(s) }
                 }
             }
         }

@@ -1,12 +1,18 @@
 package quoteParser.features
 
+import org.intellij.lang.annotations.Language
+
 /**
  * Created by Pavel.Zhuk on 16.08.2016.
  */
-class ColonFeature() : AbstractQuoteFeature() {
+class LastColonFeature() : AbstractQuoteFeature() {
     override val name: String
-        get() = "COLON"
+        get() = "LAST_COLON"
     override fun getRegex(): Regex {
+        // Full regex for testing needs
+        @Language("RegExp")
+        val regex = "(.*[\\s\\p{C}\\p{Z}>])?.*:([\\p{C}\\p{Z}\\s]*)?"
+
         // Regex for matching colon(:) in the end of the line.
         return Regex("${this.startWhitespaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
     }

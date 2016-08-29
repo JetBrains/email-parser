@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "D:${File.separator}YT${File.separator}"
+private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -23,18 +23,14 @@ private val FILTER_STRING = "##- Please type your reply above this line -##"
 private val EMAILS_COUNT = 23055
 
 fun main(args: Array<String>) {
-    val qnonh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}q_nonh.txt"
+    val qh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
+            "${pathDatasets}q_h.txt"
     ))))
-    val nonqh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}nonq_h.txt"
+    val nonqnonh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
+            "${pathDatasets}nonq_nonh.txt"
     ))))
-    val down = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}downgraded.txt"
-    ))))
-    var qnonhCount = 0
-    var nonqhCount = 0
-    var downCount = 0
+    var qhCount = 0
+    var nonqnonhCount = 0
     for (i in 0.. EMAILS_COUNT - 1) {
 
         val header: List<String>?
@@ -71,39 +67,29 @@ fun main(args: Array<String>) {
 
         val irt = msg.getHeader("In-Reply-To")
         val rfrncs = msg.getHeader("References")
-        val dwgrd_irt = msg.getHeader("Downgraded-In-Reply-To")
-        val dwgrd_rfrncs = msg.getHeader("Downgraded-References")
 
-        if (header != null && irt == null && rfrncs== null && dwgrd_irt== null&& dwgrd_rfrncs== null) {
-            qnonh.write(i.toString())
-            qnonh.newLine()
-            qnonhCount++
+        if (header == null && irt == null && rfrncs== null) {
+            nonqnonh.write(i.toString())
+            nonqnonh.newLine()
+            nonqnonhCount++
         }
-        if (header == null && (irt != null || rfrncs!= null || dwgrd_irt!= null || dwgrd_rfrncs != null)) {
+        if (header != null && (irt != null || rfrncs!= null)) {
             
-            nonqh.write(i.toString())
-            nonqh.newLine()
-            nonqhCount++
+            qh.write(i.toString())
+            qh.newLine()
+            qhCount++
         }
-        if (dwgrd_irt!= null || dwgrd_rfrncs != null) {
-            down.write(i.toString())
-            down.newLine()
-            downCount++
-        }
-
         if (i % 100 == 0) {
             println("${i} is passed")
         }
     }
 
-    qnonh.close()
-    nonqh.close()
-    down.close()
+    qh.close()
+    nonqnonh.close()
 
     println("Done.")
-    println("${qnonhCount} emails with quote has no headers.")
-    println("${nonqhCount} emails with headers has no quotes.")
-    println("${downCount} emails with downground headers.")
+    println("${qhCount} emails with quote and headers.")
+    println("${nonqnonhCount} emails without headers and quote.")
 }
 
 

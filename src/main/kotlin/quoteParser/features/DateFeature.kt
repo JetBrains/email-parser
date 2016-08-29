@@ -30,11 +30,11 @@ class DateFeature() : AbstractQuoteFeature() {
 
         // Final date regex. Colon(:) is possible before the date, 
         // arbitrary bracket is possible after the date.
-        val date = "(.*[\\p{C}\\p{Z}\\s:])?(($shortDate)|($fullDate))${this.endBracketsOptional}${this.endWhitespaceOptional}"
+        val date = "(.*[\\p{C}\\p{Z}\\s:>])?(($shortDate)|($fullDate))${this.endBracketsOptional}${this.endWhitespaceOptional}"
 
         // Full date regex for testing needs.
         @Language("RegExp")
-        val regex = "(.*[\\p{C}\\p{Z}\\s:])?(((([0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*(20)?[0-9]{2})|((20)?[0-9]{2}\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]))\\p{C}*[,\\.]{0,2})|((([0-3]?[0-9]\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}(20\\d\\d\\p{C}*[\\.,]{0,2}))|((20\\d\\d\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}([0-3]?[0-9]\\p{C}*[\\.,]{0,2}))))\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*([\\p{C}\\p{Z}\\s].*)?"
+        val regex = "(.*[\\p{C}\\p{Z}\\s:>])?(((([0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*(20)?[0-9]{2})|((20)?[0-9]{2}\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]))\\p{C}*[,\\.]{0,2})|((([0-3]?[0-9]\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}(20\\d\\d\\p{C}*[\\.,]{0,2}))|((20\\d\\d\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}([0-3]?[0-9]\\p{C}*[\\.,]{0,2}))))\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*([\\p{C}\\p{Z}\\s].*)?"
 
         return Regex(date)
     }

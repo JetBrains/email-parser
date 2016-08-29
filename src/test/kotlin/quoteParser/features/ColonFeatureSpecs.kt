@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
  */
 class ColonFeatureSpecs : Spek() {
     init {
-        val colonFeature = ColonFeature()
+        val colonFeature = LastColonFeature()
 
         given("string of text") {
             val s = "@lorem  ipsum dolor sit amet, 04/04/05, consectetuer 01:01:33 adipiscing elit. Aenean : "
