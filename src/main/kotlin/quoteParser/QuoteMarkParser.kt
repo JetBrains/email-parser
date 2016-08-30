@@ -8,11 +8,11 @@ import quoteParser.features.QuoteMarkFeature
  */
 // MAX_QUOTE_BLOCKS_COUNT = 1 is good for hiding fragmented quotations
 // but a small portion of useful content is become hidden as well.
-class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3) {
+class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3,
+                      val minimumQuoteBlockSize: Int = 10) {
 
     fun parse(lines: List<String>,
-              matchingLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature()
-                      .matchLines(lines)): Int? {
+              matchingLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature().matchLines(lines)): Int? {
 
         val quoteBlocksCount = this.getQuoteBlocksCount(matchingLines)
         if (quoteBlocksCount > this.maxQuoteBlocksCount) {
@@ -44,8 +44,7 @@ class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3) {
             startQuotedBlockIndex = matchingQuoteMarkIndex
         }
 
-        // TODO delete that after adding IN-REPLY-TO header processing. One-line quotes are exists.
-        return if (endQuotedBlockIndex - startQuotedBlockIndex == 0)
+        return if (endQuotedBlockIndex - startQuotedBlockIndex + 1 < this.minimumQuoteBlockSize)
             null
         else
             startQuotedBlockIndex

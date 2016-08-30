@@ -20,24 +20,35 @@ private object ContentType {
 
 //TODO recursive quote parsing
 fun parse(emlFile: File): Content {
-    val emailText: String = getEmailText(emlFile)
-
-    // TODO check for special email headers
-    return QuoteParser().parse(emailText.lines())
+    val msg: MimeMessage = getMimeMessage(emlFile)
+    val emailText: String = getEmailText(msg)
+    val isInReplyToHeader = containInReplyToHeader(msg)
+    return QuoteParser(isInReplyToEMLHeader = isInReplyToHeader)
+            .parse(emailText.lines())
 }
 
+fun containInReplyToHeader(msg: MimeMessage) =
+        msg.getHeader("In-Reply-To") != null || msg.getHeader("References") != null
+
 fun parseTrimmed(emlFile: File): Content {
-    val emailText: String = getEmailText(emlFile)
-    return QuoteParser().parse(emailText.lines().map { it.trim() })
+    val msg: MimeMessage = getMimeMessage(emlFile)
+    val emailText: String = getEmailText(msg)
+    val isInReplyToHeader = containInReplyToHeader(msg)
+    return QuoteParser(isInReplyToEMLHeader = isInReplyToHeader)
+            .parse(emailText.lines().map { it.trim() })
 }
 
 fun getEmailText(emlFile: File): String {
+    val msg: MimeMessage = getMimeMessage(emlFile)
+    return getEmailText(msg)
+}
+
+fun getMimeMessage(emlFile: File): MimeMessage {
     val source: InputStream = FileInputStream(emlFile)
     val props: Properties = System.getProperties()
     val session: Session = Session.getDefaultInstance(props)
     val msg: MimeMessage = MimeMessage(session, source)
-
-    return getEmailText(msg)
+    return msg
 }
 
 /**
@@ -49,7 +60,7 @@ fun getEmailText(emlFile: File): String {
  * @exception ParseException if fails to parse Content field.
  * @exception NotImplementedError for now it works only with text/plain and multipart/alternative Content-types.
  */
-private fun getEmailText(part: MimePart): String {
+fun getEmailText(part: MimePart): String {
     val content: Any = part.content ?: throw ParseException("Could not find content of this email.")
     val contentType: String = part.contentType.split(";")[0].trim().toLowerCase()
 

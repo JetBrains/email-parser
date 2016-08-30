@@ -6,9 +6,10 @@ import quoteParser.features.*
 class QuoteParser(sufficientFeatureCount: Int = 2,
                   headerLinesCount: Int = 3,
                   multiLineHeaderLinesCount: Int = 6,
-                  maxQuoteBlocksCount: Int = 3) {
+                  maxQuoteBlocksCount: Int = 3,
+                  val isInReplyToEMLHeader: Boolean = false) {
 
-    enum class Relation() {
+    private enum class Relation() {
         HEADER_LINES_FIRST,
         QUOTE_MARK_FIRST,
         QUOTE_MARK_IN_HEADER_LINES
@@ -23,7 +24,7 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
         this.lines = listOf()
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
-                sufficientFeatureCount,
+                if (this.isInReplyToEMLHeader) sufficientFeatureCount else sufficientFeatureCount + 1,
                 headerLinesCount,
                 multiLineHeaderLinesCount
         )
@@ -35,8 +36,18 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
 
         val matchingLines = this.quoteMarkFeature.matchLines(this.lines)
         val headerLinesIndexes = this.quoteHeaderLinesParser.parse(this.lines)
-        val quoteMarkIndex = this.quoteMarkParser.parse(this.lines, matchingLines)
-
+        val quoteMarkIndex =
+                // This condition means: for EMLs without In-Reply-To header search for
+                // quotation marks(>) only if quoteHeaderLines is null. It works well for
+                // test data, but it is weird.. because it skips quotation marks most of
+                // the time.
+                // As alternative this condition may be deleted, but it works
+                // worse with some cases...
+                if (!this.isInReplyToEMLHeader && headerLinesIndexes != null) {
+                    null
+                } else {
+                    this.quoteMarkParser.parse(this.lines, matchingLines)
+                }
         when {
             headerLinesIndexes == null && quoteMarkIndex == null ->
                 return Content.create(this.lines)

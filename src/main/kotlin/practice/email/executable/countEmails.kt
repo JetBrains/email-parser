@@ -2,6 +2,7 @@ package practice.email.executable
 
 import quoteParser.QuoteParser
 import quoteParser.getEmailText
+import quoteParser.parse
 import java.io.*
 import java.util.*
 import javax.mail.Session
@@ -30,10 +31,10 @@ fun main(args: Array<String>) {
 
 fun countEmails(emlDir: File) {
     val qh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}q_h.txt"
+            "${pathDatasets}nonq_h.txt"
     ))))
     val nonqnonh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}nonq_nonh.txt"
+            "${pathDatasets}q_nonh.txt"
     ))))
     var qhCount = 0
     var nonqnonhCount = 0
@@ -50,7 +51,7 @@ fun countEmails(emlDir: File) {
             val session: Session = Session.getDefaultInstance(props)
             msg = MimeMessage(session, source)
             if (!email[0].trim().equals(FILTER_STRING)) {
-                val H = QuoteParser().parse(email).header
+                val H = parse(file).header
                 if (H != null && H.text.isEmpty()) {
                     header = listOf(email[H.startIndex])
                 } else {
@@ -74,12 +75,12 @@ fun countEmails(emlDir: File) {
         val irt = msg.getHeader("In-Reply-To")
         val rfrncs = msg.getHeader("References")
 
-        if (header == null && irt == null && rfrncs== null) {
+        if (header != null && irt == null && rfrncs== null) {
             nonqnonh.write(i.toString())
             nonqnonh.newLine()
             nonqnonhCount++
         }
-        if (header != null && (irt != null || rfrncs!= null)) {
+        if (header == null && (irt != null || rfrncs!= null)) {
 
             qh.write(i.toString())
             qh.newLine()

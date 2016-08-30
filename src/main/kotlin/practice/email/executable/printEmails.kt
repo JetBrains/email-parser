@@ -2,6 +2,7 @@ package practice.email.executable
 
 
 import quoteParser.QuoteParser
+import quoteParser.parse
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -33,10 +34,10 @@ fun main(args: Array<String>) {
 
 fun printEmails(emlDir: File) {
     val out = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
-            "${pathDatasets}q_h_out.txt"
+            "${pathDatasets}nonq_nonh_out.txt"
     ))))
     val inf = BufferedReader(InputStreamReader(FileInputStream(File(
-            "${pathDatasets}q_h.txt"
+            "${pathDatasets}nonq_nonh.txt"
     ))))
 
     inf.lines().filter { it != "" }.map { it.toInt() }.forEach {
@@ -46,8 +47,7 @@ fun printEmails(emlDir: File) {
         val props: Properties = System.getProperties()
         val session: Session = Session.getDefaultInstance(props)
         val msg: MimeMessage = MimeMessage(session, source)
-        val lines = quoteParser.getEmailText(file).lines()
-        val c = QuoteParser().parse(lines)
+        val c = parse(file)
 
         val irt = msg.getHeader("In-Reply-To")
         val rfrncs = msg.getHeader("References")

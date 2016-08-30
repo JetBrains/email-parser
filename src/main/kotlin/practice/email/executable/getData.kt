@@ -1,7 +1,6 @@
 package practice.email.executable
 
-import quoteParser.QuoteParser
-import quoteParser.getEmailText
+import quoteParser.*
 import java.io.*
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
@@ -33,14 +32,17 @@ fun getData(emlDir: File) {
     for (i in 0..EMAILS_COUNT - 1) {
 
         val header: List<String>?
-        val email: List<String>
+        val emailText: List<String>
         try {
-            email = getEmailText(File(emlDir, "$i.eml")).lines()
+            val emlFile = File(emlDir, "${i}.eml")
+            val msg = getMimeMessage(emlFile)
+            emailText = getEmailText(msg).lines()
 
-            if (!email[0].trim().equals(FILTER_STRING)) {
-                val H = QuoteParser().parse(email).header
+            if (!emailText[0].trim().equals(FILTER_STRING)) {
+                val H = QuoteParser(isInReplyToEMLHeader = containInReplyToHeader(msg))
+                        .parse(emailText).header
                 if (H != null && H.text.isEmpty()) {
-                    header = listOf(email[H.startIndex])
+                    header = listOf(emailText[H.startIndex])
                 } else {
                     header = H?.text
                 }

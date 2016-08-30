@@ -1,7 +1,7 @@
 package practice.email.executable
 
-import quoteParser.QuoteParser
-import quoteParser.getEmailText
+
+import quoteParser.*
 import java.io.*
 import java.util.stream.Collectors
 
@@ -69,7 +69,7 @@ private fun readHeaders(file: File, verbose: Boolean = false): List<Pair<Int, Li
 
 private fun getActualHeaders(emlDir: File, verbose: Boolean = false): List<Pair<Int, List<String>>> {
     if (verbose) {
-        println("Evaluateing actual headers...")
+        println("Evaluating actual headers...")
     }
 
     val headers: MutableList<Pair<Int, List<String>>> = mutableListOf()
@@ -78,10 +78,13 @@ private fun getActualHeaders(emlDir: File, verbose: Boolean = false): List<Pair<
         val header: List<String>?
         val emailText: List<String>
         try {
-            emailText = getEmailText(File(emlDir, "${i}.eml")).lines()
+            val emlFile = File(emlDir, "${i}.eml")
+            val msg = getMimeMessage(emlFile)
+            emailText = getEmailText(msg).lines()
 
             if (!emailText[0].trim().equals(FILTER_STRING)) {
-                val H = QuoteParser().parse(emailText).header
+                val H = QuoteParser(isInReplyToEMLHeader = containInReplyToHeader(msg))
+                        .parse(emailText).header
                 if (H != null && H.text.isEmpty()) {
                     header = listOf(emailText[H.startIndex])
                 } else {
