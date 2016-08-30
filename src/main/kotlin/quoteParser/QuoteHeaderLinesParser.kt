@@ -5,9 +5,11 @@ import quoteParser.features.*
 /**
  * Created by Pavel.Zhuk on 25.08.2016.
  */
-class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
-                             val headerLinesCount: Int = 3,
-                             val multiLIneHeaderLinesCount: Int = 6) {
+class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
+                             val multiLIneHeaderLinesCount: Int = 6,
+                             val isInReplyToEMLHeader: Boolean = false) {
+
+    private var matchingLines: List<QuoteMarkMatchingResult>? = null
 
     // For single line headers
     private val featureSet: Array<AbstractQuoteFeature>
@@ -39,15 +41,11 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
                 LastColonFeature()
         )
         this.maxFeatureCount = this.featureSet.size
-        if (sufficientFeatureCount < 1 || sufficientFeatureCount > this.maxFeatureCount) {
-            throw IllegalArgumentException("sufficientFeatureCount must be in range 1..${this.maxFeatureCount}")
-        }
 
-        // TODO modify this.sufficientFeatureCount according to In-Reply-To header.
-        this.sufficientFeatureCount = sufficientFeatureCount
+        this.sufficientFeatureCount = 2
     }
 
-    private fun prepare() {
+    private fun prepare(lines: List<String>) {
         this.foundFeatureMap.clear()
 
         this.middleColonCount = 0
@@ -56,10 +54,13 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
 
         this.foundPhraseFeature = false
         this.phraseFeatureLineIndex = -1
+
+        // todo too slow! Should use previously calculated value (or not?)
+        this.matchingLines = QuoteMarkFeature().matchLines(lines)
     }
 
     fun parse(lines: List<String>): Pair<Int, Int>? {
-        this.prepare()
+        this.prepare(lines)
         this.lines = lines
 
         this.lines.forEachIndexed { lineIndex, line ->
@@ -103,8 +104,28 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
         this.phraseFeatureLineIndex = lineIndex
     }
 
-    private fun headerFound() =
-            this.foundFeatureMap.size >= this.sufficientFeatureCount || this.foundPhraseFeature
+    private fun headerFound(): Boolean {
+        if (this.foundPhraseFeature) {
+            return true
+        }
+        if (this.isInReplyToEMLHeader) {
+            return this.foundFeatureMap.size >= this.sufficientFeatureCount
+        } else {
+            if (this.foundFeatureMap.size > this.sufficientFeatureCount) {
+                return true
+            }
+            return this.foundFeatureMap.size == this.sufficientFeatureCount &&
+                    checkForSecondaryFeatures()
+        }
+    }
+
+    private fun checkForSecondaryFeatures(): Boolean {
+        if (this.middleColonCount > 0) {
+            return true
+        }
+        return false
+    }
+
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
         if (feature is LastColonFeature) {

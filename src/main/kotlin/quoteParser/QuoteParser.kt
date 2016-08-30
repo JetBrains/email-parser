@@ -3,8 +3,7 @@ package quoteParser
 import quoteParser.features.*
 
 // TODO Do smth with false-positive logs and stack traces (not urgent)
-class QuoteParser(sufficientFeatureCount: Int = 2,
-                  headerLinesCount: Int = 3,
+class QuoteParser(headerLinesCount: Int = 3,
                   multiLineHeaderLinesCount: Int = 6,
                   maxQuoteBlocksCount: Int = 3,
                   val isInReplyToEMLHeader: Boolean = false) {
@@ -24,11 +23,13 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
         this.lines = listOf()
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
-                if (this.isInReplyToEMLHeader) sufficientFeatureCount else sufficientFeatureCount + 1,
-                headerLinesCount,
-                multiLineHeaderLinesCount
+                headerLinesCount = headerLinesCount,
+                multiLIneHeaderLinesCount = multiLineHeaderLinesCount,
+                isInReplyToEMLHeader = this.isInReplyToEMLHeader
         )
-        this.quoteMarkParser = QuoteMarkParser(maxQuoteBlocksCount)
+        this.quoteMarkParser = QuoteMarkParser(
+                maxQuoteBlocksCount = maxQuoteBlocksCount
+        )
     }
 
     fun parse(lines: List<String>): Content {
