@@ -20,7 +20,7 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
 
     override fun getRegex(): Regex {
         // Regex for matching greater-than(>) symbol in the start of the line.
-        return Regex("[\\s\\p{C}\\p{Z}]*>.*")
+        return Regex("${this.whitespace}*>.*")
     }
 
     fun matchLines(lines: List<String>): List<QuoteMarkMatchingResult> {

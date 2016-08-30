@@ -22,10 +22,10 @@ class DateFeature() : AbstractQuoteFeature() {
         // between number of the day and year. Number of the day goes first
         // (e.g. 15 Feb 2016; 15 Thu, Feb 2016, 15 x y z 2016).
         @Language("RegExp")
-        val fullDateForward = "([0-3]?[0-9]\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}(20\\d\\d\\p{C}*[\\.,]{0,2})"
+        val fullDateForward = "([0-3]?[0-9]\\p{C}*[\\.,]{0,2}${this.whitespace}+)(\\S+${this.whitespace}+){0,3}(20\\d\\d\\p{C}*[\\.,]{0,2})"
         // The same as previous but year and number of the day are swapped.
         @Language("RegExp")
-        val fullDateReversed = "(20\\d\\d\\p{C}*[\\.,]{0,2}[\\p{C}\\p{Z}\\s]+)(\\S+[\\p{C}\\p{Z}\\s]+){0,3}([0-3]?[0-9]\\p{C}*[\\.,]{0,2})"
+        val fullDateReversed = "(20\\d\\d\\p{C}*[\\.,]{0,2}${this.whitespace}+)(\\S+${this.whitespace}+){0,3}([0-3]?[0-9]\\p{C}*[\\.,]{0,2})"
         val fullDate = "($fullDateForward)|($fullDateReversed)"
 
         // Final date regex. Colon(:) is possible before the date, 

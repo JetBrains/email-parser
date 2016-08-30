@@ -1,28 +1,34 @@
 package practice.email.executable
 
-import practice.email.parser.Email
-import practice.email.parser.EmailParser
-import practice.email.parser.QuotesHeaderSuggestions
-import practice.email.parser.preprocess
 import quoteParser.QuoteParser
 import quoteParser.getEmailText
 import java.io.*
 import java.util.*
-import java.util.regex.Pattern
-import java.util.stream.Collectors
 import javax.mail.Session
 import javax.mail.internet.MimeMessage
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "C:${File.separator}YT${File.separator}"
-
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
 
 private val EMAILS_COUNT = 23055
 
 fun main(args: Array<String>) {
+    val emlDir: File
+    if (args.size > 0) {
+        emlDir = File(args[0])
+        if (emlDir.exists() && emlDir.isDirectory) {
+            countEmails(emlDir)
+        } else {
+            println("Incorrect path.")
+        }
+    } else {
+        println("Input path to directory with emails as a first command-line argument.")
+    }
+}
+
+fun countEmails(emlDir: File) {
     val qh = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
             "${pathDatasets}q_h.txt"
     ))))
@@ -37,7 +43,7 @@ fun main(args: Array<String>) {
         val msg: MimeMessage
         val email: List<String>
         try {
-            val file = File("${pathEmails}${i}.eml")
+            val file = File(emlDir, "${i}.eml")
             email = getEmailText(file).lines()
             val source: InputStream = FileInputStream(file)
             val props: Properties = System.getProperties()
@@ -74,7 +80,7 @@ fun main(args: Array<String>) {
             nonqnonhCount++
         }
         if (header != null && (irt != null || rfrncs!= null)) {
-            
+
             qh.write(i.toString())
             qh.newLine()
             qhCount++

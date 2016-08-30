@@ -3,10 +3,10 @@ package quoteParser
 import quoteParser.features.*
 
 // TODO Do smth with false-positive logs and stack traces (not urgent)
-class QuoteParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
-                  HEADER_LINES_COUNT: Int = 3,
-                  MULTI_LINE_HEADER_LINES_COUNT: Int = 6,
-                  MAX_QUOTE_BLOCKS_COUNT: Int = 3) {
+class QuoteParser(sufficientFeatureCount: Int = 2,
+                  headerLinesCount: Int = 3,
+                  multiLineHeaderLinesCount: Int = 6,
+                  maxQuoteBlocksCount: Int = 3) {
 
     enum class Relation() {
         HEADER_LINES_FIRST,
@@ -23,11 +23,11 @@ class QuoteParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
         this.lines = listOf()
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
-                SUFFICIENT_FEATURE_COUNT,
-                HEADER_LINES_COUNT,
-                MULTI_LINE_HEADER_LINES_COUNT
+                sufficientFeatureCount,
+                headerLinesCount,
+                multiLineHeaderLinesCount
         )
-        this.quoteMarkParser = QuoteMarkParser(MAX_QUOTE_BLOCKS_COUNT)
+        this.quoteMarkParser = QuoteMarkParser(maxQuoteBlocksCount)
     }
 
     fun parse(lines: List<String>): Content {
@@ -52,7 +52,7 @@ class QuoteParser(SUFFICIENT_FEATURE_COUNT: Int = 2,
 
         // Without this condition smart cast doesn't work.
         if (headerLinesIndexes == null || quoteMarkIndex == null)
-            throw IllegalStateException("Never gets there")
+            throw IllegalStateException("Never gets here")
 
         val startHeaderLinesIndex = headerLinesIndexes.first
         val endHeaderLineIndex = headerLinesIndexes.second

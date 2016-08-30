@@ -23,7 +23,6 @@ fun parse(emlFile: File): Content {
     val emailText: String = getEmailText(emlFile)
 
     // TODO check for special email headers
-
     return QuoteParser().parse(emailText.lines())
 }
 

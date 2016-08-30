@@ -17,19 +17,31 @@ import javax.mail.internet.MimeMessage
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
 
-private val pathEmails = "C:${File.separator}YT${File.separator}"
-
 fun main(args: Array<String>) {
+    val emlDir: File
+    if (args.size > 0) {
+        emlDir = File(args[0])
+        if (emlDir.exists() && emlDir.isDirectory) {
+            printEmails(emlDir)
+        } else {
+            println("Incorrect path.")
+        }
+    } else {
+        println("Input path to directory with emails as a first command-line argument.")
+    }
+}
+
+fun printEmails(emlDir: File) {
     val out = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
             "${pathDatasets}q_h_out.txt"
     ))))
     val inf = BufferedReader(InputStreamReader(FileInputStream(File(
             "${pathDatasets}q_h.txt"
     ))))
-    
+
     inf.lines().filter { it != "" }.map { it.toInt() }.forEach {
 
-        val file = File("${pathEmails}${it}.eml")
+        val file = File(emlDir, "${it}.eml")
         val source: InputStream = FileInputStream(file)
         val props: Properties = System.getProperties()
         val session: Session = Session.getDefaultInstance(props)
@@ -60,11 +72,13 @@ fun main(args: Array<String>) {
         }
         out.newLine()
         out.newLine()
-        out.write("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n")
-        out.write("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n")
+        out.write("X".repeat(150))
+        out.newLine()
+        out.write("X".repeat(150))
+        out.newLine()
     }
-    
-    
+
+
     out.close()
     inf.close()
 }

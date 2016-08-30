@@ -6,16 +6,16 @@ import quoteParser.features.QuoteMarkFeature
 /**
  * Created by Pavel.Zhuk on 25.08.2016.
  */
-// MAX_QUOTE_BLOCKS_COUNT = 1 is good for hiding piecewise quotes
+// MAX_QUOTE_BLOCKS_COUNT = 1 is good for hiding fragmented quotations
 // but a small portion of useful content is become hidden as well.
-class QuoteMarkParser(private val MAX_QUOTE_BLOCKS_COUNT: Int = 3) {
+class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3) {
 
     fun parse(lines: List<String>,
               matchingLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature()
                       .matchLines(lines)): Int? {
 
         val quoteBlocksCount = this.getQuoteBlocksCount(matchingLines)
-        if (quoteBlocksCount > this.MAX_QUOTE_BLOCKS_COUNT) {
+        if (quoteBlocksCount > this.maxQuoteBlocksCount) {
             return null
         }
 

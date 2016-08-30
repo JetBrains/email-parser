@@ -3,24 +3,33 @@ package practice.email.executable
 import practice.email.parser.Email
 import practice.email.parser.EmailParser
 import practice.email.parser.QuotesHeaderSuggestions
-import practice.email.parser.preprocess
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
-import java.util.*
 
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "D:${File.separator}YT${File.separator}"
-
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
 
 private val EMAILS_COUNT = 1000
 fun main(args: Array<String>) {
+    val emlDir: File
+    if (args.size > 0) {
+        emlDir = File(args[0])
+        if (emlDir.exists() && emlDir.isDirectory) {
+            skipTest(emlDir)
+        } else {
+            println("Incorrect path.")
+        }
+    } else {
+        println("Input path to directory with emails as a first command-line argument.")
+    }
+}
 
+fun skipTest(emlDir: File) {
     val withHeaders = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
             "${pathDatasets}withHeaders_weak.txt"
     ))))
@@ -40,7 +49,7 @@ fun main(args: Array<String>) {
         val email: Email
         try {
             email = EmailParser(
-                    File("${pathEmails}${i}.eml")
+                    File(emlDir, "${i}.eml")
             ).parse()
 
             if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
@@ -79,7 +88,7 @@ fun main(args: Array<String>) {
                     s
                 }
             }.filterIndexed { i, s ->
-                i <= to+10
+                i <= to + 10
             }.forEach {
                 withHeaders.write(it)
                 withHeaders.newLine()
@@ -110,7 +119,7 @@ fun main(args: Array<String>) {
     }
 
     println("Done.")
-    
+
     println("$headerCount with headers.")
     println("$emptyCount without headers.")
     println("${i - headerCount - emptyCount} skipped.")

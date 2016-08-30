@@ -1,36 +1,41 @@
 package practice.email.executable
 
-import practice.email.parser.Email
-import practice.email.parser.EmailParser
-import practice.email.parser.QuotesHeaderSuggestions
-import practice.email.parser.preprocess
 import quoteParser.QuoteParser
 import quoteParser.getEmailText
 import java.io.*
-import java.util.*
-import java.util.regex.Pattern
-import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "C:${File.separator}YT${File.separator}"
-
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
 
 private val EMAILS_COUNT = 23055
 
 fun main(args: Array<String>) {
+    val emlDir: File
+    if (args.size > 0) {
+        emlDir = File(args[0])
+        if (emlDir.exists() && emlDir.isDirectory) {
+            getData(emlDir)
+        } else {
+            println("Incorrect path.")
+        }
+    } else {
+        println("Input path to directory with emails as a first command-line argument.")
+    }
+}
+
+fun getData(emlDir: File) {
     val dataSet = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
             "${pathDatasets}expected_headers.txt"
     ))))
     var headersCount = 0
-    for (i in 0.. EMAILS_COUNT - 1) {
+    for (i in 0..EMAILS_COUNT - 1) {
 
         val header: List<String>?
         val email: List<String>
         try {
-            email = getEmailText(File("${pathEmails}${i}.eml")).lines()
+            email = getEmailText(File(emlDir, "$i.eml")).lines()
 
             if (!email[0].trim().equals(FILTER_STRING)) {
                 val H = QuoteParser().parse(email).header

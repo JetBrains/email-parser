@@ -31,3 +31,5 @@ hs_err_pid*
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 /src/main/kotlin/practice/email/executable/test*.kt
+/src/test/kotlin/quoteParser/parseSpecs.kt
+!/src/main/kotlin/practice/email/executable/testData.kt

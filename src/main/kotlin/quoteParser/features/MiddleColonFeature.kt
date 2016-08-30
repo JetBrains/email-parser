@@ -9,6 +9,6 @@ class MiddleColonFeature() : AbstractQuoteFeature() {
     override fun getRegex(): Regex {
         // This regex matches the colon after any word except the last one with optional
         // whitespace before the colon and obligatory whitespace after the colon.
-        return Regex(".*\\S+[\\s\\p{C}\\p{Z}]*:[\\s\\p{C}\\p{Z}]+\\S+.*")
+        return Regex(".*\\S+${this.whitespace}*:${this.whitespace}+\\S+.*")
     }
 }

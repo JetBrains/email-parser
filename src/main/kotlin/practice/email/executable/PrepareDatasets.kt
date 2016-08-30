@@ -11,7 +11,6 @@ import java.util.stream.Collectors
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
-private val pathEmails = "D:${File.separator}YT${File.separator}"
 
 
 private val FILTER_STRING = "##- Please type your reply above this line -##"
@@ -20,6 +19,20 @@ private val EMAILS_COUNT = 23055
 private val DATASETS_SIZE = 100
 
 fun main(args: Array<String>) {
+    val emlDir: File
+    if (args.size > 0) {
+        emlDir = File(args[0])
+        if (emlDir.exists() && emlDir.isDirectory) {
+            prepareDataSets(emlDir)
+        } else {
+            println("Incorrect path.")
+        }
+    } else {
+        println("Input path to directory with emails as a first command-line argument.")
+    }
+}
+
+fun prepareDataSets(emlDir: File) {
     val used = mutableSetOf(-1)
     var count = 0
     val trainingSet = BufferedWriter(OutputStreamWriter(FileOutputStream(File(
@@ -47,7 +60,7 @@ fun main(args: Array<String>) {
         val email: Email
         try {
             email = EmailParser(
-                    File("${pathEmails}${i}.eml")
+                    File(emlDir, "${i}.eml")
             ).parse()
 
             if (!email.content.body.lines()[0].trim().equals(FILTER_STRING)) {
@@ -68,7 +81,7 @@ fun main(args: Array<String>) {
             println("Skipping...")
             continue
         }
-       
+
         if (header != null) {
 
             try {
@@ -97,7 +110,7 @@ fun main(args: Array<String>) {
 
     trainingSet.close()
     testSet.close()
-    
+
     println("Done.")
 }
 

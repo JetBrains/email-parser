@@ -10,9 +10,9 @@ class PhraseFeature() : AbstractQuoteFeature() {
         get() = "PHRASE"
     override fun getRegex(): Regex {
         @Language("RegExp")
-        val inReplyToRegex = "[\\s\\p{C}\\p{Z}]*>*[\\s\\p{C}\\p{Z}]*in[\\s\\p{C}\\p{Z}]+reply[\\s\\p{C}\\p{Z}]+to:[\\s\\p{C}\\p{Z}]*"
+        val inReplyToRegex = "${this.whitespace}*>*${this.whitespace}*in${this.whitespace}+reply${this.whitespace}+to:${this.whitespace}*"
         @Language("RegExp")
-        val replyAboveRegex = "[\\s\\p{C}\\p{Z}]*>*[\\s\\p{C}\\p{Z}]*##-.+-##[\\s\\p{C}\\p{Z}]*"
+        val replyAboveRegex = "${this.whitespace}*>*${this.whitespace}*##-.+-##${this.whitespace}*"
 
         return Regex("($inReplyToRegex)|($replyAboveRegex)", RegexOption.IGNORE_CASE)
     }

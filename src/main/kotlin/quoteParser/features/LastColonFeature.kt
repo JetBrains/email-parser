@@ -11,9 +11,9 @@ class LastColonFeature() : AbstractQuoteFeature() {
     override fun getRegex(): Regex {
         // Full regex for testing needs
         @Language("RegExp")
-        val regex = "(.*[\\s\\p{C}\\p{Z}>])?.*:([\\p{C}\\p{Z}\\s]*)?"
+        val regex = "(.*[\\s\\p{C}\\p{Z}>])?.*:(${this.whitespace}*)?"
 
         // Regex for matching colon(:) in the end of the line.
-        return Regex("${this.startWhitespaceOptional}.*:([\\p{C}\\p{Z}\\s]*)?")
+        return Regex("${this.startWhitespaceOptional}.*:(${this.whitespace}*)?")
     }
 }

@@ -56,7 +56,7 @@ private class GmailMailbox(val login: String, val pass: String) {
 
 
     /**
-     * Фультрует сообщения только с подходящим ContentType
+     * Filter messages without appropriate Content Type
      */
 
     // TODO filter messages started with FILTER_STRING
