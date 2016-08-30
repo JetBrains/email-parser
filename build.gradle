@@ -14,7 +14,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = 'practice.email.executable.MailParserExampleKt'
+mainClassName = 'practice.email.executable.QuoteParserExampleKt'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -23,7 +23,6 @@ dependencies {
     compile 'nz.ac.waikato.cms.weka:XMeans:1.0.4'
     compile 'nz.ac.waikato.cms.weka:levenshteinEditDistance:1.0.2'
 
-// https://mvnrepository.com/artifact/com.intellij/annotations
     compile group: 'com.intellij', name: 'annotations', version: '12.0'
 
     testCompile 'junit:junit:4.12'
@@ -75,4 +74,14 @@ task runClustering(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
     main = 'practice.email.executable.ClusteringExecutableKt'
+}
+
+task runProcessing(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'practice.email.executable.QuoteParserExampleKt'
+
+    if (project.hasProperty('emlFile')) {
+        args emlFile.split('\n')
+    }
 }

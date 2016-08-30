@@ -103,16 +103,16 @@ class QuoteMarkFeatureSpecs : Spek() {
             on("calling matchLines function") {
                 val matching = quoteMarkFeature.matchLines(lines)
                 it("must get appropriate value") {
-                    assertTrue { matching[0] == QuoteMarkMatchingResult.NON_EMPTY }
+                    assertTrue { matching[0] == QuoteMarkMatchingResult.NOT_EMPTY }
                 }
                 it("must get appropriate value") {
                     assertTrue { matching[1] == QuoteMarkMatchingResult.V_EMPTY }
                 }
                 it("must get appropriate value") {
-                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NOT_EMPTY }
                 }
                 it("must get appropriate value") {
-                    assertTrue { matching[3] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                    assertTrue { matching[3] == QuoteMarkMatchingResult.V_NOT_EMPTY }
                 }
             }
         }
@@ -128,19 +128,19 @@ class QuoteMarkFeatureSpecs : Spek() {
             on("calling matchLines function") {
                 val matching = quoteMarkFeature.matchLines(lines)
                 it("must get appropriate value") {
-                    assertTrue { matching[0] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                    assertTrue { matching[0] == QuoteMarkMatchingResult.V_NOT_EMPTY }
                 }
                 it("must get appropriate value") {
                     assertTrue { matching[1] == QuoteMarkMatchingResult.EMPTY }
                 }
                 it("must get appropriate value") {
-                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NON_EMPTY }
+                    assertTrue { matching[2] == QuoteMarkMatchingResult.V_NOT_EMPTY }
                 }
                 it("must get appropriate value") {
                     assertTrue { matching[3] == QuoteMarkMatchingResult.V_EMPTY }
                 }
                 it("must get appropriate value") {
-                    assertTrue { matching[4] == QuoteMarkMatchingResult.NON_EMPTY }
+                    assertTrue { matching[4] == QuoteMarkMatchingResult.NOT_EMPTY }
                 }
             }
         }

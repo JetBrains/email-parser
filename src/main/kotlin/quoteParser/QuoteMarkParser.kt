@@ -36,7 +36,7 @@ class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3) {
                 if (matchingLines[lineIndex].hasQuoteMark()) {
                     matchingQuoteMarkIndex = lineIndex
                 }
-                if (matchingLines[lineIndex] == QuoteMarkMatchingResult.NON_EMPTY) {
+                if (matchingLines[lineIndex] == QuoteMarkMatchingResult.NOT_EMPTY) {
                     break
                 }
                 lineIndex--

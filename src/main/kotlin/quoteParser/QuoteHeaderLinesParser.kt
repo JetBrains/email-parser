@@ -43,7 +43,7 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
             throw IllegalArgumentException("sufficientFeatureCount must be in range 1..${this.maxFeatureCount}")
         }
 
-        // TODO modify this.sufficientFeatureCount depend of In-Reply-To header.
+        // TODO modify this.sufficientFeatureCount according to In-Reply-To header.
         this.sufficientFeatureCount = sufficientFeatureCount
     }
 
@@ -64,7 +64,7 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
 
         this.lines.forEachIndexed { lineIndex, line ->
 
-            this.resetSingleLineFeatures(oldLineIndex = lineIndex - headerLinesCount, all = false)
+            this.resetSingleLineFeatures(oldLineIndex = lineIndex - this.headerLinesCount, all = false)
 
             var anyFeatureMatches = false
 
@@ -85,7 +85,7 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
             }
 
             if (anyFeatureMatches) {
-                this.resetFeatures(oldLineIndex = lineIndex - headerLinesCount)
+                this.resetFeatures(oldLineIndex = lineIndex - this.headerLinesCount)
             } else {
                 this.resetFeatures(all = true)
             }
@@ -110,23 +110,23 @@ class QuoteHeaderLinesParser(sufficientFeatureCount: Int = 2,
         if (feature is LastColonFeature) {
 
             // LastColonFeature cannot be the first feature of the quote.
-            if (foundFeatureMap.size == 0) {
+            if (this.foundFeatureMap.size == 0) {
                 return
             }
 
             // LastColonFeature cannot be in multi line header.
-            if (middleColonCount > 0) {
+            if (this.middleColonCount > 0) {
                 var startIndex = lineIndex
-                foundFeatureMap.forEach { startIndex = Math.min(it.value, startIndex) }
+                this.foundFeatureMap.forEach { startIndex = Math.min(it.value, startIndex) }
                 val headerLinesCount = lineIndex - startIndex
 
                 // It seems like MiddleColonFeature instead LastColonFeature.
-                if (middleColonCount <= headerLinesCount) {
+                if (this.middleColonCount <= headerLinesCount) {
                     updateMultiLineFeature(lineIndex)
 
                     // If line contains the real MiddleColonFeature
                     // then we should decrease its count.
-                    if (this.middleColonFeature.matches(lines[lineIndex])) {
+                    if (this.middleColonFeature.matches(this.lines[lineIndex])) {
                         this.middleColonCount--
                     }
                 }

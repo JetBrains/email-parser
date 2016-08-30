@@ -122,7 +122,7 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
         if (isTextBetween) {
 
             var i = startHeaderLinesIndex
-            while (i > 0 && matchingLines[i - 1] != QuoteMarkMatchingResult.NON_EMPTY)
+            while (i > 0 && matchingLines[i - 1] != QuoteMarkMatchingResult.NOT_EMPTY)
                 --i
             if (i == 0 || matchingLines.subList(i, this.lines.size).any() { it.hasQuoteMark() }) {
                 val msg = "Relation = ${Relation.QUOTE_MARK_FIRST}. Found quoteMark(>), but in the lines after ${i - 1} must not be any quote mark!"
@@ -163,13 +163,13 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
     private fun isTextBetween(startIndex: Int, endIndex: Int,
                               matchingLines: List<QuoteMarkMatchingResult>) =
             (startIndex + 1..endIndex - 1).any() {
-                matchingLines[it] == QuoteMarkMatchingResult.NON_EMPTY
+                matchingLines[it] == QuoteMarkMatchingResult.NOT_EMPTY
             }
 
     private fun isQuotedTextBetween(startIndex: Int, endIndex: Int,
                                     matchingLines: List<QuoteMarkMatchingResult>) =
             (startIndex + 1..endIndex - 1).any() {
-                matchingLines[it] == QuoteMarkMatchingResult.V_NON_EMPTY
+                matchingLines[it] == QuoteMarkMatchingResult.V_NOT_EMPTY
             }
 
     private fun isQuoteMarksAroundHeaderLines(startHeaderLinesIndex: Int,
@@ -186,7 +186,7 @@ class QuoteParser(sufficientFeatureCount: Int = 2,
             if (matchingLines[i].hasQuoteMark()) {
                 return true
             }
-            if (matchingLines[i] == QuoteMarkMatchingResult.NON_EMPTY) {
+            if (matchingLines[i] == QuoteMarkMatchingResult.NOT_EMPTY) {
                 return false
             }
         }

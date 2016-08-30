@@ -5,13 +5,13 @@ package quoteParser.features
  */
 enum class QuoteMarkMatchingResult() {
     V_EMPTY,
-    V_NON_EMPTY,
+    V_NOT_EMPTY,
     EMPTY,
-    NON_EMPTY;
+    NOT_EMPTY;
 
-    fun hasQuoteMark() = this == V_EMPTY || this == V_NON_EMPTY
+    fun hasQuoteMark() = this == V_EMPTY || this == V_NOT_EMPTY
     fun isEmpty() = this == EMPTY
-    fun isTextWithoutQuoteMark() = this == NON_EMPTY
+    fun isTextWithoutQuoteMark() = this == NOT_EMPTY
 }
 
 class QuoteMarkFeature() : AbstractQuoteFeature() {
@@ -37,9 +37,9 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
                 containText = !it.trim().isEmpty()
             }
             return@map when {
-                matchesQuoteMark && containText -> QuoteMarkMatchingResult.V_NON_EMPTY
+                matchesQuoteMark && containText -> QuoteMarkMatchingResult.V_NOT_EMPTY
                 matchesQuoteMark && !containText -> QuoteMarkMatchingResult.V_EMPTY
-                !matchesQuoteMark && containText -> QuoteMarkMatchingResult.NON_EMPTY
+                !matchesQuoteMark && containText -> QuoteMarkMatchingResult.NOT_EMPTY
                 else -> QuoteMarkMatchingResult.EMPTY
             }
         }
