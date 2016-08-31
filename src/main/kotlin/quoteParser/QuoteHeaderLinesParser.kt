@@ -9,7 +9,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                              val multiLIneHeaderLinesCount: Int = 6,
                              val isInReplyToEMLHeader: Boolean = false) {
 
-    private var matchingLines: List<QuoteMarkMatchingResult>? = null
+    private var matchedLinesQuoteMark: List<QuoteMarkMatchingResult>? = null
 
     // For single line headers
     private val featureSet: Array<AbstractQuoteFeature>
@@ -45,7 +45,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.sufficientFeatureCount = 2
     }
 
-    private fun prepare(lines: List<String>) {
+    private fun prepare(matchedLinesQuoteMark: List<QuoteMarkMatchingResult>) {
         this.foundFeatureMap.clear()
 
         this.middleColonCount = 0
@@ -55,12 +55,13 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.foundPhraseFeature = false
         this.phraseFeatureLineIndex = -1
 
-        // todo too slow! Should use previously calculated value (or not?)
-        this.matchingLines = QuoteMarkFeature().matchLines(lines)
+        this.matchedLinesQuoteMark = matchedLinesQuoteMark
     }
 
-    fun parse(lines: List<String>): Pair<Int, Int>? {
-        this.prepare(lines)
+    fun parse(lines: List<String>,
+              matchedLinesQuoteMark: List<QuoteMarkMatchingResult> =
+              QuoteMarkFeature().matchLines(lines)): Pair<Int, Int>? {
+        this.prepare(matchedLinesQuoteMark)
         this.lines = lines
 
         this.lines.forEachIndexed { lineIndex, line ->
@@ -119,11 +120,23 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         }
     }
 
-    private fun checkForSecondaryFeatures(): Boolean {
-        if (this.middleColonCount > 0) {
-            return true
-        }
+    private fun checkForSecondaryFeatures() =
+            checkForMiddleColon() || checkForQuoteMark() || checkForDoubleEmail()
+
+    private fun checkForDoubleEmail(): Boolean {
         return false
+    }
+
+    private fun checkForQuoteMark(): Boolean {
+        return false
+    }
+
+    private fun checkForMiddleColon(): Boolean {
+        val sortedIndexes = this.foundFeatureMap.values.sorted()
+        val startIdx = sortedIndexes.first()
+        val endIdx = sortedIndexes.last()
+        return lines.subList(startIdx, endIdx + 1)
+                .any { this.middleColonFeature.matches(it) }
     }
 
 

@@ -36,7 +36,7 @@ class QuoteParser(headerLinesCount: Int = 3,
         this.lines = lines
 
         val matchingLines = this.quoteMarkFeature.matchLines(this.lines)
-        val headerLinesIndexes = this.quoteHeaderLinesParser.parse(this.lines)
+        val headerLinesIndexes = this.quoteHeaderLinesParser.parse(this.lines, matchingLines)
         val quoteMarkIndex =
                 // This condition means: for EMLs without In-Reply-To header search for
                 // quotation marks(>) only if quoteHeaderLines is null. It works well for
