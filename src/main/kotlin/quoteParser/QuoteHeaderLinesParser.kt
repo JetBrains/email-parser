@@ -9,6 +9,18 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                              val multiLIneHeaderLinesCount: Int = 6,
                              val isInReplyToEMLHeader: Boolean = false) {
 
+    // todo replace this with smth more appropriate
+    private val valuableFeatureCombinations = listOf(
+            Pair("DATE", "LAST_COLON"),
+//            Pair("EMAIL", "TIME"),
+            Pair("TIME", "LAST_COLON")
+    )
+    private val secondaryValuableFeatureCombinations = listOf(
+            Pair("EMAIL", "DATE"),
+            Pair("EMAIL", "LAST_COLON")
+    )
+    private val leftLinesCount = 25
+
     private var matchedLinesQuoteMark: List<QuoteMarkMatchingResult>? = null
 
     // For single line headers
@@ -105,36 +117,64 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.phraseFeatureLineIndex = lineIndex
     }
 
-    private fun headerFound(): Boolean {
-        if (this.foundPhraseFeature) {
-            return true
-        }
-        if (this.isInReplyToEMLHeader) {
-            return this.foundFeatureMap.size >= this.sufficientFeatureCount
-        } else {
-            if (this.foundFeatureMap.size > this.sufficientFeatureCount) {
-                return true
+    private fun headerFound() =
+            when {
+                this.foundPhraseFeature -> true
+                this.foundFeatureMap.size > this.sufficientFeatureCount -> true
+                this.foundFeatureMap.size == this.sufficientFeatureCount
+                        && isValuableFeatures(valuableFeatureCombinations) -> true
+                this.foundFeatureMap.size == this.sufficientFeatureCount
+                        && checkForSecondaryFeatures() -> true
+                else -> false
             }
-            return this.foundFeatureMap.size == this.sufficientFeatureCount &&
-                    checkForSecondaryFeatures()
-        }
-    }
 
-    private fun checkForSecondaryFeatures() =
-            checkForMiddleColon() || checkForQuoteMark() || checkForDoubleEmail()
+    private fun isValuableFeatures(valuableFeatures: List<Pair<String, String>>) =
+            valuableFeatures.any {
+                this.foundFeatureMap.containsKey(it.first) &&
+                        this.foundFeatureMap.containsKey(it.second)
+            }
 
-    private fun checkForDoubleEmail(): Boolean {
-        return false
-    }
-
-    private fun checkForQuoteMark(): Boolean {
-        return false
-    }
-
-    private fun checkForMiddleColon(): Boolean {
+    private fun checkForSecondaryFeatures(): Boolean {
         val sortedIndexes = this.foundFeatureMap.values.sorted()
         val startIdx = sortedIndexes.first()
         val endIdx = sortedIndexes.last()
+
+        return when {
+            checkMiddleColonSuggestion(startIdx, endIdx) -> true
+            checkQuoteMarkSuggestion(endIdx) -> true
+            checkLinesCountSuggestion(endIdx) -> true
+            else -> false
+        }
+    }
+
+    private fun checkLinesCountSuggestion(endIdx: Int) =
+            this.isInReplyToEMLHeader &&
+                    isValuableFeatures(secondaryValuableFeatureCombinations) &&
+                    lines.size - endIdx - 1 >= leftLinesCount
+
+    /**
+     * It is a common case when header of the quote is followed
+     * by the quote marks(>).
+     */
+    private fun checkQuoteMarkSuggestion(endIdx: Int): Boolean {
+        var idx = endIdx + 1
+        while (idx < lines.size) {
+            if (matchedLinesQuoteMark!![idx].isTextWithoutQuoteMark()) {
+                return false
+            }
+            if (matchedLinesQuoteMark!![idx].hasQuoteMark()) {
+                return true
+            }
+            idx++
+        }
+        return false
+    }
+
+    /**
+     * If supposed header lines contains MiddleColonFeature most often
+     * it is a multi line header.
+     */
+    private fun checkMiddleColonSuggestion(startIdx: Int, endIdx: Int): Boolean {
         return lines.subList(startIdx, endIdx + 1)
                 .any { this.middleColonFeature.matches(it) }
     }
@@ -148,11 +188,13 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                 return
             }
 
+            val sortedIndexes = this.foundFeatureMap.values.sorted()
+            val startIdx = sortedIndexes.first()
+            val endIdx = sortedIndexes.last()
+
             // LastColonFeature cannot be in multi line header.
-            if (this.middleColonCount > 0) {
-                var startIndex = lineIndex
-                this.foundFeatureMap.forEach { startIndex = Math.min(it.value, startIndex) }
-                val headerLinesCount = lineIndex - startIndex
+            if (checkMiddleColonSuggestion(startIdx, endIdx)) {
+                val headerLinesCount = endIdx - startIdx + 1
 
                 // It seems like MiddleColonFeature instead LastColonFeature.
                 if (this.middleColonCount <= headerLinesCount) {
