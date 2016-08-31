@@ -2,7 +2,6 @@ package quoteParser
 
 import quoteParser.features.*
 
-// TODO Do smth with false-positive logs and stack traces (not urgent)
 class QuoteParser(headerLinesCount: Int = 3,
                   multiLineHeaderLinesCount: Int = 6,
                   maxQuoteBlocksCount: Int = 3,
