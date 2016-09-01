@@ -23,8 +23,7 @@ class QuoteParser(headerLinesCount: Int = 3,
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
                 headerLinesCount = headerLinesCount,
-                multiLIneHeaderLinesCount = multiLineHeaderLinesCount,
-                isInReplyToEMLHeader = this.isInReplyToEMLHeader
+                multiLIneHeaderLinesCount = multiLineHeaderLinesCount
         )
         this.quoteMarkParser = QuoteMarkParser(
                 maxQuoteBlocksCount = maxQuoteBlocksCount

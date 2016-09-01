@@ -44,8 +44,28 @@ class MiddleColonFeatureSpecs : Spek() {
         given("string of text") {
             val s = "lorem ipsum dolor sit amet - 3100 12:34:\t\t\t\t  consectetuer adipiscing \t\t\t\tc@f.rt\t\t\t\t"
             on("checking regexes") {
-                it("should match MIDDLE_COLON regex") {
-                    assertTrue {
+                it("should not match MIDDLE_COLON regex") {
+                    assertFalse {
+                        middleColonFeature.matches(s)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = ":lorem ipsum dolor sit amet"
+            on("checking regexes") {
+                it("should not match MIDDLE_COLON regex") {
+                    assertFalse {
+                        middleColonFeature.matches(s)
+                    }
+                }
+            }
+        }
+        given("string of text") {
+            val s = "\t \t :lorem ipsum dolor sit amet"
+            on("checking regexes") {
+                it("should not match MIDDLE_COLON regex") {
+                    assertFalse {
                         middleColonFeature.matches(s)
                     }
                 }

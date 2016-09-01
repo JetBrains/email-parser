@@ -6,15 +6,7 @@ import quoteParser.features.*
  * Created by Pavel.Zhuk on 25.08.2016.
  */
 class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
-                             val multiLIneHeaderLinesCount: Int = 6,
-                             val isInReplyToEMLHeader: Boolean = false) {
-
-    // todo replace this with more appropriate structure
-    private val valuableFeatureCombinations = listOf(
-            Pair("DATE", "LAST_COLON"),
-            Pair("EMAIL", "TIME"),
-            Pair("TIME", "LAST_COLON")
-    )
+                             val multiLIneHeaderLinesCount: Int = 6) {
 
     private var matchedLinesQuoteMark: List<QuoteMarkMatchingResult>? = null
 
@@ -117,16 +109,8 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                 this.foundPhraseFeature -> true
                 this.foundFeatureMap.size > this.sufficientFeatureCount -> true
                 this.foundFeatureMap.size == this.sufficientFeatureCount
-                        && this.isValuableFeatures(this.valuableFeatureCombinations) -> true
-                this.foundFeatureMap.size == this.sufficientFeatureCount
                         && this.checkForSecondaryFeatures() -> true
                 else -> false
-            }
-
-    private fun isValuableFeatures(valuableFeatures: List<Pair<String, String>>) =
-            valuableFeatures.any {
-                this.foundFeatureMap.containsKey(it.first) &&
-                        this.foundFeatureMap.containsKey(it.second)
             }
 
     private fun checkForSecondaryFeatures(): Boolean {
