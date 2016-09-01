@@ -13,7 +13,11 @@ class PhraseFeature() : AbstractQuoteFeature() {
         val inReplyToRegex = "${this.whitespace}*>*${this.whitespace}*in${this.whitespace}+" +
                 "reply${this.whitespace}+to:${this.whitespace}*"
         val replyAboveRegex = "${this.whitespace}*>*${this.whitespace}*##-.+-##${this.whitespace}*"
+        val originalMsgRegex = "${this.whitespace}*-*${this.whitespace}*Original${this.whitespace}+" +
+                "Message${this.whitespace}*-*${this.whitespace}*"
+        val fwdMsgRegex = "${this.whitespace}*-*${this.whitespace}Forwarded${this.whitespace}+" +
+                "message${this.whitespace}*-*${this.whitespace}*"
 
-        return Regex("($inReplyToRegex)|($replyAboveRegex)", RegexOption.IGNORE_CASE)
+        return Regex("($inReplyToRegex)|($replyAboveRegex)|($originalMsgRegex)", RegexOption.IGNORE_CASE)
     }
 }
