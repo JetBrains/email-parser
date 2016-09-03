@@ -1,8 +1,5 @@
 package practice.email.executable
 
-import practice.email.parser.Email
-import practice.email.parser.EmailParser
-import practice.email.parser.QuotesHeaderSuggestions
 import quoteParser.Content
 import quoteParser.getEmailText
 import quoteParser.parse
