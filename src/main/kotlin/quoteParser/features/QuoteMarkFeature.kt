@@ -45,3 +45,23 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
         }
     }
 }
+
+
+/**
+ * It is a common case when header of the quote is followed
+ * by the quote marks(>).
+ */
+fun checkQuoteMarkSuggestion(endIdx: Int, lines: List<String>,
+                             matchedLinesQuoteMark: List<QuoteMarkMatchingResult>): Boolean {
+    var idx = endIdx + 1
+    while (idx < lines.size) {
+        if (matchedLinesQuoteMark[idx].isTextWithoutQuoteMark()) {
+            return false
+        }
+        if (matchedLinesQuoteMark[idx].hasQuoteMark()) {
+            return true
+        }
+        idx++
+    }
+    return false
+}

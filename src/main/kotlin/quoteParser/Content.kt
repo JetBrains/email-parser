@@ -1,5 +1,8 @@
 package quoteParser
 
+import quoteParser.features.QuoteMarkMatchingResult
+import quoteParser.features.checkQuoteMarkSuggestion
+
 /**
  * Created by Pavel.Zhuk on 16.08.2016.
  */
@@ -37,9 +40,14 @@ data class Content(val body: List<String>,
     }
 
     companion object {
+        /**
+         * Create a Content structure with just a body.
+         */
         fun create(lines: List<String>) = Content(lines, null, null)
 
         fun create(lines: List<String>, fromIndex: Int, toIndex: Int = fromIndex): Content {
+
+
             return Content(
                     lines.subList(0, fromIndex),
                     QuoteHeader(fromIndex, toIndex, lines.subList(fromIndex, toIndex)),
@@ -49,6 +57,33 @@ data class Content(val body: List<String>,
                             null
                     )
             )
+        }
+
+        /**
+         * Create a Content structure with leading '>' removed for header and quote.
+         */
+        fun create(lines: List<String>, matchedLinesQuoteMark: List<QuoteMarkMatchingResult>,
+                   fromIndex: Int, toIndex: Int = fromIndex,
+                   deleteQuoteMarks: Boolean = true): Content {
+
+            if (deleteQuoteMarks &&
+                    (fromIndex == toIndex ||
+                            checkQuoteMarkSuggestion(toIndex, lines, matchedLinesQuoteMark))) {
+                return create(
+                        lines = lines.mapIndexed { i, s ->
+                            val line = s.trimStart()
+                            if (i >= fromIndex && line.startsWith('>')) {
+                                line.drop(1)
+                            } else {
+                                s
+                            }
+                        },
+                        fromIndex = fromIndex,
+                        toIndex = toIndex
+                )
+            }
+
+            return create(lines, fromIndex, toIndex)
         }
     }
 }

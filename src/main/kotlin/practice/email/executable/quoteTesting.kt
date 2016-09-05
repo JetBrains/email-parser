@@ -1,7 +1,6 @@
 package practice.email.executable
 
 import quoteParser.Content
-import quoteParser.getEmailText
 import quoteParser.parse
 import java.io.BufferedWriter
 import java.io.File
@@ -31,7 +30,7 @@ fun quoteTest(emlDir: File) {
             "${pathDatasets}quoteTesting_out.txt"
     ))))
 
-    val emlNums = getSLEmlNums()
+    val emlNums = getABEmlNums()
     var i = 0
     while (i < emlNums.size) {
         try {
@@ -120,15 +119,90 @@ fun getSLEmlNums(): Array<Pair<Int, String>> =
         )
 
 fun getMLEmlNums(): Array<Pair<Int, String>> =
-        arrayOf()
+        arrayOf(
+                Pair(196,"DT+MC"),
+                Pair(279,"DT+MC+split"),
+                Pair(348,"broken and -T"),
+                Pair(18139,"DT+MC skip dates"),
+                Pair(3697,">+ML"),
+                Pair(3715,">+*ML*"),
+                Pair(4298,"+garbage"),
+                Pair(31,"ML4"),
+                Pair(38,"ML5"),
+                Pair(43,"ML4"),
+                Pair(82,"split"),
+                Pair(85,"ML3"),
+                Pair(158,""),
+                Pair(210,"ML6"),
+                Pair(260,"ML5+sign"),
+                Pair(322,"@D+MC"),
+                Pair(17860,"@T+MC"),
+                Pair(501,"Swedish"),
+                Pair(481,"*ML*"),
+                Pair(770,"*ML* + >"),
+                Pair(17326,"+BFM"),
+                Pair(17617,"ST TR"),
+                Pair(17747,"*ML* broken"),
+                Pair(17774,"##--## broken"),
+                Pair(17794,"chinese"),
+                Pair(17811,"T:sec + |"),
+                Pair(3926,"organization?")
+        )
 
 fun getABEmlNums(): Array<Pair<Int, String>> =
-        arrayOf()
+        arrayOf(
+                Pair(4237,"split"),
+                Pair(5370,"split"),
+                Pair(127,""),
+                Pair(149,""),
+                Pair(556,"")
+        )
 
 fun getPhraseEmlNums(): Array<Pair<Int, String>> =
-        arrayOf()
+        arrayOf(
+                Pair(92,"IRT"),
+                Pair(121,"-OM-"),
+                Pair(2555,"critical -OM-"),
+                Pair(17407,"##--##")
+        )
 
 fun getEmptyEmlNums(): Array<Pair<Int, String>> =
-        arrayOf()
+        arrayOf(
+                Pair(3505, "@:"),
+                Pair(19908, "@:"),
+                Pair(636, "DT"),
+                Pair(4898, "DT"),
+                Pair(4861, "DT"),
+                Pair(93, "DT"),
+                Pair(102, "ST TR"),
+                Pair(146, "D@"),
+                Pair(205, ">>>"),
+                Pair(1165, "logs + >"),
+                Pair(22347, ">"),
+                Pair(20454, ">"),
+                Pair(17499, "arabic")
+        )
+
 fun getErrorsEmlNums(): Array<Pair<Int, String>> =
-        arrayOf()
+        arrayOf(
+                Pair(166, "fp DT"),
+                Pair(4083, "fp DT"),
+                Pair(9757, "skip >"),
+                Pair(17659, ""),
+                Pair(1566, ""),
+                Pair(9076, ""),
+                Pair(3953, "DT: - fp"),
+                Pair(3184, "logs ok"),
+                Pair(22912, "logs =("),
+                Pair(3185, "logs"),
+                Pair(3549, "@T skip"),
+                Pair(61, "> fp"),
+                Pair(136, "> fp"),
+                Pair(766, "double > blocks"),
+                Pair(17382, "DT skip"),
+                Pair(18796, "Chinese elusive header"),
+                Pair(3594, "content?"),
+                Pair(8863, "gaps"),
+                Pair(1729, "@:"),
+                Pair(21086, "body after quote")
+        )

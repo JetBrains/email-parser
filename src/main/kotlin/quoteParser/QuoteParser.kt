@@ -5,6 +5,7 @@ import quoteParser.features.*
 class QuoteParser(headerLinesCount: Int = 3,
                   multiLineHeaderLinesCount: Int = 6,
                   maxQuoteBlocksCount: Int = 3,
+                  val deleteQuoteMarks: Boolean = true,
                   val isInReplyToEMLHeader: Boolean = false) {
 
     private enum class Relation() {
@@ -53,11 +54,18 @@ class QuoteParser(headerLinesCount: Int = 3,
             headerLinesIndexes != null && quoteMarkIndex == null ->
                 return Content.create(
                         this.lines,
+                        matchingLines,
                         headerLinesIndexes.first,
-                        headerLinesIndexes.second + 1
+                        headerLinesIndexes.second + 1,
+                        deleteQuoteMarks
                 )
             headerLinesIndexes == null && quoteMarkIndex != null ->
-                return Content.create(this.lines, quoteMarkIndex)
+                return Content.create(
+                        this.lines,
+                        matchingLines,
+                        quoteMarkIndex,
+                        deleteQuoteMarks=deleteQuoteMarks
+                )
         }
 
         // Without this condition smart cast doesn't work.
@@ -77,7 +85,8 @@ class QuoteParser(headerLinesCount: Int = 3,
             Relation.QUOTE_MARK_IN_HEADER_LINES -> {
                 return this.getContentSameLinesCase(
                         startHeaderLinesIndex,
-                        endHeaderLineIndex
+                        endHeaderLineIndex,
+                        matchingLines
                 )
             }
             Relation.QUOTE_MARK_FIRST -> {
@@ -117,9 +126,20 @@ class QuoteParser(headerLinesCount: Int = 3,
         }
 
         if (isTextBetween && isQuoteMarksAroundHeaderLines) {
-            return Content.create(this.lines, quoteMarkIndex)
+            return Content.create(
+                    this.lines,
+                    matchingLines,
+                    quoteMarkIndex,
+                    deleteQuoteMarks=deleteQuoteMarks
+            )
         } else {
-            return Content.create(this.lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
+            return Content.create(
+                    this.lines,
+                    matchingLines,
+                    startHeaderLinesIndex,
+                    endHeaderLineIndex + 1,
+                    deleteQuoteMarks=deleteQuoteMarks
+            )
         }
     }
 
@@ -139,10 +159,21 @@ class QuoteParser(headerLinesCount: Int = 3,
                 throw IllegalStateException(msg)
             }
 
-            return Content.create(this.lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
+            return Content.create(
+                    this.lines,
+                    matchingLines,
+                    startHeaderLinesIndex,
+                    endHeaderLineIndex + 1,
+                    deleteQuoteMarks=deleteQuoteMarks
+            )
 
         } else if (isQuotedTextBetween) {
-            return Content.create(this.lines, quoteMarkIndex)
+            return Content.create(
+                    this.lines,
+                    matchingLines,
+                    quoteMarkIndex,
+                    deleteQuoteMarks=deleteQuoteMarks
+            )
         }
 
         var startIndex = startHeaderLinesIndex
@@ -152,11 +183,24 @@ class QuoteParser(headerLinesCount: Int = 3,
             }
         }
 
-        return Content.create(this.lines, startIndex, endHeaderLineIndex + 1)
+        return Content.create(
+                this.lines,
+                matchingLines,
+                startIndex,
+                endHeaderLineIndex + 1,
+                deleteQuoteMarks=deleteQuoteMarks
+        )
     }
 
-    private fun getContentSameLinesCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int) =
-            Content.create(this.lines, startHeaderLinesIndex, endHeaderLineIndex + 1)
+    private fun getContentSameLinesCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int,
+                                        matchingLines: List<QuoteMarkMatchingResult>) =
+            Content.create(
+                    this.lines,
+                    matchingLines,
+                    startHeaderLinesIndex,
+                    endHeaderLineIndex + 1,
+                    deleteQuoteMarks=deleteQuoteMarks
+            )
 
 
     private fun getRelation(startHeaderLinesIndex: Int, endHeaderLinesIndex: Int,

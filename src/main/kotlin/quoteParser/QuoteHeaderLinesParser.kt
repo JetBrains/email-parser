@@ -8,8 +8,6 @@ import quoteParser.features.*
 class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                              val multiLIneHeaderLinesCount: Int = 6) {
 
-    private var matchedLinesQuoteMark: List<QuoteMarkMatchingResult>? = null
-
     // For single line headers
     private val featureSet: Array<AbstractQuoteFeature>
     private val sufficientFeatureCount: Int
@@ -44,7 +42,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.sufficientFeatureCount = 2
     }
 
-    private fun prepare(matchedLinesQuoteMark: List<QuoteMarkMatchingResult>) {
+    private fun prepare() {
         this.foundFeatureMap.clear()
 
         this.middleColonCount = 0
@@ -53,14 +51,12 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
 
         this.foundPhraseFeature = false
         this.phraseFeatureLineIndex = -1
-
-        this.matchedLinesQuoteMark = matchedLinesQuoteMark
     }
 
     fun parse(lines: List<String>,
               matchedLinesQuoteMark: List<QuoteMarkMatchingResult> =
               QuoteMarkFeature().matchLines(lines)): Pair<Int, Int>? {
-        this.prepare(matchedLinesQuoteMark)
+        this.prepare()
         this.lines = lines
 
         this.lines.forEachIndexed { lineIndex, line ->
@@ -91,7 +87,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                 this.resetFeatures(all = true)
             }
 
-            if (this.headerFound()) {
+            if (this.headerFound(matchedLinesQuoteMark)) {
                 return@parse this.identifyHeader()
             }
         }
@@ -104,43 +100,25 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.phraseFeatureLineIndex = lineIndex
     }
 
-    private fun headerFound() =
+    private fun headerFound(matchedLinesQuoteMark: List<QuoteMarkMatchingResult>) =
             when {
                 this.foundPhraseFeature -> true
                 this.foundFeatureMap.size > this.sufficientFeatureCount -> true
                 this.foundFeatureMap.size == this.sufficientFeatureCount
-                        && this.checkForSecondaryFeatures() -> true
+                        && this.checkForSecondaryFeatures(matchedLinesQuoteMark) -> true
                 else -> false
             }
 
-    private fun checkForSecondaryFeatures(): Boolean {
+    private fun checkForSecondaryFeatures(matchedLinesQuoteMark: List<QuoteMarkMatchingResult>): Boolean {
         val sortedIndexes = this.foundFeatureMap.values.sorted()
         val startIdx = sortedIndexes.first()
         val endIdx = sortedIndexes.last()
 
         return when {
             this.checkMiddleColonSuggestion(startIdx, endIdx) -> true
-            this.checkQuoteMarkSuggestion(endIdx) -> true
+            checkQuoteMarkSuggestion(endIdx, lines, matchedLinesQuoteMark) -> true
             else -> false
         }
-    }
-
-    /**
-     * It is a common case when header of the quote is followed
-     * by the quote marks(>).
-     */
-    private fun checkQuoteMarkSuggestion(endIdx: Int): Boolean {
-        var idx = endIdx + 1
-        while (idx < this.lines.size) {
-            if (this.matchedLinesQuoteMark!![idx].isTextWithoutQuoteMark()) {
-                return false
-            }
-            if (this.matchedLinesQuoteMark!![idx].hasQuoteMark()) {
-                return true
-            }
-            idx++
-        }
-        return false
     }
 
     /**
