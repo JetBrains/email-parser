@@ -6,7 +6,8 @@ class QuoteParser(headerLinesCount: Int = 3,
                   multiLineHeaderLinesCount: Int = 6,
                   maxQuoteBlocksCount: Int = 3,
                   val deleteQuoteMarks: Boolean = true,
-                  val isInReplyToEMLHeader: Boolean = false) {
+                  val isInReplyToEMLHeader: Boolean = false,
+                  val recursive: Boolean = false) {
 
     private enum class Relation() {
         HEADER_LINES_FIRST,
@@ -20,6 +21,9 @@ class QuoteParser(headerLinesCount: Int = 3,
     private val quoteMarkParser: QuoteMarkParser
 
     init {
+        if (!deleteQuoteMarks && recursive) {
+            throw IllegalStateException("Can't perform recursive parsing without deleting '>'")
+        }
         this.lines = listOf()
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
@@ -50,21 +54,17 @@ class QuoteParser(headerLinesCount: Int = 3,
                 }
         when {
             headerLinesIndexes == null && quoteMarkIndex == null ->
-                return Content.create(this.lines)
+                return Content(lines, null, null)
             headerLinesIndexes != null && quoteMarkIndex == null ->
-                return Content.create(
-                        this.lines,
-                        matchingLines,
+                return this.createContent(
                         headerLinesIndexes.first,
                         headerLinesIndexes.second + 1,
-                        deleteQuoteMarks
+                        matchingLines
                 )
             headerLinesIndexes == null && quoteMarkIndex != null ->
-                return Content.create(
-                        this.lines,
-                        matchingLines,
+                return this.createContent(
                         quoteMarkIndex,
-                        deleteQuoteMarks=deleteQuoteMarks
+                        matchingLines=matchingLines
                 )
         }
 
@@ -83,9 +83,9 @@ class QuoteParser(headerLinesCount: Int = 3,
 
         when (relation) {
             Relation.QUOTE_MARK_IN_HEADER_LINES -> {
-                return this.getContentSameLinesCase(
+                return this.createContent(
                         startHeaderLinesIndex,
-                        endHeaderLineIndex,
+                        endHeaderLineIndex + 1,
                         matchingLines
                 )
             }
@@ -126,20 +126,12 @@ class QuoteParser(headerLinesCount: Int = 3,
         }
 
         if (isTextBetween && isQuoteMarksAroundHeaderLines) {
-            return Content.create(
-                    this.lines,
-                    matchingLines,
+            return this.createContent(
                     quoteMarkIndex,
-                    deleteQuoteMarks=deleteQuoteMarks
+                    matchingLines=matchingLines
             )
         } else {
-            return Content.create(
-                    this.lines,
-                    matchingLines,
-                    startHeaderLinesIndex,
-                    endHeaderLineIndex + 1,
-                    deleteQuoteMarks=deleteQuoteMarks
-            )
+            return createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
         }
     }
 
@@ -159,20 +151,12 @@ class QuoteParser(headerLinesCount: Int = 3,
                 throw IllegalStateException(msg)
             }
 
-            return Content.create(
-                    this.lines,
-                    matchingLines,
-                    startHeaderLinesIndex,
-                    endHeaderLineIndex + 1,
-                    deleteQuoteMarks=deleteQuoteMarks
-            )
+            return createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
 
         } else if (isQuotedTextBetween) {
-            return Content.create(
-                    this.lines,
-                    matchingLines,
+            return this.createContent(
                     quoteMarkIndex,
-                    deleteQuoteMarks=deleteQuoteMarks
+                    matchingLines=matchingLines
             )
         }
 
@@ -183,25 +167,55 @@ class QuoteParser(headerLinesCount: Int = 3,
             }
         }
 
-        return Content.create(
-                this.lines,
-                matchingLines,
-                startIndex,
-                endHeaderLineIndex + 1,
-                deleteQuoteMarks=deleteQuoteMarks
-        )
+        return createContent(startIndex, endHeaderLineIndex + 1, matchingLines)
     }
 
-    private fun getContentSameLinesCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int,
-                                        matchingLines: List<QuoteMarkMatchingResult>) =
-            Content.create(
-                    this.lines,
-                    matchingLines,
-                    startHeaderLinesIndex,
-                    endHeaderLineIndex + 1,
-                    deleteQuoteMarks=deleteQuoteMarks
-            )
 
+    private fun createContent(fromIndex: Int,
+                              toIndex: Int = fromIndex,
+                              matchingLines: List<QuoteMarkMatchingResult>): Content {
+        deleteQuoteMarks(fromIndex, toIndex, matchingLines)
+
+        return if (!recursive) {
+            Content(
+                    this.lines.subList(0, fromIndex),
+                    QuoteHeader(fromIndex, toIndex, this.lines.subList(fromIndex, toIndex)),
+                    Content(
+                            this.lines.subList(toIndex, this.lines.lastIndex + 1),
+                            null,
+                            null
+                    )
+            )
+        } else {
+            Content(
+                    this.lines.subList(0, fromIndex),
+                    QuoteHeader(fromIndex, toIndex, this.lines.subList(fromIndex, toIndex)),
+                    this.parse(this.lines.subList(toIndex, this.lines.lastIndex + 1))
+            )
+        }
+    }
+
+    private fun deleteQuoteMarks(fromIndex: Int,
+                                 toIndex: Int = fromIndex,
+                                 matchingLines: List<QuoteMarkMatchingResult>) {
+        if (this.deleteQuoteMarks &&
+                (fromIndex == toIndex ||
+                        checkQuoteMarkSuggestion(toIndex, this.lines, matchingLines))) {
+
+            this.lines = this.lines.mapIndexed { i, s ->
+                val line = s.trimStart()
+                if (i >= fromIndex) {
+                    when {
+                        line.startsWith("> ") -> line.drop(2)
+                        line.startsWith('>') -> line.drop(1)
+                        else -> s
+                    }
+                } else {
+                    s
+                }
+            }
+        }
+    }
 
     private fun getRelation(startHeaderLinesIndex: Int, endHeaderLinesIndex: Int,
                             quoteMarkIndex: Int) =

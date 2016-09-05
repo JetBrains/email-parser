@@ -10,7 +10,7 @@ data class Content(val body: List<String>,
                    val header: QuoteHeader?,
                    val quote: Content?) {
 
-    fun toString(addMarks: Boolean = false, uppercaseHeader: Boolean = false): String {
+    fun toString(addMarks: Boolean = true, uppercaseHeader: Boolean = false): String {
         val prefix = if (addMarks) "> " else ""
         val separator = if (addMarks) "\n> " else "\n"
 
@@ -25,8 +25,9 @@ data class Content(val body: List<String>,
                     }
         else
             ""
-        val quoteText = this.quote?.body
-                ?.joinToString(prefix = prefix, separator = separator, postfix = "")
+        val quoteText = this.quote?.
+                toString(addMarks, uppercaseHeader)?.
+                lines()?.joinToString(prefix = prefix, separator = separator, postfix = "")
                 ?: ""
 
         return StringBuilder(bodyText)
@@ -37,57 +38,5 @@ data class Content(val body: List<String>,
 
     override fun toString(): String {
         return toString(addMarks = false)
-    }
-
-    companion object {
-        /**
-         * Create a Content structure with just a body.
-         */
-        fun create(lines: List<String>) = Content(lines, null, null)
-
-        fun create(lines: List<String>, fromIndex: Int, toIndex: Int = fromIndex): Content {
-
-
-            return Content(
-                    lines.subList(0, fromIndex),
-                    QuoteHeader(fromIndex, toIndex, lines.subList(fromIndex, toIndex)),
-                    Content(
-                            lines.subList(toIndex, lines.lastIndex + 1),
-                            null,
-                            null
-                    )
-            )
-        }
-
-        /**
-         * Create a Content structure with leading '>' removed for header and quote.
-         */
-        fun create(lines: List<String>, matchedLinesQuoteMark: List<QuoteMarkMatchingResult>,
-                   fromIndex: Int, toIndex: Int = fromIndex,
-                   deleteQuoteMarks: Boolean = true): Content {
-
-            if (deleteQuoteMarks &&
-                    (fromIndex == toIndex ||
-                            checkQuoteMarkSuggestion(toIndex, lines, matchedLinesQuoteMark))) {
-                return create(
-                        lines = lines.mapIndexed { i, s ->
-                            val line = s.trimStart()
-                            if (i >= fromIndex) {
-                                when {
-                                    line.startsWith("> ") -> line.drop(2)
-                                    line.startsWith('>') ->  line.drop(1)
-                                    else -> s
-                                }
-                            } else {
-                                s
-                            }
-                        },
-                        fromIndex = fromIndex,
-                        toIndex = toIndex
-                )
-            }
-
-            return create(lines, fromIndex, toIndex)
-        }
     }
 }
