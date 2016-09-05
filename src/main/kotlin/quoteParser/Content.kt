@@ -72,8 +72,12 @@ data class Content(val body: List<String>,
                 return create(
                         lines = lines.mapIndexed { i, s ->
                             val line = s.trimStart()
-                            if (i >= fromIndex && line.startsWith('>')) {
-                                line.drop(1)
+                            if (i >= fromIndex) {
+                                when {
+                                    line.startsWith("> ") -> line.drop(2)
+                                    line.startsWith('>') ->  line.drop(1)
+                                    else -> s
+                                }
                             } else {
                                 s
                             }
