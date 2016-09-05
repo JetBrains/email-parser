@@ -41,7 +41,6 @@ private fun readHeaders(file: File, verbose: Boolean = false): List<Pair<Int, Li
     if (verbose) {
         print("Reading expected headers...")
     }
-
     val inf = BufferedReader(InputStreamReader(FileInputStream(file)))
     var num: Int
     val lines = inf.lines().collect(Collectors.toList())
@@ -85,7 +84,7 @@ private fun getActualHeaders(emlDir: File, verbose: Boolean = false): List<Pair<
             if (!emailText[0].trim().equals(FILTER_STRING)) {
                 val qp = QuoteParser(
                         isInReplyToEMLHeader = containInReplyToHeader(msg),
-                        deleteQuoteMarks = true
+                        deleteQuoteMarks = false
                 )
                 val c = qp.parse(emailText)
                 val H = c.header
