@@ -223,7 +223,6 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
             }
         }
 
-        // TODO add some tricky removal of angle brackets (not urgent)
         return Pair(fromIndex, toIndex)
     }
 

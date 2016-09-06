@@ -10,15 +10,6 @@ import javax.mail.internet.MimeMultipart
 import javax.mail.internet.MimePart
 import javax.mail.internet.ParseException
 
-/**
- * Contains email's Content-Type header values this library is currently able to parse.
- */
-private object ContentType {
-    val TEXT_PLAIN = "text/plain"
-    val MULTIPART_ALT = "multipart/alternative"
-}
-
-//TODO recursive quote parsing
 fun parse(emlFile: File): Content {
     val msg: MimeMessage = getMimeMessage(emlFile)
     val emailText: String = getEmailText(msg)
@@ -29,14 +20,6 @@ fun parse(emlFile: File): Content {
 
 fun containInReplyToHeader(msg: MimeMessage) =
         msg.getHeader("In-Reply-To") != null || msg.getHeader("References") != null
-
-fun parseTrimmed(emlFile: File): Content {
-    val msg: MimeMessage = getMimeMessage(emlFile)
-    val emailText: String = getEmailText(msg)
-    val isInReplyToHeader = containInReplyToHeader(msg)
-    return QuoteParser(isInReplyToEMLHeader = isInReplyToHeader)
-            .parse(emailText.lines().map { it.trim() })
-}
 
 fun getEmailText(emlFile: File): String {
     val msg: MimeMessage = getMimeMessage(emlFile)
@@ -52,26 +35,26 @@ fun getMimeMessage(emlFile: File): MimeMessage {
 }
 
 /**
- * This function defines email message type, amount of parts it is consists of,
- * gets the appropriate part and parses it.
- *
- * @param part parsed part of email message (email messages with multipart Content-type consists of several MimePart's).
- * @return object of Content class.
- * @exception ParseException if fails to parse Content field.
- * @exception NotImplementedError for now it works only with text/plain and multipart/alternative Content-types.
+ * @param part MimePart to get plain text from.
+ * @return string with email content.
+ * @exception ParseException if fails to get Content field or email does not contain text/plain content at all.
  */
 fun getEmailText(part: MimePart): String {
-    val content: Any = part.content ?: throw ParseException("Could not find content of this email.")
-    val contentType: String = part.contentType.split(";")[0].trim().toLowerCase()
+   val text = searchForContent(part)
+    return text ?: throw ParseException("Could not find text/plain part.")
+}
 
-    when (contentType) {
-        ContentType.TEXT_PLAIN ->
-            return (content as String)
-        ContentType.MULTIPART_ALT ->
-            return getEmailText(
-                    (content as MimeMultipart).getBodyPart(0) as MimePart
-            )
-    // TODO add another content types
-        else -> throw NotImplementedError()
+private fun searchForContent(part: MimePart): String? {
+    val content = part.content ?: throw ParseException("Could not find content of this email.")
+
+    if (part.isMimeType("text/plain")) {
+        return content as String
     }
+    if (content is MimeMultipart) {
+        for (i in 0..content.count - 1) {
+            val c = searchForContent(content.getBodyPart(i) as MimePart)
+            return c ?: continue
+        }
+    }
+    return null
 }
