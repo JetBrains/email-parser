@@ -6,6 +6,7 @@ import javax.mail.internet.MimeMessage
 
 private val pathEmails = "C:${File.separator}YT${File.separator}"
 
+// todo modify
 fun main(args: Array<String>) {
     val emlFile = File("${pathEmails}9757.eml")
     val start = System.currentTimeMillis()
@@ -13,11 +14,11 @@ fun main(args: Array<String>) {
     val emailText: String = getEmailText(msg)
     val isInReplyToHeader = containInReplyToHeader(msg)
     val trigger = false
-    val content = QuoteParser(
-            isInReplyToEMLHeader = isInReplyToHeader,
-            deleteQuoteMarks = false,
-            recursive = trigger
-    ).parse(emailText.lines())
+    val content = QuoteParser.Builder()
+            .hasInReplyToEMLHeader(isInReplyToHeader)
+            .deleteQuoteMarks(false)
+            .recursive(trigger)
+            .build().parse(emailText.lines())
     val end = System.currentTimeMillis()
     println("Working time: ${end - start} ms.")
 

@@ -1,6 +1,6 @@
 package practice.email.executable
 
-import quoteParser.parse
+import quoteParser.QuoteParser
 import java.io.File
 
 private val incorrectFileMsg = "Given file is not exists."
@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
         val file = File(args[0])
         if (file.exists()) {
             val start = System.currentTimeMillis()
-            val c = parse(file)
+            val c = QuoteParser.Builder().build().parse(file)
             val end = System.currentTimeMillis()
             println("Working time: ${end - start} ms.")
             println("-".repeat(50))

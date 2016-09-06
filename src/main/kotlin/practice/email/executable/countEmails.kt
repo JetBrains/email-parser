@@ -2,7 +2,6 @@ package practice.email.executable
 
 import quoteParser.QuoteParser
 import quoteParser.getEmailText
-import quoteParser.parse
 import java.io.*
 import java.util.*
 import javax.mail.Session
@@ -51,7 +50,7 @@ fun countEmails(emlDir: File) {
             val session: Session = Session.getDefaultInstance(props)
             msg = MimeMessage(session, source)
             if (!email[0].trim().equals(FILTER_STRING)) {
-                val H = parse(file).header
+                val H = QuoteParser.Builder().build().parse(file).header
                 if (H != null && H.text.isEmpty()) {
                     header = listOf(email[H.startIndex])
                 } else {

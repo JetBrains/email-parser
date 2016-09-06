@@ -1,13 +1,20 @@
 package quoteParser
 
 import quoteParser.features.*
+import java.io.File
+import javax.mail.internet.MimeMessage
 
-class QuoteParser(headerLinesCount: Int = 3,
-                  multiLineHeaderLinesCount: Int = 6,
-                  maxQuoteBlocksCount: Int = 3,
-                  val deleteQuoteMarks: Boolean = true,
-                  val isInReplyToEMLHeader: Boolean = false,
-                  val recursive: Boolean = false) {
+class QuoteParser private constructor(builder: Builder) {
+
+    private var hasInReplyToEMLHeader: Boolean
+    private val deleteQuoteMarks: Boolean
+    private val recursive: Boolean
+
+    private val quoteMarkFeature: QuoteMarkFeature
+    private val quoteHeaderLinesParser: QuoteHeaderLinesParser
+    private val quoteMarkParser: QuoteMarkParser
+
+    private var lines: List<String>
 
     private enum class Relation() {
         HEADER_LINES_FIRST,
@@ -15,24 +22,79 @@ class QuoteParser(headerLinesCount: Int = 3,
         QUOTE_MARK_IN_HEADER_LINES
     }
 
-    private var lines: List<String>
-    private val quoteMarkFeature: QuoteMarkFeature
-    private val quoteHeaderLinesParser: QuoteHeaderLinesParser
-    private val quoteMarkParser: QuoteMarkParser
+    class Builder {
+        internal var headerLinesCount: Int = 3
+            private set
+        internal var multiLineHeaderLinesCount: Int = 6
+            private set
+        internal var maxQuoteBlocksCount: Int = 3
+            private set
+        internal var deleteQuoteMarks: Boolean = true
+            private set
+        internal var recursive: Boolean = false
+            private set
+        internal var hasInReplyToEMLHeader: Boolean = false
+            private set
+
+        fun headerLinesCount(value: Int): Builder {
+            this.headerLinesCount = value
+            return this
+        }
+
+        fun multiLineHeaderLinesCount(value: Int): Builder {
+            this.multiLineHeaderLinesCount = value
+            return this
+        }
+
+        fun maxQuoteBlocksCount(value: Int): Builder {
+            this.maxQuoteBlocksCount = value
+            return this
+        }
+
+        fun deleteQuoteMarks(value: Boolean): Builder {
+            this.deleteQuoteMarks = value
+            return this
+        }
+
+        fun recursive(value: Boolean): Builder {
+            this.recursive = value
+            return this
+        }
+
+        fun hasInReplyToEMLHeader(value: Boolean): Builder {
+            this.hasInReplyToEMLHeader = value
+            return this
+        }
+
+        fun build(): QuoteParser {
+            return QuoteParser(this)
+        }
+    }
 
     init {
+        this.deleteQuoteMarks = builder.deleteQuoteMarks
+        this.recursive = builder.recursive
+        this.hasInReplyToEMLHeader = builder.hasInReplyToEMLHeader
+
         if (!deleteQuoteMarks && recursive) {
             throw IllegalStateException("Can't perform recursive parsing without deleting '>'")
         }
         this.lines = listOf()
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
-                headerLinesCount = headerLinesCount,
-                multiLIneHeaderLinesCount = multiLineHeaderLinesCount
+                headerLinesCount = builder.headerLinesCount,
+                multiLIneHeaderLinesCount = builder.multiLineHeaderLinesCount
         )
         this.quoteMarkParser = QuoteMarkParser(
-                maxQuoteBlocksCount = maxQuoteBlocksCount
+                maxQuoteBlocksCount = builder.maxQuoteBlocksCount
         )
+    }
+
+    fun parse(emlFile: File): Content {
+        val msg: MimeMessage = getMimeMessage(emlFile)
+        val emailText: String = getEmailText(msg)
+        this.hasInReplyToEMLHeader = containInReplyToHeader(msg)
+        return parse(emailText.lines())
     }
 
     fun parse(lines: List<String>): Content {
@@ -47,7 +109,7 @@ class QuoteParser(headerLinesCount: Int = 3,
                 // the time.
                 // As alternative this condition may be deleted, but it works
                 // worse with some cases...
-                if (!this.isInReplyToEMLHeader && headerLinesIndexes != null) {
+                if (!this.hasInReplyToEMLHeader && headerLinesIndexes != null) {
                     null
                 } else {
                     this.quoteMarkParser.parse(this.lines, matchingLines)

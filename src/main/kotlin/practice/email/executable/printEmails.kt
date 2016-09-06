@@ -2,7 +2,6 @@ package practice.email.executable
 
 
 import quoteParser.QuoteParser
-import quoteParser.parse
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
@@ -47,7 +46,7 @@ fun printEmails(emlDir: File) {
         val props: Properties = System.getProperties()
         val session: Session = Session.getDefaultInstance(props)
         val msg: MimeMessage = MimeMessage(session, source)
-        val c = parse(file)
+        val c = QuoteParser.Builder().build().parse(file)
 
         val irt = msg.getHeader("In-Reply-To")
         val rfrncs = msg.getHeader("References")

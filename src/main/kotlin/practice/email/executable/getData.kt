@@ -39,10 +39,10 @@ fun getData(emlDir: File) {
             emailText = getEmailText(msg).lines()
 
             if (!emailText[0].trim().equals(FILTER_STRING)) {
-                val qp = QuoteParser(
-                        isInReplyToEMLHeader = containInReplyToHeader(msg),
-                        deleteQuoteMarks = false
-                )
+                val qp = QuoteParser.Builder()
+                        .hasInReplyToEMLHeader(containInReplyToHeader(msg))
+                        .deleteQuoteMarks(false)
+                        .build()
                 val c = qp.parse(emailText)
                 val H = c.header
                 if (H != null && H.text.isEmpty()) {

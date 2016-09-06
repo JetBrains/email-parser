@@ -62,7 +62,7 @@ private class GmailMailbox(val login: String, val pass: String) {
             messages.filterIndexed { i, message ->
                 if (i % 50 == 0)
                     println("$i messages filtered.")
-                
+
                 !message.isMimeType("text/plain") && !message.isMimeType("multipart/alternative")
             }
 

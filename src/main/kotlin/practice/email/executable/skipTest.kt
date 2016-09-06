@@ -1,8 +1,8 @@
 package practice.email.executable
 
 import quoteParser.Content
+import quoteParser.QuoteParser
 import quoteParser.getEmailText
-import quoteParser.parse
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -53,7 +53,7 @@ fun skipTest(emlDir: File) {
                 continue
             }
 
-            val c = parse(file)
+            val c = QuoteParser.Builder().build().parse(file)
 
             if (c.header == null) {
                 write(empty, c, i)

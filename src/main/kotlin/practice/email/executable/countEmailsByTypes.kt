@@ -1,12 +1,7 @@
 package practice.email.executable
 
-import quoteParser.QuoteParser
 import quoteParser.getEmailText
-import quoteParser.parse
 import java.io.*
-import java.util.*
-import javax.mail.Session
-import javax.mail.internet.MimeMessage
 import javax.mail.internet.ParseException
 
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +

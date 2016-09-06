@@ -10,14 +10,6 @@ import javax.mail.internet.MimeMultipart
 import javax.mail.internet.MimePart
 import javax.mail.internet.ParseException
 
-fun parse(emlFile: File): Content {
-    val msg: MimeMessage = getMimeMessage(emlFile)
-    val emailText: String = getEmailText(msg)
-    val isInReplyToHeader = containInReplyToHeader(msg)
-    return QuoteParser(isInReplyToEMLHeader = isInReplyToHeader)
-            .parse(emailText.lines())
-}
-
 fun containInReplyToHeader(msg: MimeMessage) =
         msg.getHeader("In-Reply-To") != null || msg.getHeader("References") != null
 

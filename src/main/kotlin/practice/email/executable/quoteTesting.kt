@@ -1,7 +1,7 @@
 package practice.email.executable
 
 import quoteParser.Content
-import quoteParser.parse
+import quoteParser.QuoteParser
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -35,7 +35,7 @@ fun quoteTest(emlDir: File) {
     while (i < emlNums.size) {
         try {
             val file = File(emlDir, "${emlNums[i].first}.eml")
-            val c = parse(file)
+            val c = QuoteParser.Builder().build().parse(file)
             writeEml(out, c, emlNums[i])
         } catch(e: Exception) {
             println("${i}.eml gave an error while parsing: ${e.message}")
