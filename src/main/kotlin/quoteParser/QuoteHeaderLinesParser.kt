@@ -6,7 +6,8 @@ import quoteParser.features.*
  * Created by Pavel.Zhuk on 25.08.2016.
  */
 class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
-                             val multiLIneHeaderLinesCount: Int = 6) {
+                             val multiLIneHeaderLinesCount: Int = 6,
+                             keyPhrases: List<String> = KeyPhrases.default) {
 
     // For single line headers
     private val featureSet: Array<AbstractQuoteFeature>
@@ -25,12 +26,13 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
     // For phraseFeature
     private var foundPhraseFeature = false
     private var phraseFeatureLineIndex = -1
-    private val phraseFeature = PhraseFeature()
+    private val phraseFeature: PhraseFeature
     // ------
 
     private var lines: List<String> = listOf()
 
     init {
+        phraseFeature = PhraseFeature(keyPhrases)
         this.featureSet = arrayOf(
                 DateFeature(),
                 TimeFeature(),

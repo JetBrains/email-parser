@@ -33,7 +33,9 @@ class QuoteParser private constructor(builder: Builder) {
             private set
         internal var recursive: Boolean = false
             private set
-        internal var hasInReplyToEMLHeader: Boolean = false
+        internal var hasInReplyToEMLHeader: Boolean = true
+            private set
+        internal var keyPhrases: List<String> = KeyPhrases.default
             private set
 
         fun headerLinesCount(value: Int): Builder {
@@ -66,6 +68,11 @@ class QuoteParser private constructor(builder: Builder) {
             return this
         }
 
+        fun keyPhrases(value: List<String>): Builder {
+            this.keyPhrases = value
+            return this
+        }
+
         fun build(): QuoteParser {
             return QuoteParser(this)
         }
@@ -83,7 +90,8 @@ class QuoteParser private constructor(builder: Builder) {
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
                 headerLinesCount = builder.headerLinesCount,
-                multiLIneHeaderLinesCount = builder.multiLineHeaderLinesCount
+                multiLIneHeaderLinesCount = builder.multiLineHeaderLinesCount,
+                keyPhrases = builder.keyPhrases
         )
         this.quoteMarkParser = QuoteMarkParser(
                 maxQuoteBlocksCount = builder.maxQuoteBlocksCount
