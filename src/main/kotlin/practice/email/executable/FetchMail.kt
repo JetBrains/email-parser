@@ -58,17 +58,12 @@ private class GmailMailbox(val login: String, val pass: String) {
     /**
      * Filter messages without appropriate Content Type
      */
-
-    // TODO filter messages started with FILTER_STRING
-
     private fun filterMessages(messages: List<Message>): List<Message> =
             messages.filterIndexed { i, message ->
                 if (i % 50 == 0)
                     println("$i messages filtered.")
-
-                val contentType = message.contentType.split(";")[0].trim().toLowerCase()
-                contentType.equals(ContentType.TEXT_PLAIN) ||
-                        contentType.equals(ContentType.MULTIPART_ALT)
+                
+                !message.isMimeType("text/plain") && !message.isMimeType("multipart/alternative")
             }
 
 
@@ -80,7 +75,9 @@ private class GmailMailbox(val login: String, val pass: String) {
             if (i % 50 == 0)
                 println("$i messages saved.")
 
-            message.writeTo(FileOutputStream(File("$path$i.eml")))
+            val fos = FileOutputStream(File("$path$i.eml"))
+            message.writeTo(fos)
+            fos.close()
         }
     }
 }
