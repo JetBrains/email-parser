@@ -142,7 +142,7 @@ class QuoteParser private constructor(builder: Builder) {
             headerLinesIndexes == null && quoteMarkIndex != null ->
                 return this.createContent(
                         quoteMarkIndex,
-                        matchingLines=matchingLines
+                        matchingLines = matchingLines
                 )
         }
 
@@ -206,7 +206,7 @@ class QuoteParser private constructor(builder: Builder) {
         if (isTextBetween && isQuoteMarksAroundHeaderLines) {
             return this.createContent(
                     quoteMarkIndex,
-                    matchingLines=matchingLines
+                    matchingLines = matchingLines
             )
         } else {
             return createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
@@ -234,7 +234,7 @@ class QuoteParser private constructor(builder: Builder) {
         } else if (isQuotedTextBetween) {
             return this.createContent(
                     quoteMarkIndex,
-                    matchingLines=matchingLines
+                    matchingLines = matchingLines
             )
         }
 

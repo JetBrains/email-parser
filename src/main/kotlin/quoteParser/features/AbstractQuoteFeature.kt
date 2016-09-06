@@ -16,7 +16,10 @@ abstract class AbstractQuoteFeature() {
     protected val startBracketsOptional = "\\p{C}*[\\.,\\{\\[<\\*\\(:\"'`\\|\\\\/~]?\\p{C}*"
     @Language("Regexp")
     protected val endBracketsOptional = "\\p{C}*[\\.,}\\]>\\*\\):\"'`\\|\\\\/~;]?\\p{C}*"
+
     abstract val name: String
+
     abstract protected fun getRegex(): Regex
+
     open fun matches(line: String): Boolean = this.getRegex().matches(line)
 }
