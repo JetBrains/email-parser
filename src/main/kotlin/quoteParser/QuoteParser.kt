@@ -29,6 +29,8 @@ class QuoteParser private constructor(builder: Builder) {
             private set
         internal var maxQuoteBlocksCount: Int = 3
             private set
+        internal var minimumQuoteBlockSize: Int = 7
+            private set
         internal var deleteQuoteMarks: Boolean = true
             private set
         internal var recursive: Boolean = false
@@ -50,6 +52,11 @@ class QuoteParser private constructor(builder: Builder) {
 
         fun maxQuoteBlocksCount(value: Int): Builder {
             this.maxQuoteBlocksCount = value
+            return this
+        }
+
+        fun minimumQuoteBlockSize(value: Int): Builder {
+            this.minimumQuoteBlockSize = value
             return this
         }
 
@@ -94,7 +101,8 @@ class QuoteParser private constructor(builder: Builder) {
                 keyPhrases = builder.keyPhrases
         )
         this.quoteMarkParser = QuoteMarkParser(
-                maxQuoteBlocksCount = builder.maxQuoteBlocksCount
+                maxQuoteBlocksCount = builder.maxQuoteBlocksCount,
+                minimumQuoteBlockSize = builder.minimumQuoteBlockSize
         )
     }
 
