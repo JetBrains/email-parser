@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
  */
 class PhraseFeatureSpecs : Spek() {
     init {
-        val phraseFeature = PhraseFeature()
+        val phraseFeature = PhraseFeature(KeyPhrases.default)
 
         given("header phrase") {
             val s = """   In reply to:   """
