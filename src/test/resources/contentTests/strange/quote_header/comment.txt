@@ -1,4 +1,0 @@
-quote_with_sign.eml
-
-There are strange quote header witch goes to the body part.
-How is that?? Should fix.

@@ -14,11 +14,15 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = 'quoteParser.executable.QuoteParserExampleKt'
+mainClassName = 'practice.email.executable.QuoteParserExampleKt'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'javax.mail:mail:1.4.7'
+    compile 'nz.ac.waikato.cms.weka:weka-stable:3.8.0'
+    compile 'nz.ac.waikato.cms.weka:XMeans:1.0.4'
+    compile 'nz.ac.waikato.cms.weka:levenshteinEditDistance:1.0.2'
+
     compile group: 'com.intellij', name: 'annotations', version: '12.0'
 
     testCompile 'junit:junit:4.12'
@@ -46,10 +50,36 @@ run {
     }
 }
 
+task runQHS(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'practice.email.executable.QuoteHeaderSuggestionsExecutableKt'
+
+    if (project.hasProperty('paths')) {
+        args(paths.split(';'))
+    }
+}
+
+task runEditDistance(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'practice.email.executable.EditDistanceExecutableKt'
+
+    if (project.hasProperty('headers')) {
+        args(headers.split(','))
+    }
+}
+
+task runClustering(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    main = 'practice.email.executable.ClusteringExecutableKt'
+}
+
 task runProcessing(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
-    main = 'quoteParser.executable.QuoteParserExampleKt'
+    main = 'practice.email.executable.QuoteParserExampleKt'
 
     if (project.hasProperty('emlFile')) {
         args emlFile.split('\n')
