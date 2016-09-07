@@ -8,10 +8,10 @@ import quoteParser.features.QuoteMarkFeature
  */
 // MAX_QUOTE_BLOCKS_COUNT = 1 is good for hiding fragmented quotes
 // but a small portion of useful content is become hidden as well.
-class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3,
+internal class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3,
                       val minimumQuoteBlockSize: Int = 7) {
 
-    fun parse(lines: List<String>,
+    internal fun parse(lines: List<String>,
               matchingLines: List<QuoteMarkMatchingResult> = QuoteMarkFeature().matchLines(lines)): Int? {
 
         val quoteBlocksCount = this.getQuoteBlocksCount(matchingLines)

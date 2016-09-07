@@ -7,7 +7,7 @@ import javax.mail.internet.ParseException
 private val pathDatasets = ".${File.separator}src${File.separator}main${File.separator}" +
         "resources${File.separator}datasets${File.separator}"
 
-private val EMAILS_COUNT = 23055 /*+ cnt*/
+private val EMAILS_COUNT = 13702
 
 fun main(args: Array<String>) {
     val emlDir: File
@@ -32,7 +32,7 @@ fun countEmailsByTypes(emlDir: File) {
     ))))
     var textPlainCount = 0
     var nonTextPlainCount = 0
-    for (i in 23055.. EMAILS_COUNT - 1) {
+    for (i in 0.. EMAILS_COUNT - 1) {
         try {
             val file = File(emlDir, "${i}.eml")
             val emailText = getEmailText(file)

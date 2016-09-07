@@ -1,8 +1,5 @@
 package quoteParser
 
-import quoteParser.features.QuoteMarkMatchingResult
-import quoteParser.features.checkQuoteMarkSuggestion
-
 /**
  * Created by Pavel.Zhuk on 16.08.2016.
  */

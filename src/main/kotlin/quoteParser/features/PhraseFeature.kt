@@ -7,7 +7,7 @@ import org.intellij.lang.annotations.Language
  */
 object KeyPhrases {
     @Language("Regexp")
-    private val whitespace = "[\\p{C}\\p{Z}\\s]"
+    val whitespace = "[\\p{C}\\p{Z}\\s]"
 
     val inReplyToRegex = "${this.whitespace}*>*${this.whitespace}*in${this.whitespace}+" +
             "reply${this.whitespace}+to:${this.whitespace}*"
@@ -21,9 +21,9 @@ object KeyPhrases {
             "message${this.whitespace}*-*${this.whitespace}*"
 
     val default = listOf<String>(
-            inReplyToRegex,
-            replyAboveRegex,
-            originalMsgRegex
+            this.inReplyToRegex,
+            this.replyAboveRegex,
+            this.originalMsgRegex
     )
 }
 
@@ -34,10 +34,10 @@ class PhraseFeature(keyPhrases: List<String>) : AbstractQuoteFeature() {
     private val commonRegex: String
 
     override fun getRegex(): Regex {
-        return Regex(commonRegex, RegexOption.IGNORE_CASE)
+        return Regex(this.commonRegex, RegexOption.IGNORE_CASE)
     }
 
     init {
-        commonRegex = keyPhrases.joinToString(prefix = "(", separator = ")|(", postfix = ")")
+        this.commonRegex = keyPhrases.joinToString(prefix = "(", separator = ")|(", postfix = ")")
     }
 }

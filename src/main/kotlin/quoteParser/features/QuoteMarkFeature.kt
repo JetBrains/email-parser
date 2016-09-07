@@ -3,14 +3,13 @@ package quoteParser.features
 /**
  * Created by Pavel.Zhuk on 24.08.2016.
  */
-enum class QuoteMarkMatchingResult() {
+enum class QuoteMarkMatchingResult {
     V_EMPTY,
     V_NOT_EMPTY,
     EMPTY,
     NOT_EMPTY;
 
     fun hasQuoteMark() = this == V_EMPTY || this == V_NOT_EMPTY
-    fun isEmpty() = this == EMPTY
     fun isTextWithoutQuoteMark() = this == NOT_EMPTY
 }
 
@@ -51,7 +50,7 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
  * It is a common case when header of the quote is followed
  * by the quote marks(>).
  */
-fun checkQuoteMarkSuggestion(endIdx: Int, lines: List<String>,
+internal fun checkQuoteMarkSuggestion(endIdx: Int, lines: List<String>,
                              matchedLinesQuoteMark: List<QuoteMarkMatchingResult>): Boolean {
     var idx = endIdx + 1
     while (idx < lines.size) {

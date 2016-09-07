@@ -4,6 +4,53 @@ import quoteParser.features.*
 import java.io.File
 import javax.mail.internet.MimeMessage
 
+private enum class Relation() {
+    HEADER_LINES_FIRST,
+    QUOTE_MARK_FIRST,
+    QUOTE_MARK_IN_HEADER_LINES
+}
+
+private fun getRelation(startHeaderLinesIndex: Int, endHeaderLinesIndex: Int, quoteMarkIndex: Int) =
+        when {
+            quoteMarkIndex < startHeaderLinesIndex ->
+                Relation.QUOTE_MARK_FIRST
+            quoteMarkIndex > endHeaderLinesIndex ->
+                Relation.HEADER_LINES_FIRST
+            else ->
+                Relation.QUOTE_MARK_IN_HEADER_LINES
+        }
+
+private fun isTextBetween(startIndex: Int, endIndex: Int, matchingLines: List<QuoteMarkMatchingResult>) =
+        (startIndex + 1..endIndex - 1).any() {
+            matchingLines[it] == QuoteMarkMatchingResult.NOT_EMPTY
+        }
+
+private fun isQuotedTextBetween(startIndex: Int, endIndex: Int, matchingLines: List<QuoteMarkMatchingResult>) =
+        (startIndex + 1..endIndex - 1).any() {
+            matchingLines[it] == QuoteMarkMatchingResult.V_NOT_EMPTY
+        }
+
+private fun isQuoteMarksAroundHeaderLines(startHeaderLinesIndex: Int,
+                                          endHeaderLinesIndex: Int,
+                                          quoteMarkIndex: Int,
+                                          matchingLines: List<QuoteMarkMatchingResult>): Boolean {
+    val headerLinesContainsQuoteMarks = (startHeaderLinesIndex..endHeaderLinesIndex).all() {
+        matchingLines[it].hasQuoteMark()
+    }
+    if (headerLinesContainsQuoteMarks) {
+        return true
+    }
+    for (i in endHeaderLinesIndex + 1..quoteMarkIndex) {
+        if (matchingLines[i].hasQuoteMark()) {
+            return true
+        }
+        if (matchingLines[i] == QuoteMarkMatchingResult.NOT_EMPTY) {
+            return false
+        }
+    }
+    return true
+}
+
 class QuoteParser private constructor(builder: Builder) {
 
     private var hasInReplyToEMLHeader: Boolean
@@ -14,13 +61,7 @@ class QuoteParser private constructor(builder: Builder) {
     private val quoteHeaderLinesParser: QuoteHeaderLinesParser
     private val quoteMarkParser: QuoteMarkParser
 
-    private var lines: List<String>
-
-    private enum class Relation() {
-        HEADER_LINES_FIRST,
-        QUOTE_MARK_FIRST,
-        QUOTE_MARK_IN_HEADER_LINES
-    }
+    private var lines: List<String> = listOf()
 
     class Builder {
         internal var headerLinesCount: Int = 3
@@ -90,10 +131,10 @@ class QuoteParser private constructor(builder: Builder) {
         this.recursive = builder.recursive
         this.hasInReplyToEMLHeader = builder.hasInReplyToEMLHeader
 
-        if (!deleteQuoteMarks && recursive) {
+        if (!this.deleteQuoteMarks && this.recursive) {
             throw IllegalStateException("Can't perform recursive parsing without deleting '>'")
         }
-        this.lines = listOf()
+
         this.quoteMarkFeature = QuoteMarkFeature()
         this.quoteHeaderLinesParser = QuoteHeaderLinesParser(
                 headerLinesCount = builder.headerLinesCount,
@@ -153,7 +194,7 @@ class QuoteParser private constructor(builder: Builder) {
         val startHeaderLinesIndex = headerLinesIndexes.first
         val endHeaderLineIndex = headerLinesIndexes.second
 
-        val relation = this.getRelation(
+        val relation = getRelation(
                 startHeaderLinesIndex,
                 endHeaderLineIndex,
                 quoteMarkIndex
@@ -189,8 +230,8 @@ class QuoteParser private constructor(builder: Builder) {
     private fun getContentHeaderLinesFirstCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int, quoteMarkIndex: Int,
                                                matchingLines: List<QuoteMarkMatchingResult>): Content {
 
-        val isTextBetween = this.isTextBetween(endHeaderLineIndex, quoteMarkIndex, matchingLines)
-        val isQuoteMarksAroundHeaderLines = this.isQuoteMarksAroundHeaderLines(
+        val isTextBetween = isTextBetween(endHeaderLineIndex, quoteMarkIndex, matchingLines)
+        val isQuoteMarksAroundHeaderLines = isQuoteMarksAroundHeaderLines(
                 startHeaderLinesIndex,
                 endHeaderLineIndex,
                 quoteMarkIndex,
@@ -209,15 +250,15 @@ class QuoteParser private constructor(builder: Builder) {
                     matchingLines = matchingLines
             )
         } else {
-            return createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
+            return this.createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
         }
     }
 
     private fun getContentQuoteMarkFirstCase(startHeaderLinesIndex: Int, endHeaderLineIndex: Int, quoteMarkIndex: Int,
                                              matchingLines: List<QuoteMarkMatchingResult>): Content {
 
-        val isTextBetween = this.isTextBetween(quoteMarkIndex, startHeaderLinesIndex, matchingLines)
-        val isQuotedTextBetween = this.isQuotedTextBetween(quoteMarkIndex, startHeaderLinesIndex, matchingLines)
+        val isTextBetween = isTextBetween(quoteMarkIndex, startHeaderLinesIndex, matchingLines)
+        val isQuotedTextBetween = isQuotedTextBetween(quoteMarkIndex, startHeaderLinesIndex, matchingLines)
 
         if (isTextBetween) {
 
@@ -229,7 +270,7 @@ class QuoteParser private constructor(builder: Builder) {
                 throw IllegalStateException(msg)
             }
 
-            return createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
+            return this.createContent(startHeaderLinesIndex, endHeaderLineIndex + 1, matchingLines)
 
         } else if (isQuotedTextBetween) {
             return this.createContent(
@@ -245,16 +286,16 @@ class QuoteParser private constructor(builder: Builder) {
             }
         }
 
-        return createContent(startIndex, endHeaderLineIndex + 1, matchingLines)
+        return this.createContent(startIndex, endHeaderLineIndex + 1, matchingLines)
     }
 
 
     private fun createContent(fromIndex: Int,
                               toIndex: Int = fromIndex,
                               matchingLines: List<QuoteMarkMatchingResult>): Content {
-        deleteQuoteMarks(fromIndex, toIndex, matchingLines)
+        this.deleteQuoteMarks(fromIndex, toIndex, matchingLines)
 
-        return if (!recursive) {
+        return if (!this.recursive) {
             Content(
                     this.lines.subList(0, fromIndex),
                     QuoteHeader(fromIndex, toIndex, this.lines.subList(fromIndex, toIndex)),
@@ -293,49 +334,5 @@ class QuoteParser private constructor(builder: Builder) {
                 }
             }
         }
-    }
-
-    private fun getRelation(startHeaderLinesIndex: Int, endHeaderLinesIndex: Int,
-                            quoteMarkIndex: Int) =
-            when {
-                quoteMarkIndex < startHeaderLinesIndex ->
-                    Relation.QUOTE_MARK_FIRST
-                quoteMarkIndex > endHeaderLinesIndex ->
-                    Relation.HEADER_LINES_FIRST
-                else ->
-                    Relation.QUOTE_MARK_IN_HEADER_LINES
-            }
-
-    private fun isTextBetween(startIndex: Int, endIndex: Int,
-                              matchingLines: List<QuoteMarkMatchingResult>) =
-            (startIndex + 1..endIndex - 1).any() {
-                matchingLines[it] == QuoteMarkMatchingResult.NOT_EMPTY
-            }
-
-    private fun isQuotedTextBetween(startIndex: Int, endIndex: Int,
-                                    matchingLines: List<QuoteMarkMatchingResult>) =
-            (startIndex + 1..endIndex - 1).any() {
-                matchingLines[it] == QuoteMarkMatchingResult.V_NOT_EMPTY
-            }
-
-    private fun isQuoteMarksAroundHeaderLines(startHeaderLinesIndex: Int,
-                                              endHeaderLinesIndex: Int,
-                                              quoteMarkIndex: Int,
-                                              matchingLines: List<QuoteMarkMatchingResult>): Boolean {
-        val headerLinesContainsQuoteMarks = (startHeaderLinesIndex..endHeaderLinesIndex).all() {
-            matchingLines[it].hasQuoteMark()
-        }
-        if (headerLinesContainsQuoteMarks) {
-            return true
-        }
-        for (i in endHeaderLinesIndex + 1..quoteMarkIndex) {
-            if (matchingLines[i].hasQuoteMark()) {
-                return true
-            }
-            if (matchingLines[i] == QuoteMarkMatchingResult.NOT_EMPTY) {
-                return false
-            }
-        }
-        return true
     }
 }

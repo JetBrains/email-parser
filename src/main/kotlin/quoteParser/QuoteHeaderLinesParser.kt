@@ -5,7 +5,7 @@ import quoteParser.features.*
 /**
  * Created by Pavel.Zhuk on 25.08.2016.
  */
-class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
+internal class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                              val multiLIneHeaderLinesCount: Int = 6,
                              keyPhrases: List<String> = KeyPhrases.default) {
 
@@ -32,7 +32,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
     private var lines: List<String> = listOf()
 
     init {
-        phraseFeature = PhraseFeature(keyPhrases)
+        this.phraseFeature = PhraseFeature(keyPhrases)
         this.featureSet = arrayOf(
                 DateFeature(),
                 TimeFeature(),
@@ -55,7 +55,7 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         this.phraseFeatureLineIndex = -1
     }
 
-    fun parse(lines: List<String>,
+    internal fun parse(lines: List<String>,
               matchedLinesQuoteMark: List<QuoteMarkMatchingResult> =
               QuoteMarkFeature().matchLines(lines)): Pair<Int, Int>? {
         this.prepare()
@@ -117,21 +117,11 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
         val endIdx = sortedIndexes.last()
 
         return when {
-            this.checkMiddleColonSuggestion(startIdx, endIdx) -> true
-            checkQuoteMarkSuggestion(endIdx, lines, matchedLinesQuoteMark) -> true
+            checkMiddleColonSuggestion(startIdx, endIdx, this.lines, this.middleColonFeature) -> true
+            checkQuoteMarkSuggestion(endIdx, this.lines, matchedLinesQuoteMark) -> true
             else -> false
         }
     }
-
-    /**
-     * If supposed header lines contains MiddleColonFeature most often
-     * it is a multi line header.
-     */
-    private fun checkMiddleColonSuggestion(startIdx: Int, endIdx: Int): Boolean {
-        return this.lines.subList(startIdx, endIdx + 1)
-                .any { this.middleColonFeature.matches(it) }
-    }
-
 
     private fun updateSingleLineFeature(lineIndex: Int, feature: AbstractQuoteFeature) {
         if (feature is LastColonFeature) {
@@ -146,12 +136,12 @@ class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
             val endIdx = sortedIndexes.last()
 
             // LastColonFeature cannot be in multi line header.
-            if (checkMiddleColonSuggestion(startIdx, endIdx)) {
+            if (checkMiddleColonSuggestion(startIdx, endIdx, this.lines, this.middleColonFeature)) {
                 val headerLinesCount = endIdx - startIdx + 1
 
                 // It seems like MiddleColonFeature instead LastColonFeature.
                 if (this.middleColonCount <= headerLinesCount) {
-                    updateMultiLineFeature(lineIndex)
+                    this.updateMultiLineFeature(lineIndex)
 
                     // If line contains the real MiddleColonFeature
                     // then we should decrease its count.

@@ -19,3 +19,13 @@ class MiddleColonFeature() : AbstractQuoteFeature() {
         return Regex("[\\s\\p{C}\\p{Z}>]*\\S+${this.whitespace}*:${this.whitespace}+\\S+.*")
     }
 }
+
+/**
+ * If supposed header lines contains MiddleColonFeature most often
+ * it is a multi line header.
+ */
+internal fun checkMiddleColonSuggestion(startIdx: Int, endIdx: Int, lines: List<String>,
+                                       middleColonFeature: MiddleColonFeature): Boolean {
+    return lines.subList(startIdx, endIdx + 1)
+            .any { middleColonFeature.matches(it) }
+}

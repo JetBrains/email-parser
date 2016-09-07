@@ -3,7 +3,7 @@ package quoteParser
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import java.util.*
+import java.util.Properties
 import javax.mail.Session
 import javax.mail.internet.MimeMessage
 import javax.mail.internet.MimeMultipart
@@ -13,17 +13,17 @@ import javax.mail.internet.ParseException
 fun containInReplyToHeader(msg: MimeMessage) =
         msg.getHeader("In-Reply-To") != null || msg.getHeader("References") != null
 
-fun getEmailText(emlFile: File): String {
-    val msg: MimeMessage = getMimeMessage(emlFile)
-    return getEmailText(msg)
-}
-
 fun getMimeMessage(emlFile: File): MimeMessage {
     val source: InputStream = FileInputStream(emlFile)
     val props: Properties = System.getProperties()
     val session: Session = Session.getDefaultInstance(props)
     val msg: MimeMessage = MimeMessage(session, source)
     return msg
+}
+
+fun getEmailText(emlFile: File): String {
+    val msg: MimeMessage = getMimeMessage(emlFile)
+    return getEmailText(msg)
 }
 
 /**
