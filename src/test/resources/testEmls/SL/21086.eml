@@ -1,0 +1,52 @@
+References: <JM9>
+From: asd asd <asd@asd.com>
+Date: Wed, 16 Mar 2016 10:12:39 +0200
+In-Reply-To: <JM9>
+Content-Type: multipart/alternative;
+ boundary="------------040909060702020004070705"
+
+This is a multi-part message in MIME format.
+--------------040909060702020004070705
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+text text SJ text text text text
+text text text (text text).
+
+On Tue, 15 Mar 2016 12:30:19 +0000
+
+> text,
+>
+> text text text text text.
+>
+> texttextme know if need any further assistance.
+>
+> text text,
+>
+
+I text text text text text text text in text text
+
+--------------040909060702020004070705
+Content-Type: multipart/related;
+ boundary="------------010605090706020707000802"
+
+
+--------------010605090706020707000802
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+</html>
+
+--------------010605090706020707000802
+Content-Type: image/png;
+ name="asd.png"
+Content-Transfer-Encoding: base64
+Content-ID: <part1.06080005.01050201@asd.com>
+Content-Disposition: inline;
+ filename="asd.png"
+
+asdasdasd
+--------------010605090706020707000802--
+
+--------------040909060702020004070705--
