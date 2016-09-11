@@ -1,4 +1,4 @@
-package quoteParser.executable
+package executable
 
 import quoteParser.*
 import java.io.*

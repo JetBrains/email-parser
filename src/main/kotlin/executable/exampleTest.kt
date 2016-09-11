@@ -1,4 +1,4 @@
-package quoteParser.executable
+package executable
 
 import quoteParser.*
 import java.io.*
@@ -8,7 +8,7 @@ private val pathEmails = "C:${File.separator}YT${File.separator}"
 
 // todo modify
 fun main(args: Array<String>) {    
-    val emlFile = File("""D:\YT\3594.eml""")
+    val emlFile = File("""D:\YT\6510.eml""")
     val start = System.currentTimeMillis()
     val msg: MimeMessage = getMimeMessage(emlFile)
     val emailText: String = getEmailText(msg)

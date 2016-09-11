@@ -1,4 +1,4 @@
-package quoteParser.executable
+package executable
 
 import java.io.File
 import java.io.FileInputStream

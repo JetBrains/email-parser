@@ -8,9 +8,9 @@ import kotlin.test.assertEquals
 private val dir = ".${File.separator}testEmls${File.separator}error${File.separator}"
 
 class QuoteParserErrorSpecs : Spek() {
-    private val parser = QuoteParser.Builder().
-            deleteQuoteMarks(false).
-            build()
+    private val parser = QuoteParser.Builder()
+            .deleteQuoteMarks(false)
+            .build()
 
     private fun Given.check(emailNum: Int, expectedQuoteHeader: QuoteHeader?) {
         val url = parser.javaClass.classLoader.getResource("$dir$emailNum.eml")
@@ -72,7 +72,7 @@ class QuoteParserErrorSpecs : Spek() {
                     startIndex = 0,
                     endIndex = 1,
                     text = listOf(
-                            """slon slon slon slon at slon.slon.slon/slon is slon slon slon slon of """ + 
+                            """slon slon slon slon at slon.slon.slon/slon is slon slon slon slon of """ +
                                     """11/25/2014 07:31 EST:"""
                     )
             )

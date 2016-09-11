@@ -8,9 +8,9 @@ import kotlin.test.assertEquals
 private val dir = ".${File.separator}testEmls${File.separator}ML${File.separator}"
 
 class QuoteParserMLSpecs : Spek() {
-    private val parser = QuoteParser.Builder().
-            deleteQuoteMarks(false).
-            build()
+    private val parser = QuoteParser.Builder()
+            .deleteQuoteMarks(false)
+            .build()
 
     private fun Given.check(emailNum: Int, expectedQuoteHeader: QuoteHeader) {
         val url = parser.javaClass.classLoader.getResource("$dir$emailNum.eml")
@@ -259,7 +259,7 @@ class QuoteParserMLSpecs : Spek() {
                     startIndex = 10,
                     endIndex = 11,
                     text = listOf(
-                            """<div>-------- Original message --------</div><div>From: text text """ + 
+                            """<div>-------- Original message --------</div><div>From: text text """ +
                                     """<text-text@text.com> </div><div>Date:12/02/2014  09:48  (GMT-08:00) """ +
                                     """</div><div>To: text.text.123@text.text.text </div><div>Subject: Re: text't""" +
                                     """ text or text text </div><div>"""
@@ -326,9 +326,6 @@ class QuoteParserMLSpecs : Spek() {
             )
             check(emailNum, expectedQuoteHeader)
         }
-
-
-
 
 
     }

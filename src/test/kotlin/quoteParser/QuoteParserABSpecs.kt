@@ -8,9 +8,9 @@ import kotlin.test.assertEquals
 private val dir = ".${File.separator}testEmls${File.separator}AB${File.separator}"
 
 class QuoteParserABSpecs : Spek() {
-    private val parser = QuoteParser.Builder().
-            deleteQuoteMarks(false).
-            build()
+    private val parser = QuoteParser.Builder()
+            .deleteQuoteMarks(false)
+            .build()
 
     private fun Given.check(emailNum: Int, expectedQuoteHeader: QuoteHeader?) {
         val url = parser.javaClass.classLoader.getResource("$dir$emailNum.eml")
