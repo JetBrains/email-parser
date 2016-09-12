@@ -2,9 +2,6 @@ package quoteParser
 
 import quoteParser.features.*
 
-/**
- * Created by Pavel.Zhuk on 25.08.2016.
- */
 internal class QuoteHeaderLinesParser(val headerLinesCount: Int = 3,
                              val multiLIneHeaderLinesCount: Int = 6,
                              keyPhrases: List<String> = KeyPhrases.default) {

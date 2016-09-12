@@ -15,7 +15,7 @@ class QuoteMarkFeature() : AbstractQuoteFeature() {
         get() = "QUOTE_MARK"
 
     override fun getRegex(): Regex {
-        // Regex for matching greater-than(>) symbol in the start of the line.
+        // Regex for matching greater-than(>) symbol in the beginning of the line.
         return Regex("${this.whitespace}*>.*")
     }
 

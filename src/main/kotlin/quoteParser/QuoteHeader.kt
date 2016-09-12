@@ -3,8 +3,8 @@ package quoteParser
 /**
  * Represent header of the quote.
  * 
- * @property startIndex number of the string of the email message where header of the quote begins (inclusive)
- * @property endIndex number of the string of the email message where header of the quote ends (exclusive)
+ * @property startIndex index of the string of the email message where header of the quote begins (inclusive)
+ * @property endIndex index of the string of the email message where header of the quote ends (exclusive)
  * @property text header lines
  */
 data class QuoteHeader(val startIndex: Int,

@@ -33,7 +33,7 @@ object KeyPhrases {
             "message${this.whitespace}*-*${this.whitespace}*"
 
     /**
-     * List of key phrases contains [inReplyToRegex], [replyAboveRegex], [originalMsgRegex].
+     * List of key phrases containing [inReplyToRegex], [replyAboveRegex], [originalMsgRegex] regexes.
      */
     val default = listOf<String>(
             this.inReplyToRegex,

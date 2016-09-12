@@ -11,10 +11,10 @@ import javax.mail.internet.MimePart
 import javax.mail.internet.ParseException
 
 /**
- * Check weather given message contain *In-Reply-To* header or 
+ * Check weather given message contains *In-Reply-To* header or 
  * *References* header.
  * @param msg 
- * @return true if message contain at least one of the headers specified above
+ * @return true if message contains at least one of the headers specified above
  * @see getMimeMessage
  */
 fun containInReplyToHeader(msg: MimeMessage) =

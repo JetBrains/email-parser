@@ -7,10 +7,10 @@ class DateFeature() : AbstractQuoteFeature() {
         get() = "DATE"
 
     override fun getRegex(): Regex {
-        // Short date format starts with day number (e.g. 15-02-2016)
+        // Short date format starting with the day number (e.g. 15-02-2016)
         @Language("RegExp")
         val shortDateForward = "[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*(20)?[0-9]{2}"
-        // Short date format starts with year (2016-02-15)
+        // Short date format starting with the year (2016-02-15)
         @Language("RegExp")
         val shortDateReversed = "(20)?[0-9]{2}\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]\\p{C}*[/.-]\\p{C}*[0-3]?[0-9]"
         val shortDate = "(($shortDateForward)|($shortDateReversed))\\p{C}*[,\\.]{0,2}"

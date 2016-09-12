@@ -7,7 +7,7 @@ private val incorrectFileMsg = "Given file is not exists."
 private val noFilePathMsg = "There isn't any path to target file. Try again and input path as a first command-line argument."
 
 // This is an example of typical usage of QuoteParser.
-// You must use QuoteParser.Builder to create exemplar.
+// You must use QuoteParser.Builder to instantiate.
 // You can also customize QuoteParser parameters with that builder,
 // but all of them have default value.
 fun main(args: Array<String>) {

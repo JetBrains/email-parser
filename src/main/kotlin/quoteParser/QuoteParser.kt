@@ -52,7 +52,7 @@ private fun isQuoteMarksAroundHeaderLines(startHeaderLinesIndex: Int,
 }
 
 /**
- * A **parser** to separate a quote from useful email content.
+ * A parser to separate a quote from useful email content.
  * 
  * To instantiate this class use [QuoteParser.Builder].      
  * Typical usage: create **QuoteParser** instance with [builder][QuoteParser.Builder]
@@ -74,7 +74,7 @@ class QuoteParser private constructor(builder: Builder) {
     /**
      * Builder for [QuoteParser] class.
      * 
-     * All customizable parameters has the default value.
+     * All customizable parameters have the default value.
      * In most cases you do not need to modify them.
      */
     class Builder {
@@ -142,9 +142,9 @@ class QuoteParser private constructor(builder: Builder) {
         }
 
         /**
-         * Specify whether you want to analyze the nested citations.
-         * If set true then [deleteQuoteMarks]
-         * must also be true. It is impossible to parse nested citations without deleting '>'.
+         * Specify whether to analyze the nested citations.
+         * If set true then [deleteQuoteMarks] must also be true. 
+         * It is impossible to parse nested citations without deleting '>'.
          * Default = false.
          */
         fun recursive(value: Boolean): Builder {
@@ -153,7 +153,7 @@ class QuoteParser private constructor(builder: Builder) {
         }
         
         /**
-         *  User can specify list of regexes which define a quote beginning.
+         *  User can specify list of regexes defining a quote beginning.
          *  If any of the regex from the list is matched then quote is defined. 
          *  Default = [KeyPhrases.default]
          *  @param value list of the user defined regexes
@@ -206,11 +206,11 @@ class QuoteParser private constructor(builder: Builder) {
      * Parse given list of strings to separate a quote from the useful content.
      * Works only with *text/plain* MIME type.
      * 
-     * **hasInReplyToEMLHeader** define if email contained *In-Reply-To* header 
+     * *hasInReplyToEMLHeader* defines if email contains *In-Reply-To* header 
      * or *References* header. If set to true then weakened criteria are used.
      *
      * @param lines list of strings with email content. Strings must be represented as a plain text.
-     * @param hasInReplyToEMLHeader define if email contained In-Reply-To header or References header. Default = true 
+     * @param hasInReplyToEMLHeader defines if email contains In-Reply-To header or References header. Default = true 
      * @return [Content] object
      * @see containInReplyToHeader
      */
@@ -220,10 +220,10 @@ class QuoteParser private constructor(builder: Builder) {
         val matchingLines = this.quoteMarkFeature.matchLines(this.lines)
         val headerLinesIndexes = this.quoteHeaderLinesParser.parse(this.lines, matchingLines)
         val quoteMarkIndex =
-                // This condition means: for EMLs without In-Reply-To header search for
-                // quotation marks(>) only if quoteHeaderLines is null. It works well for
-                // test data, but it is weird.. because it skips quotation marks most of
-                // the time.
+                // This condition means: for EMLs without In-Reply-To header or References header
+                // search for quotation marks(>) only if quoteHeaderLines is null. It works well for
+                // the test data, but it is weird.. because it skips quotation marks most of the time.
+                //
                 // As alternative this condition may be deleted, but it works
                 // worse with some cases...
                 if (!hasInReplyToEMLHeader && headerLinesIndexes != null) {

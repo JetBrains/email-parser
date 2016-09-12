@@ -3,9 +3,6 @@ package quoteParser
 import quoteParser.features.QuoteMarkMatchingResult
 import quoteParser.features.QuoteMarkFeature
 
-/**
- * Created by Pavel.Zhuk on 25.08.2016.
- */
 // MAX_QUOTE_BLOCKS_COUNT = 1 is good for hiding fragmented quotes
 // but a small portion of useful content is become hidden as well.
 internal class QuoteMarkParser(val maxQuoteBlocksCount: Int = 3,

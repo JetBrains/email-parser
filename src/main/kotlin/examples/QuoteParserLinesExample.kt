@@ -10,12 +10,12 @@ private val incorrectFileMsg = "Given file is not exists."
 private val noFilePathMsg = "There isn't any path to target file. Try again and input path as a first command-line argument."
 
 // This is an example of usage QuoteParser with list of strings.
-// You can specify if the supposed eml file contain In-Reply-To header
-// through the call of the Builder().hasInReplyToEMLHeader(value).
+// You can specify if the supposed eml file contain In-Reply-To or
+// References header through the call of the quoteParserObj.parse(lines, hasInReplyTo).
 // It has true default value which means that quotation criteria are weakened.
 //
 // Also you could use helper functions to get MimeMessage, check for 
-// In-Reply-To header or extract plain text from MimeMessage.
+// In-Reply-To or References header or extract plain text from MimeMessage.
 fun main(args: Array<String>) {
     if (args.size > 0) {
         val file = File(args[0])
