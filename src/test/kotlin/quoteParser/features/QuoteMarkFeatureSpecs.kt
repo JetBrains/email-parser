@@ -4,9 +4,6 @@ import org.jetbrains.spek.api.Spek
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Created by Pavel.Zhuk on 24.08.2016.
- */
 class QuoteMarkFeatureSpecs : Spek() {
     init {
         val quoteMarkFeature = QuoteMarkFeature()
