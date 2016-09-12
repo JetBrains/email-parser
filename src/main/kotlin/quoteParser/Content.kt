@@ -23,10 +23,15 @@ data class Content(val body: List<String>,
         val prefix = if (addMarks) "> " else ""
         val separator = if (addMarks) "\n> " else "\n"
 
-        val bodyText = this.body.joinToString(
-                separator = "\n",
-                postfix = if (this.header != null) "\n" else ""
-        )
+        val bodyText = if (!this.body.isEmpty()) {
+            this.body.joinToString(
+                    separator = "\n",
+                    postfix = if (this.header != null) "\n" else ""
+            )
+        } else {
+            ""
+        }
+
         val headerText = if (this.header != null && !this.header.text.isEmpty())
             this.header.text
                     .joinToString(prefix = prefix, separator = separator, postfix = "\n") {
@@ -34,10 +39,13 @@ data class Content(val body: List<String>,
                     }
         else
             ""
-        val quoteText = this.quote?.
-                toString(addMarks, uppercaseHeader)?.
-                lines()?.joinToString(prefix = prefix, separator = separator, postfix = "")
-                ?: ""
+
+        val quoteText = if (this.quote != null && !this.quote.body.isEmpty())
+                this.quote
+                        .toString(addMarks, uppercaseHeader).lines()
+                        .joinToString(prefix = prefix, separator = separator, postfix = "")
+        else
+            ""
 
         return StringBuilder(bodyText)
                 .append(headerText)
