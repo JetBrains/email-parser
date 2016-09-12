@@ -2,9 +2,6 @@ package quoteParser.features
 
 import org.intellij.lang.annotations.Language
 
-/**
- * Created by Pavel.Zhuk on 16.08.2016.
- */
 abstract class AbstractQuoteFeature() {
     @Language("Regexp")
     protected val whitespace = "[\\p{C}\\p{Z}\\s]"

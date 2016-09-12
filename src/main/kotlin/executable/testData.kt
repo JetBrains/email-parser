@@ -83,10 +83,9 @@ private fun getActualHeaders(emlDir: File, verbose: Boolean = false): List<Pair<
 
             if (!emailText[0].trim().equals(FILTER_STRING)) {
                 val qp = QuoteParser.Builder()
-                        .hasInReplyToEMLHeader(containInReplyToHeader(msg))
                         .deleteQuoteMarks(false)
                         .build()
-                val c = qp.parse(emailText)
+                val c = qp.parse(emailText, containInReplyToHeader(msg))
                 val H = c.header
                 if (H != null && H.text.isEmpty()) {
                     header = listOf(c.quote!!.body[0])

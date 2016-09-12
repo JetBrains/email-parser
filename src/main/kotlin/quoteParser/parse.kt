@@ -10,9 +10,21 @@ import javax.mail.internet.MimeMultipart
 import javax.mail.internet.MimePart
 import javax.mail.internet.ParseException
 
+/**
+ * Check weather given message contain *In-Reply-To* header or 
+ * *References* header.
+ * @param msg 
+ * @return true if message contain at least one of the headers specified above
+ * @see getMimeMessage
+ */
 fun containInReplyToHeader(msg: MimeMessage) =
         msg.getHeader("In-Reply-To") != null || msg.getHeader("References") != null
 
+/**
+ * Construct *MimeMessage* from File object
+ * @param emlFile 
+ * @return MimeMessage object
+ */
 fun getMimeMessage(emlFile: File): MimeMessage {
     val source: InputStream = FileInputStream(emlFile)
     val props: Properties = System.getProperties()
@@ -21,15 +33,25 @@ fun getMimeMessage(emlFile: File): MimeMessage {
     return msg
 }
 
+/**
+ * Construct MimeMessage and then get the content of the text/plain part 
+ * of this message. So if you already have MimeMessage object it is better 
+ * to call **getEmailText(MimePart)** function in order to avoid additional 
+ * costs.
+ * @param emlFile
+ * @return plain text content of the message as a string 
+ * @throws ParseException if message does not contain text/plain part
+ */
 fun getEmailText(emlFile: File): String {
     val msg: MimeMessage = getMimeMessage(emlFile)
     return getEmailText(msg)
 }
 
 /**
+ * Get the content of the text/plain part of the message.
  * @param part MimePart to get plain text from.
- * @return string with email content.
- * @exception ParseException if fails to get Content field or email does not contain text/plain content at all.
+ * @return plain text content of the message as a string
+ * @exception ParseException if message does not contain text/plain part
  */
 fun getEmailText(part: MimePart): String {
    val text = searchForContent(part)

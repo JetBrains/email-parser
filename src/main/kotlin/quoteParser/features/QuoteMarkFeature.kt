@@ -1,8 +1,5 @@
 package quoteParser.features
 
-/**
- * Created by Pavel.Zhuk on 24.08.2016.
- */
 enum class QuoteMarkMatchingResult {
     V_EMPTY,
     V_NOT_EMPTY,

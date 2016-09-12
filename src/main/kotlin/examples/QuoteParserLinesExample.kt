@@ -27,9 +27,8 @@ fun main(args: Array<String>) {
             val emlText = getEmailText(msg)
             
             val c = QuoteParser.Builder()
-                    .hasInReplyToEMLHeader(hasInReplyTo)
                     .build()
-                    .parse(emlText.lines())
+                    .parse(emlText.lines(), hasInReplyTo)
 
             val end = System.currentTimeMillis()
             println("Working time: ${end - start} ms.")

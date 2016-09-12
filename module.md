@@ -1,25 +1,9 @@
 # Module emailParser
 
-This is module description. 
-
-detailed
-
 # Package quoteParser
 
-main package
-
-detailed
-
-## test header
-
-text
-
-text
-
-text
-- text    
-- text
+Main package. Contain QuoteParser itself and related classes and functions.
 
 # Package quoteParser.features
 
-Contain some basic features
+Contain features used to define quote.
