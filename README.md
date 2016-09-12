@@ -1,9 +1,9 @@
 # email-parser
-This library provides ability to separate the quotation from the useful content in email messages. The main purpose of this library is to process as much diferent quotation formats as possible. It is also independent from the language used in email.
+This library provides ability to separate the quotation from the useful content in email messages. The main purpose of this library is to process as much different quotation formats as possible. It is also independent from the language used in email.
 
-Efficiency estimation we have got during testing: **> 97.5 %** correctly proccessed emails.
+Efficiency estimation we have got during testing: **> 97.5 %** correctly processed emails.
 
-For now it works only with text/plain Content-Type. Text/html content type will be added soon.
+For now it works only with text/plain Content-Type. Text/HTML content type will be added soon.
 
 # Usage
 You can download library sources and add them into your project.
@@ -25,7 +25,7 @@ Enter `gradlew test` in the console.
 ### Documentation
 To get documentation in [dokka](https://github.com/Kotlin/dokka) format enter `gradlew dokka` in the console. Then run `build/dokka/email-parser/index.html`
 
-To get documentation in Javadoc format enther `gradlew dokkaJavadoc` in the console. Then run `build/javadoc/index.html`
+To get documentation in Javadoc format enter `gradlew dokkaJavadoc` in the console. Then run `build/javadoc/index.html`
 
 ### Description
 The main package of the library is [quoteParser](src/main/kotlin/quoteParser). Its main class is [QuoteParser](src/main/kotlin/quoteParser/QuoteParser.kt#L63). 
