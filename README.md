@@ -55,7 +55,6 @@ val content = QuoteParser.Builder()
         .build {
             deleteQuoteMarks = true
             recursive = false
-        }
-        .parse(emlText.lines())
+        }.parse(emlText.lines())
 ```
 Complete code of the examples is placed [here](src/main/kotlin/examples).
