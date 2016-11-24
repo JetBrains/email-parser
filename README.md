@@ -49,4 +49,13 @@ val content = QuoteParser.Builder()
         .build()
         .parse(emlText.lines())
 ```
+Kotlin-style builder is also supported:
+```kotlin
+val content = QuoteParser.Builder()
+        .build {
+            deleteQuoteMarks = true
+            recursive = false
+        }
+        .parse(emlText.lines())
+```
 Complete code of the examples is placed [here](src/main/kotlin/examples).

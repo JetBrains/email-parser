@@ -6,16 +6,16 @@ import javax.mail.internet.MimeMessage
 
 private val pathEmails = "C:${File.separator}YT${File.separator}"
 
-fun main(args: Array<String>) {    
-    val emlFile = File("""D:\YT\6510.eml""")
+fun main(args: Array<String>) {
+    val emlFile = File("""C:\YT\6510.eml""")
     val start = System.currentTimeMillis()
-    val trigger = true
     val content = QuoteParser.Builder()
-            .deleteQuoteMarks(false)
-            .recursive(false)
-            .build().parse(emlFile)
+            .build {
+                deleteQuoteMarks = false
+                recursive = false
+            }.parse(emlFile)
     val end = System.currentTimeMillis()
     println("Working time: ${end - start} ms.")
 
-    println(content.toString(addMarks = false, uppercaseHeader = true))
+    println(content.toString(addMarks = true, uppercaseHeader = true))
 }

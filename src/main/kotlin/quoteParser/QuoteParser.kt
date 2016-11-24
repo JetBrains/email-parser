@@ -79,19 +79,12 @@ class QuoteParser private constructor(builder: Builder) {
      */
     class Builder {
         internal var headerLinesCount: Int = 3
-            private set
         internal var multiLineHeaderLinesCount: Int = 6
-            private set
         internal var maxQuoteBlocksCount: Int = 3
-            private set
         internal var minimumQuoteBlockSize: Int = 7
-            private set
         internal var deleteQuoteMarks: Boolean = true
-            private set
         internal var recursive: Boolean = false
-            private set
         internal var keyPhrases: List<String> = KeyPhrases.default
-            private set
 
         /**
          * Maximum number of lines going one after another to
@@ -165,6 +158,12 @@ class QuoteParser private constructor(builder: Builder) {
 
         fun build(): QuoteParser {
             return QuoteParser(this)
+        }
+
+        fun build(init: Builder.() -> Unit): QuoteParser {
+            val builder = Builder()
+            builder.init()
+            return QuoteParser(builder)
         }
     }
 
