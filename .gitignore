@@ -32,3 +32,4 @@ hs_err_pid*
 !gradle-wrapper.jar
 /src/main/kotlin/executable/test*.kt
 !/src/main/kotlin/executable/testData.kt
+/target/

@@ -1,5 +1,5 @@
 # email-parser
-This library provides ability to separate the quotation from the useful content in email messages. The main purpose of this library is to process as much different quotation formats as possible. It is also independent from the language used in email.
+This simple library provides ability to separate the quotation from the useful content in email messages. The main purpose of this library is to process as much different quotation formats as possible. It is also independent from the language used in email.
 
 Efficiency estimation we have got during testing: **> 97.5 %** correctly processed emails.
 
