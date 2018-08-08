@@ -3,7 +3,7 @@ This simple library provides ability to separate the quotation from the useful c
 
 Efficiency estimation we have got during testing: **> 97.5 %** correctly processed emails.
 
-For now it works only with text/plain Content-Type. Text/HTML content type will be added soon.
+For now it works only with text/plain Content-Type. Other content-types may be added later (you are welcome to make a pull request).
 
 # Usage
 You can download library sources and add them into your project.
